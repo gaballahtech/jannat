@@ -16,7 +16,7 @@ export default function AnnouncementBanner() {
             <p className="text-[12px] font-normal leading-relaxed tracking-[0.18em] md:tracking-[0.24em]">
               SHIPPING TO ALL GOVERNORATES — {formatEGP(shippingFee)} FLAT
             </p>
-            <p className="mt-1 text-[11px] tracking-[0.12em] text-white/55">
+            <p className="mt-1 text-[11px] tracking-[0.12em] text-white/85">
               Online payment · Delivery within a week
             </p>
           </div>

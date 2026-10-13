@@ -112,6 +112,12 @@ try {
         await page.waitForTimeout(400);
         await check(page, `admin-${tab}`, scheme);
       }
+      // product editor modal (video field, matrix, pairings)
+      await page.goto(`${BASE}/admin/products`, { waitUntil: 'networkidle' });
+      await page.getByRole('button', { name: 'EDIT' }).first().click();
+      await page.waitForTimeout(600);
+      await check(page, 'admin-editor', scheme);
+      if (scheme === 'dark') await shot(page, 'admin-editor', scheme);
       if (scheme === 'dark') {
         await page.goto(`${BASE}/admin/products`, { waitUntil: 'networkidle' });
         await shot(page, 'admin-products', scheme);

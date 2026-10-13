@@ -102,7 +102,7 @@ function ls(ctx: CanvasRenderingContext2D, px: string) {
 export async function renderInvoicePng(
   inv: Invoice,
   thumbs: Map<string, string | undefined>,
-  logoSrc = '/logo-white.png',
+  logoSrc = '/jannat.webp',
 ): Promise<Blob> {
   const biz = getSettings();
   const contact = getContact();

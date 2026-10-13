@@ -401,7 +401,7 @@ function ProductEditor({
               inputMode="url"
               className={input}
             />
-            <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/45 dark:text-white/60">
+            <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/60 dark:text-white/60">
               {f.videoUrl.trim() === '' ? (
                 VIDEO_HELP
               ) : parseVideoUrl(f.videoUrl) ? (

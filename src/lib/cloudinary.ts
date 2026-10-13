@@ -3,7 +3,7 @@ import { idbDel, refKey, storeUpload } from '../admin/db';
 /* Optional Cloudinary direct upload (no server needed).
    Set in .env (see .env.example):
      VITE_CLOUDINARY_CLOUD_NAME=xxxx
-     VITE_CLOUDINARY_PRESET=pearlin_unsigned   (unsigned preset, folder pearlin/products)
+     VITE_CLOUDINARY_PRESET=pearlin_unsigned   (unsigned preset, folder jannat/products)
    When unset, admin uploads fall back to device-local IndexedDB (`idb:` refs). */
 
 const CLOUD = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME as string | undefined;
