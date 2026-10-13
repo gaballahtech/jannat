@@ -78,7 +78,7 @@ unreachable — so the shop never goes blank.
 - [x] A11y: labels, `aria-expanded`, keyboard dropdown, focus trap on overlays
 - [x] Automatic dark mode (OS setting, no toggle) + adaptive black/white logo
 - [x] Neon Postgres backend + server username/password auth (`db/BACKEND.md`)
-- [ ] Set real domain (currently `https://pearlin-eg.com` in `index.html`,
+- [ ] Set real domain (currently `https://jannat-eg.vercel.app` in `index.html`,
       `public/robots.txt`, `public/sitemap.xml`)
 - [ ] Self-host product photos, add `srcset`, real OG image
 - [ ] Connect database, auth, order tracking (replaces localStorage/IndexedDB)
