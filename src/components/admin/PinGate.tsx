@@ -112,7 +112,7 @@ export default function PinGate({ onUnlock }: { onUnlock: () => void }) {
           className="mt-3 w-full rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-center text-xl font-normal tracking-[0.2em] outline-none placeholder:text-black/25 placeholder:tracking-[0.1em] focus:border-black dark:focus:border-white"
         />
       )}
-      {err && <p className="mt-3 text-[12px] font-normal tracking-[0.12em] text-red-700">{err}</p>}
+      {err && <p className="mt-3 text-[12px] font-normal tracking-[0.12em] text-red-700 dark:text-red-400">{err}</p>}
       <button
         onClick={submit}
         disabled={busy || wait > 0}
@@ -120,7 +120,7 @@ export default function PinGate({ onUnlock }: { onUnlock: () => void }) {
       >
         {wait > 0 ? `WAIT ${wait}S` : setup ? 'CREATE & UNLOCK' : 'UNLOCK'}
       </button>
-      <p className="mt-4 max-w-xs text-[11px] leading-relaxed tracking-[0.08em] text-black/40 dark:text-white/40">
+      <p className="mt-4 max-w-xs text-[11px] leading-relaxed tracking-[0.08em] text-black/40 dark:text-white/65">
         Device-level lock only — anyone with this browser can clear site data. Real multi-user
         security needs a server backend later.
       </p>

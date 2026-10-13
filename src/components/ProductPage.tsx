@@ -492,15 +492,15 @@ export default function ProductPage({ productId }: { productId: string }) {
               return (
                 <div
                   key={b.product.id}
-                  className={`flex items-center gap-3 rounded-xl border bg-white p-3 transition ${
-                    on ? 'border-black' : 'border-black/10 opacity-60'
+                  className={`flex items-center gap-3 rounded-xl border bg-white p-3 transition dark:bg-white/[0.04] ${
+                    on ? 'border-black dark:border-white' : 'border-black/10 opacity-60 dark:border-white/10'
                   }`}
                 >
                   <button
                     onClick={() => setChecked((p) => ({ ...p, [b.product.id]: !on }))}
                     aria-label={on ? `Remove ${b.product.name} from bundle` : `Add ${b.product.name} to bundle`}
                     className={`grid h-6 w-6 shrink-0 place-items-center rounded-full border transition active:scale-95 ${
-                      on ? 'border-black bg-black text-white' : 'border-black/25 text-transparent hover:border-black'
+                      on ? 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black' : 'border-black/25 text-transparent hover:border-black dark:border-white/25 dark:hover:border-white'
                     }`}
                   >
                     <Check className="h-3.5 w-3.5" />
@@ -531,7 +531,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                         {formatEGP(b.product.price)} · {b.variant} / {b.size}
                       </span>
                     </span>
-                    <ArrowRight className="h-4 w-4 shrink-0 text-black/35 dark:text-white/35" />
+                    <ArrowRight className="h-4 w-4 shrink-0 text-black/35 dark:text-white/65" />
                   </a>
                 </div>
               );

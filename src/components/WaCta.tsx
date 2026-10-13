@@ -96,7 +96,7 @@ export default function WaCta({
   };
 
   const input =
-    'w-full rounded-xl border border-black/15 bg-white px-4 py-3.5 text-[14px] outline-none placeholder:text-black/35 focus:border-black dark:border-white/15 dark:bg-[#101010] dark:placeholder:text-white/35 dark:focus:border-white';
+    'w-full rounded-xl border border-black/15 bg-white px-4 py-3.5 text-[14px] outline-none placeholder:text-black/35 focus:border-black dark:border-white/15 dark:bg-[#101010] dark:placeholder:text-white/60 dark:focus:border-white';
 
   return (
     <>
@@ -186,7 +186,7 @@ export default function WaCta({
                         options={(govObj?.cities ?? []).map((c) => ({ value: c, label: c }))}
                       />
                       {!gov && (
-                        <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/40 dark:text-white/40">
+                        <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/40 dark:text-white/65">
                           Pick a governorate first.
                         </p>
                       )}
@@ -207,7 +207,7 @@ export default function WaCta({
                 )}
 
                 {err && (
-                  <p className="mt-3 text-[12px] font-normal tracking-[0.06em] text-red-700">{err}</p>
+                  <p className="mt-3 text-[12px] font-normal tracking-[0.06em] text-red-700 dark:text-red-400">{err}</p>
                 )}
                 <button
                   onClick={submit}

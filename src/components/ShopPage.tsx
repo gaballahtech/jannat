@@ -58,8 +58,8 @@ export default function ShopPage() {
               href={shopPath(c.id, sort)}
               className={`whitespace-nowrap rounded-full px-6 py-3 text-[11px] font-normal tracking-[0.2em] transition ${
                 !wishOnly && cat === c.id
-                  ? 'bg-black text-white'
-                  : 'bg-[#F4F4F4] text-black hover:bg-black hover:text-white'
+                  ? 'bg-black text-white dark:bg-white dark:text-black'
+                  : 'bg-[#F4F4F4] text-black hover:bg-black hover:text-white dark:bg-white/[0.07] dark:text-[#f2f2f2] dark:hover:bg-white dark:hover:text-black'
               }`}
             >
               {c.label}
@@ -69,8 +69,8 @@ export default function ShopPage() {
             href={wishOnly ? shopPath('all', sort) : '/shop/saved'}
             className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-6 py-3 text-[11px] font-normal tracking-[0.2em] transition ${
               wishOnly
-                ? 'bg-black text-white'
-                : 'border border-black/20 bg-white text-black hover:border-black'
+                ? 'bg-black text-white dark:bg-white dark:text-black'
+                : 'border border-black/20 bg-white text-black hover:border-black dark:border-white/20 dark:bg-[#101010] dark:text-[#f2f2f2] dark:hover:border-white'
             }`}
           >
             <Heart className="h-3.5 w-3.5" fill={wishOnly ? 'currentColor' : 'none'} />

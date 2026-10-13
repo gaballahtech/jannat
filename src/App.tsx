@@ -126,9 +126,9 @@ function Shell() {
         <main>
           <Suspense
             fallback={
-              <p className="mx-auto max-w-[1200px] px-4 py-24 text-center text-[12px] tracking-[0.24em] text-black/50">
-                LOADING DASHBOARD…
-              </p>
+      <p className="mx-auto max-w-[1200px] px-4 py-24 text-center text-[12px] tracking-[0.24em] text-black/50 dark:text-white/65">
+        LOADING DASHBOARD…
+      </p>
             }
           >
             <Admin />

@@ -280,7 +280,7 @@ function ProductEditor({
   };
 
   const input =
-    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black dark:border-white/15 dark:bg-[#101010] dark:placeholder:text-white/35 dark:focus:border-white sm:text-[13px]';
+    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black dark:border-white/15 dark:bg-[#101010] dark:placeholder:text-white/60 dark:focus:border-white sm:text-[13px]';
   const label = 'mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60';
 
   return (
@@ -412,7 +412,7 @@ function ProductEditor({
                   {v._preview ? (
                     <img src={v._preview} alt={v.name} className="h-full w-full object-cover" />
                   ) : (
-                    <span className="grid h-full w-full place-items-center text-black/30 dark:text-white/30">
+                    <span className="grid h-full w-full place-items-center text-black/30 dark:text-white/50">
                       <ImagePlus className="h-6 w-6" />
                     </span>
                   )}
@@ -452,7 +452,7 @@ function ProductEditor({
                   <button
                     onClick={() => set({ variants: f.variants.filter((x) => x._key !== v._key) })}
                     aria-label="Remove color"
-                    className="self-start rounded-full p-2 text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white"
+                    className="self-start rounded-full p-2 text-black/40 dark:text-white/65 hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -540,7 +540,7 @@ function ProductEditor({
           <p className="mt-2 text-[11px] tracking-[0.06em] text-black/45 dark:text-white/45">
             Write how many pieces you have of each color in each size. Total updates by itself.
             {f.origStock > matrixTotal(f) && (
-              <span className="font-normal text-red-700">
+              <span className="font-normal text-red-700 dark:text-red-400">
                 {' '}
                 Heads up: total dropped from {f.origStock} to {matrixTotal(f)} — removed
                 colors/sizes discarded the difference. Re-add it if that was a mistake.
@@ -611,7 +611,7 @@ function ProductEditor({
           </p>
         </div>
 
-        {err && <p className="mt-4 text-[12px] font-normal tracking-[0.1em] text-red-700">{err}</p>}
+        {err && <p className="mt-4 text-[12px] font-normal tracking-[0.1em] text-red-700 dark:text-red-400">{err}</p>}
         <div className="mt-6 flex gap-3">
           <button
             onClick={onClose}
@@ -969,7 +969,7 @@ function OverviewTab({
                   <img src={p.variants[0]?.image} alt={p.name} className="h-12 w-10 rounded-lg object-cover" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[12px] font-normal tracking-[0.1em]">{p.name}</p>
-                    <p className={`text-[11px] font-normal tracking-[0.12em] ${p.stock === 0 ? 'text-red-700' : 'text-black/55 dark:text-white/55'}`}>
+                    <p className={`text-[11px] font-normal tracking-[0.12em] ${p.stock === 0 ? 'text-red-700 dark:text-red-400' : 'text-black/55 dark:text-white/55'}`}>
                       {p.stock === 0 ? 'SOLD OUT' : `${p.stock} LEFT`}
                     </p>
                   </div>
@@ -1283,7 +1283,7 @@ function CategoriesTab({ products, refresh }: { products: Product[]; refresh: ()
           <Plus className="h-4 w-4" /> ADD
         </button>
       </div>
-      {msg && <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700">{msg}</p>}
+      {msg && <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700 dark:text-red-400">{msg}</p>}
 
       <ul className="mt-5 space-y-3">
         {cats.map((c) => (
@@ -1393,7 +1393,7 @@ function HomepageTab({ refresh }: { refresh: () => Promise<void> }) {
         </p>
       )}
       {err && (
-        <p className="rounded-xl px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-red-700">
+        <p className="rounded-xl px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-red-700 dark:text-red-400">
           {err}
         </p>
       )}
@@ -1516,7 +1516,7 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
       </button>
 
       <div className="relative mt-4">
-        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35 dark:text-white/35" />
+        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35 dark:text-white/65" />
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -1525,7 +1525,7 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
         />
       </div>
 
-      {msg && <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700">{msg}</p>}
+      {msg && <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700 dark:text-red-400">{msg}</p>}
 
       {visible.length === 0 ? (
         <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/45 dark:text-white/45">
@@ -1562,7 +1562,7 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
                     {p.stock === 0 ? 'SOLD OUT' : `ONLY ${p.stock} LEFT`}
                   </span>
                 )}
-                <span className="text-[11px] tracking-[0.1em] text-black/40 dark:text-white/40">
+                <span className="text-[11px] tracking-[0.1em] text-black/40 dark:text-white/65">
                   Tap EDIT to change colors, sizes & pieces
                 </span>
               </div>
@@ -1853,7 +1853,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
   };
 
   const input =
-    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black dark:border-white/15 dark:bg-[#101010] dark:placeholder:text-white/35 dark:focus:border-white sm:text-[13px]';
+    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black dark:border-white/15 dark:bg-[#101010] dark:placeholder:text-white/60 dark:focus:border-white sm:text-[13px]';
   const label = 'mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60';
 
   if (detail) {
@@ -1867,7 +1867,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
         </button>
         <FitInvoice invoice={detail} />
         {exportErr && (
-          <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700">{exportErr}</p>
+          <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700 dark:text-red-400">{exportErr}</p>
         )}
         {exportOk && (
           <p className="mt-3 rounded-xl bg-black px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-white dark:bg-white dark:text-black">
@@ -1976,7 +1976,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                         <button
                           onClick={() => setLines((ls) => ls.filter((_, j) => j !== i))}
                           aria-label="Remove item"
-                          className="rounded-full p-1.5 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white"
+                          className="rounded-full p-1.5 text-black/40 dark:text-white/65 hover:text-black dark:hover:text-white"
                         >
                           <X className="h-4 w-4" />
                         </button>
@@ -2092,7 +2092,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                 </div>
               </div>
 
-              {err && <p className="mt-3 text-[12px] font-normal tracking-[0.1em] text-red-700">{err}</p>}
+              {err && <p className="mt-3 text-[12px] font-normal tracking-[0.1em] text-red-700 dark:text-red-400">{err}</p>}
               <h3 className="mt-5 flex items-center gap-2.5 text-[12px] font-normal tracking-[0.22em]">
                 <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white dark:bg-white dark:text-black">3</span>
                 REVIEW & SAVE
@@ -2121,7 +2121,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
           <div className="mt-4">
             <FitInvoice invoice={saved} />
             {exportErr && (
-              <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700">{exportErr}</p>
+              <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700 dark:text-red-400">{exportErr}</p>
             )}
             {exportOk && (
               <p className="mt-3 rounded-xl bg-black px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-white dark:bg-white dark:text-black">
@@ -2176,7 +2176,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
       ) : (
         <>
           <div className="relative mt-4">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35 dark:text-white/35" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35 dark:text-white/65" />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}

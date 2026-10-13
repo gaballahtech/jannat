@@ -104,7 +104,7 @@ export default function CartDrawer() {
                               <p className="mt-1 flex items-center gap-1.5 text-[11px] tracking-[0.15em] text-black/50 dark:text-white/50">
                                 {v && (
                                   <span
-                                    className="inline-block h-2.5 w-2.5 rounded-full ring-1 ring-black/20"
+                                    className="inline-block h-2.5 w-2.5 rounded-full ring-1 ring-black/20 dark:ring-white/20"
                                     style={{ background: v.hex }}
                                   />
                                 )}
@@ -114,7 +114,7 @@ export default function CartDrawer() {
                             <button
                               onClick={() => remove(i.product.id, i.variant, i.size)}
                               aria-label="Remove"
-                              className="rounded-full p-2 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white active:bg-black/5"
+                              className="rounded-full p-2 text-black/40 dark:text-white/65 hover:text-black dark:hover:text-white active:bg-black/5"
                             >
                               <Trash2 className="h-4 w-4" />
                             </button>
