@@ -54,7 +54,7 @@ export default function ProductCard({ product }: { product: Product }) {
     >
       <div className="p-2 pb-0">
         <div
-          className="relative aspect-[3/4] overflow-hidden rounded-xl bg-[#F4F4F4] ring-1 ring-white/25"
+          className="relative aspect-[3/4] overflow-hidden rounded-xl bg-[#F4F4F4] dark:bg-white/[0.07] ring-1 ring-white/25"
           onMouseEnter={startCycle}
           onMouseLeave={stopCycle}
           onTouchStart={startCycle}
@@ -62,7 +62,7 @@ export default function ProductCard({ product }: { product: Product }) {
           onTouchCancel={stopCycle}
         >
           {out ? (
-            <span className="absolute left-3 top-3 z-10 rounded-full bg-white px-3 py-1 text-[10px] font-normal tracking-[0.18em] text-black">
+            <span className="absolute left-3 top-3 z-10 rounded-full bg-white px-3 py-1 text-[10px] font-normal tracking-[0.18em] text-black dark:bg-white dark:text-black">
               SOLD OUT
             </span>
           ) : (
@@ -70,7 +70,7 @@ export default function ProductCard({ product }: { product: Product }) {
               <span
                 className={`absolute left-3 top-3 z-10 rounded-full px-3 py-1 text-[10px] font-normal tracking-[0.18em] ${
                   product.tag === 'NEW'
-                    ? 'bg-white text-black'
+                    ? 'bg-white text-black dark:bg-white dark:text-black'
                     : 'border border-white/30 bg-black/80 text-white backdrop-blur'
                 }`}
               >

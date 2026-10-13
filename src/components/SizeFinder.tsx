@@ -29,7 +29,7 @@ function NumField({
 }) {
   return (
     <div>
-      <label className="mb-1.5 block text-[11px] font-normal tracking-[0.18em] text-black/60">
+      <label className="mb-1.5 block text-[11px] font-normal tracking-[0.18em] text-black/60 dark:text-white/60">
         {label}
       </label>
       <div className="flex items-center gap-2">
@@ -37,9 +37,9 @@ function NumField({
           value={value}
           onChange={(e) => set(onlyDigits(e.target.value, 3))}
           inputMode="numeric"
-          className="min-w-0 flex-1 rounded-xl border border-black/15 px-3 py-2.5 text-center text-[15px] font-normal outline-none focus:border-black"
+          className="min-w-0 flex-1 rounded-xl border border-black/15 dark:border-white/15 px-3 py-2.5 text-center text-[15px] font-normal outline-none focus:border-black dark:focus:border-white"
         />
-        <span className="w-8 shrink-0 text-[11px] font-normal text-black/40">{suffix}</span>
+        <span className="w-8 shrink-0 text-[11px] font-normal text-black/40 dark:text-white/40">{suffix}</span>
       </div>
       <input
         type="range"
@@ -114,7 +114,7 @@ export default function SizeFinder({
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 60, opacity: 0 }}
               transition={{ type: 'tween', duration: 0.28 }}
-              className="pointer-events-auto max-h-[92dvh] w-full max-w-md overflow-y-auto rounded-t-[24px] bg-white p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:rounded-[24px] sm:p-8"
+              className="pointer-events-auto max-h-[92dvh] w-full max-w-md overflow-y-auto rounded-t-[24px] bg-white dark:bg-[#101010] p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:rounded-[24px] sm:p-8"
             >
               <div className="flex items-center justify-between">
                 <h2 className="flex items-center gap-2 text-[13px] font-normal tracking-[0.22em]">
@@ -123,7 +123,7 @@ export default function SizeFinder({
                 <button
                   onClick={onClose}
                   aria-label="Close size finder"
-                  className="rounded-full p-2 hover:bg-black/5"
+                  className="rounded-full p-2 hover:bg-black/5 dark:hover:bg-white/10"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -147,7 +147,7 @@ export default function SizeFinder({
               </div>
 
               {/* Mode */}
-              <div className="mt-3 grid grid-cols-2 gap-2 rounded-2xl bg-[#F4F4F4] p-1.5">
+              <div className="mt-3 grid grid-cols-2 gap-2 rounded-2xl bg-[#F4F4F4] dark:bg-white/[0.07] p-1.5">
                 {(
                   [
                     ['quick', 'QUICK · GUESS'],
@@ -191,12 +191,12 @@ export default function SizeFinder({
                   )}
                   <button
                     onClick={() => setGuide((g) => !g)}
-                    className="text-[11px] font-normal tracking-[0.15em] text-black/55 underline-offset-4 hover:text-black hover:underline"
+                    className="text-[11px] font-normal tracking-[0.15em] text-black/55 dark:text-white/55 underline-offset-4 hover:text-black dark:hover:text-white hover:underline"
                   >
                     {guide ? 'HIDE MEASURING GUIDE −' : 'HOW TO MEASURE +'}
                   </button>
                   {guide && (
-                    <ul className="space-y-1.5 rounded-2xl bg-[#F8F8F8] p-4 text-[12px] leading-relaxed tracking-[0.04em] text-black/65">
+                    <ul className="space-y-1.5 rounded-2xl bg-[#F8F8F8] dark:bg-white/[0.05] p-4 text-[12px] leading-relaxed tracking-[0.04em] text-black/65 dark:text-white/65">
                       <li>
                         <b>{gender === 'male' ? 'Chest' : 'Bust'}:</b> tape around the fullest
                         part, under the arms, straight across the back.
@@ -231,7 +231,7 @@ export default function SizeFinder({
 
               {/* Fit */}
               <div className="mt-5">
-                <p className="text-[11px] font-normal tracking-[0.2em] text-black/60">
+                <p className="text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                   HOW DO YOU LIKE IT?
                 </p>
                 <div className="mt-2.5 grid grid-cols-3 gap-2">
@@ -259,12 +259,12 @@ export default function SizeFinder({
               </div>
 
               {/* Result */}
-              <div className="mt-6 rounded-2xl bg-black p-5 text-center text-white">
+              <div className="mt-6 rounded-2xl bg-black p-5 text-center text-white dark:bg-white dark:text-black">
                 <div className="flex items-center justify-center gap-2">
-                  <p className="text-[10px] font-normal tracking-[0.28em] text-white/55">YOUR SIZE</p>
+                  <p className="text-[10px] font-normal tracking-[0.28em] text-white/55 dark:text-black/55">YOUR SIZE</p>
                   <span
                     className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-[9px] font-normal tracking-[0.15em] ${
-                      advice.accuracy === 'high' ? 'bg-white text-black' : 'bg-white/15 text-white/80'
+                      advice.accuracy === 'high' ? 'bg-white text-black dark:bg-black dark:text-white' : 'bg-white/15 text-white/80 dark:bg-black/10 dark:text-black/70'
                     }`}
                   >
                     <BadgeCheck className="h-3 w-3" />
@@ -273,13 +273,13 @@ export default function SizeFinder({
                 </div>
                 <p className="font-display mt-1 text-5xl font-normal">{advice.size}</p>
                 {advice.between && (
-                  <p className="mt-1.5 text-[11px] font-normal tracking-[0.1em] text-white">
+                  <p className="mt-1.5 text-[11px] font-normal tracking-[0.1em] text-white dark:text-black">
                     Between {advice.between[0]} and {advice.between[1]} — sized up for comfort
                   </p>
                 )}
                 <ul className="mx-auto mt-3 max-w-xs space-y-1">
                   {advice.steps.map((s) => (
-                    <li key={s} className="text-[11px] tracking-[0.08em] text-white/60">
+                    <li key={s} className="text-[11px] tracking-[0.08em] text-white/60 dark:text-black/60">
                       {s}
                     </li>
                   ))}
@@ -291,11 +291,11 @@ export default function SizeFinder({
                   onApply(advice.size);
                   onClose();
                 }}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
               >
                 USE SIZE {advice.size} <ArrowRight className="h-4 w-4" />
               </button>
-              <p className="mt-3 text-center text-[11px] leading-relaxed tracking-[0.06em] text-black/45">
+              <p className="mt-3 text-center text-[11px] leading-relaxed tracking-[0.06em] text-black/45 dark:text-white/45">
                 Tape measurements + gender tables = our most precise answer. Still unsure? Ask us
                 on WhatsApp with your numbers.
               </p>

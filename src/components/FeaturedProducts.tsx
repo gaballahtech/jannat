@@ -22,7 +22,7 @@ export function SectionHeader({
         className="group flex items-center gap-2.5 text-[12px] font-normal tracking-[0.22em]"
       >
         {link}
-        <span className="grid h-9 w-9 place-items-center rounded-full border border-black/15 transition group-hover:border-black group-hover:bg-black group-hover:text-white">
+        <span className="grid h-9 w-9 place-items-center rounded-full border border-black/15 dark:border-white/15 transition group-hover:border-black group-hover:bg-black group-hover:text-white">
           <ArrowRight className="h-4 w-4" />
         </span>
       </a>

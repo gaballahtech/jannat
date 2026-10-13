@@ -70,14 +70,14 @@ export default function Hero() {
           <br />
           <em className="font-normal normal-case italic">Made for Egypt.</em>
         </motion.h1>
-        <p className="mt-7 max-w-md text-[14px] leading-relaxed tracking-wider text-black/60">
+        <p className="mt-7 max-w-md text-[14px] leading-relaxed tracking-wider text-black/60 dark:text-white/60">
           Premium hoodies & essentials, delivered to your door anywhere in Egypt. Order in 1
           minute on WhatsApp.
         </p>
         <div className="mt-9 flex flex-wrap items-center gap-4">
           <a
             href="/shop"
-            className="group inline-flex items-center gap-3 rounded-full bg-black px-9 py-4 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800"
+            className="group inline-flex items-center gap-3 rounded-full bg-black px-9 py-4 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
           >
             SHOP HOODIES
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -87,14 +87,14 @@ export default function Hero() {
             message={(info) => `Hi pearlin! I'm ${info.name}. I want to order.`}
             title="QUICK HELLO"
             submitLabel="CONTINUE TO WHATSAPP"
-            className="inline-flex items-center gap-2 rounded-full border-2 border-black px-9 py-4 text-[12px] font-normal tracking-[0.22em] transition hover:border-[#25D366] hover:bg-[#25D366] hover:text-white"
+            className="inline-flex items-center gap-2 rounded-full border-2 border-black dark:border-white px-9 py-4 text-[12px] font-normal tracking-[0.22em] transition hover:border-[#25D366] hover:bg-[#25D366] hover:text-white dark:hover:text-black"
           >
             <WhatsAppIcon className="h-4 w-4" />
             ORDER ON WHATSAPP
           </WaCta>
         </div>
 
-        <div className="mt-14 flex items-center gap-8 border-t border-black/10 pt-6 text-[11px] tracking-[0.2em] text-black/50">
+        <div className="mt-14 flex items-center gap-8 border-t border-black/10 dark:border-white/10 pt-6 text-[11px] tracking-[0.2em] text-black/50 dark:text-white/50">
           <span>CAIRO · EGYPT</span>
           <span className="hidden sm:inline">ONLINE PAYMENT</span>
         </div>
@@ -107,7 +107,7 @@ export default function Hero() {
             <a
               href={slide.url}
               aria-label={`View ${slide.name}`}
-              className="group relative block overflow-hidden rounded-[20px] bg-[#F4F4F4] ring-1 ring-black/10"
+              className="group relative block overflow-hidden rounded-[20px] bg-[#F4F4F4] dark:bg-white/[0.07] ring-1 ring-black/10 dark:ring-white/10"
             >
               <AnimatePresence mode="wait">
                 <motion.img
@@ -134,7 +134,7 @@ export default function Hero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="truncate text-[11px] font-normal tracking-[0.18em] text-black/65"
+                  className="truncate text-[11px] font-normal tracking-[0.18em] text-black/65 dark:text-white/65"
                 >
                   {slide.label}
                 </motion.p>
@@ -146,11 +146,11 @@ export default function Hero() {
                     onClick={() => setIndex(i)}
                     aria-label={`Slide ${i + 1}`}
                     className={`h-2 rounded-full transition-all duration-300 ${
-                      i === index ? 'w-6 bg-black' : 'w-2 bg-black/20 hover:bg-black/50'
+                      i === index ? 'w-6 bg-black dark:bg-white' : 'w-2 bg-black/20 hover:bg-black/50 dark:bg-white/20 dark:hover:bg-white/50'
                     }`}
                   />
                 ))}
-                <span className="ml-1 text-[10px] font-normal tracking-[0.2em] text-black/50">
+                <span className="ml-1 text-[10px] font-normal tracking-[0.2em] text-black/50 dark:text-white/50">
                   0{index + 1} / 0{slides.length}
                 </span>
               </div>
@@ -158,21 +158,21 @@ export default function Hero() {
           </div>
 
           <div className="hidden flex-col items-center justify-between py-2 sm:flex">
-            <span className="vertical-text text-[11px] font-normal tracking-[0.35em] text-black/60">
+            <span className="vertical-text text-[11px] font-normal tracking-[0.35em] text-black/60 dark:text-white/60">
               WINTER 2026
             </span>
             <div className="flex flex-col gap-2.5">
               <button
                 onClick={prev}
                 aria-label="Previous"
-                className="rounded-full border border-black/15 bg-white p-3.5 transition hover:bg-black hover:text-white"
+                className="rounded-full border border-black/15 dark:border-white/15 bg-white dark:bg-[#101010] p-3.5 transition hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
               >
                 <ArrowLeft className="h-4 w-4" />
               </button>
               <button
                 onClick={next}
                 aria-label="Next"
-                className="rounded-full bg-black p-3.5 text-white transition hover:bg-neutral-800"
+                className="rounded-full bg-black p-3.5 text-white transition hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
               >
                 <ArrowRight className="h-4 w-4" />
               </button>
@@ -182,14 +182,14 @@ export default function Hero() {
 
         {/* Mobile slide controls with pearl dots */}
         <div className="mt-4 flex items-center justify-between sm:hidden">
-          <div className="flex items-center gap-2 rounded-full bg-[#F4F4F4] px-4 py-2.5">
+          <div className="flex items-center gap-2 rounded-full bg-[#F4F4F4] dark:bg-white/[0.07] px-4 py-2.5">
             {slides.map((s, i) => (
               <button
                 key={s.id}
                 onClick={() => setIndex(i)}
                 aria-label={`Slide ${i + 1}`}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  i === index ? 'w-6 bg-black' : 'w-2 bg-black/20'
+                  i === index ? 'w-6 bg-black dark:bg-white' : 'w-2 bg-black/20 dark:bg-white/20'
                 }`}
               />
             ))}
@@ -198,14 +198,14 @@ export default function Hero() {
             <button
               onClick={prev}
               aria-label="Previous"
-              className="rounded-full border border-black/15 bg-white p-3.5 transition active:bg-black active:text-white"
+              className="rounded-full border border-black/15 dark:border-white/15 bg-white dark:bg-[#101010] p-3.5 transition active:bg-black dark:active:bg-white active:text-white dark:active:text-black dark:active:bg-white dark:active:text-black"
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
             <button
               onClick={next}
               aria-label="Next"
-              className="rounded-full bg-black p-3.5 text-white transition active:bg-neutral-800"
+              className="rounded-full bg-black p-3.5 text-white transition active:bg-neutral-800 dark:bg-white dark:text-black"
             >
               <ArrowRight className="h-4 w-4" />
             </button>

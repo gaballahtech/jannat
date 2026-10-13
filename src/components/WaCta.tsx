@@ -96,7 +96,7 @@ export default function WaCta({
   };
 
   const input =
-    'w-full rounded-xl border border-black/15 bg-white px-4 py-3.5 text-[14px] outline-none placeholder:text-black/35 focus:border-black';
+    'w-full rounded-xl border border-black/15 bg-white px-4 py-3.5 text-[14px] outline-none placeholder:text-black/35 focus:border-black dark:border-white/15 dark:bg-[#101010] dark:placeholder:text-white/35 dark:focus:border-white';
 
   return (
     <>
@@ -120,11 +120,11 @@ export default function WaCta({
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 60, opacity: 0 }}
                 transition={{ type: 'tween', duration: 0.28 }}
-                className="pointer-events-auto w-full max-w-md rounded-t-[24px] bg-white p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:rounded-[24px] sm:p-8"
+                className="pointer-events-auto w-full max-w-md rounded-t-[24px] bg-white dark:bg-[#101010] p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:rounded-[24px] sm:p-8"
               >
                 <div className="flex items-center justify-between">
                   <h2 className="flex items-center gap-2 text-[13px] font-normal tracking-[0.2em]">
-                    <span className="grid h-9 w-9 place-items-center rounded-full bg-black text-white">
+                    <span className="grid h-9 w-9 place-items-center rounded-full bg-black text-white dark:bg-white dark:text-black">
                       <WhatsAppIcon className="h-4 w-4" />
                     </span>
                     {title}
@@ -132,14 +132,14 @@ export default function WaCta({
                   <button
                     onClick={() => setOpen(false)}
                     aria-label="Close"
-                    className="rounded-full p-2 hover:bg-black/5"
+                    className="rounded-full p-2 hover:bg-black/5 dark:hover:bg-white/10"
                   >
                     <X className="h-5 w-5" />
                   </button>
                 </div>
 
                 <div className="mt-6">
-                  <label className="mb-1.5 flex items-center gap-1.5 text-[11px] font-normal tracking-[0.2em] text-black/60">
+                  <label className="mb-1.5 flex items-center gap-1.5 text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                     <User className="h-3.5 w-3.5" /> YOUR NAME
                   </label>
                   <input
@@ -155,7 +155,7 @@ export default function WaCta({
                 {mode === 'full' && (
                   <>
                     <div className="mt-4">
-                      <label className="mb-1.5 flex items-center gap-1.5 text-[11px] font-normal tracking-[0.2em] text-black/60">
+                      <label className="mb-1.5 flex items-center gap-1.5 text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                         <MapPin className="h-3.5 w-3.5" /> GOVERNORATE
                       </label>
                       <Dropdown
@@ -174,7 +174,7 @@ export default function WaCta({
                       />
                     </div>
                     <div className="mt-4">
-                      <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">
+                      <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                         CITY
                       </label>
                       <Dropdown
@@ -186,13 +186,13 @@ export default function WaCta({
                         options={(govObj?.cities ?? []).map((c) => ({ value: c, label: c }))}
                       />
                       {!gov && (
-                        <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/40">
+                        <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/40 dark:text-white/40">
                           Pick a governorate first.
                         </p>
                       )}
                     </div>
                     <div className="mt-4">
-                      <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">
+                      <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                         EXACT ADDRESS
                       </label>
                       <input
@@ -211,11 +211,11 @@ export default function WaCta({
                 )}
                 <button
                   onClick={submit}
-                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800"
+                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
                 >
                   {submitLabel} <ArrowRight className="h-4 w-4" />
                 </button>
-                <p className="mt-3 text-center text-[11px] tracking-[0.06em] text-black/45">
+                <p className="mt-3 text-center text-[11px] tracking-[0.06em] text-black/45 dark:text-white/45">
                   No phone needed — WhatsApp already shows your number.
                 </p>
               </motion.div>

@@ -77,31 +77,33 @@ export function ConfirmHost() {
               role="alertdialog"
               aria-modal="true"
               aria-label={req.opts.title}
-              className="pointer-events-auto w-full max-w-sm rounded-[24px] bg-white p-6 text-center sm:p-7"
+              className="pointer-events-auto w-full max-w-sm rounded-[24px] bg-white dark:bg-[#101010] p-6 text-center sm:p-7"
             >
               <span
                 className={`mx-auto grid h-12 w-12 place-items-center rounded-full ${
-                  req.opts.danger ? 'bg-red-700 text-white' : 'bg-black text-white'
+                  req.opts.danger ? 'bg-red-700 text-white' : 'bg-black text-white dark:bg-white dark:text-black'
                 }`}
               >
                 <AlertTriangle className="h-5 w-5" />
               </span>
               <h2 className="font-display mt-4 text-2xl font-normal uppercase">{req.opts.title}</h2>
-              <p className="mt-2 text-[13px] leading-relaxed tracking-[0.04em] text-black/60">
+              <p className="mt-2 text-[13px] leading-relaxed tracking-[0.04em] text-black/60 dark:text-white/60">
                 {req.opts.message}
               </p>
               <div className="mt-6 flex gap-2.5">
                 <button
                   onClick={() => settle(false)}
-                  className="flex-1 rounded-full border border-black/20 py-3.5 text-[12px] font-normal tracking-[0.2em] transition hover:border-black"
+                  className="flex-1 rounded-full border border-black/20 dark:border-white/20 py-3.5 text-[12px] font-normal tracking-[0.2em] transition hover:border-black dark:hover:border-white"
                 >
                   CANCEL
                 </button>
                 <button
                   onClick={() => settle(true)}
                   autoFocus
-                  className={`flex-[2] rounded-full py-3.5 text-[12px] font-normal tracking-[0.2em] text-white transition ${
-                    req.opts.danger ? 'bg-red-700 hover:bg-red-800' : 'bg-black hover:bg-neutral-800'
+                  className={`flex-[2] rounded-full py-3.5 text-[12px] font-normal tracking-[0.2em] transition ${
+                    req.opts.danger
+                      ? 'bg-red-700 text-white hover:bg-red-800'
+                      : 'bg-black text-white hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200'
                   }`}
                 >
                   {req.opts.confirmLabel ?? 'CONFIRM'}

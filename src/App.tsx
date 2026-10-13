@@ -107,7 +107,7 @@ function Shell() {
   }, [route, products, cats]);
 
   return (
-    <div className="min-h-screen bg-white text-[#111111]">
+    <div className="min-h-screen bg-white text-[#111111] dark:bg-[#0b0b0b] dark:text-[#f2f2f2]">
       <AnnouncementBanner />
       <Header />
       {route.view === 'shop' ? (

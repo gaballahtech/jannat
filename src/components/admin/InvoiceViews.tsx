@@ -214,7 +214,7 @@ export function FitInvoice({ invoice }: { invoice: Invoice }) {
   return (
     <div
       ref={outer}
-      className="overflow-hidden rounded-2xl border border-black/10 bg-[#F8F8F8] py-6"
+      className="overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] py-6"
     >
       <div style={{ width: 640, margin: '0 auto', zoom: s }}>
         <InvoiceCard invoice={invoice} />

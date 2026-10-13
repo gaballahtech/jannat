@@ -1,11 +1,18 @@
 @import "tailwindcss";
 
+/* Automatic dark mode follows the OS setting (no in-app toggle).
+   Tailwind's `dark:` variant defaults to prefers-color-scheme. */
+
 @theme {
   --font-display: "Playfair Display", "Didot", Georgia, serif;
   --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
   --color-ink: #0a0a0a;
   --color-coal: #131313;
   --color-smoke: #6f6f6f;
+}
+
+:root {
+  color-scheme: light dark;
 }
 
 html {
@@ -21,9 +28,23 @@ body {
   overscroll-behavior-y: none;
 }
 
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0b0b0b;
+    color: #f2f2f2;
+  }
+}
+
 ::selection {
   background: #0a0a0a;
   color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  ::selection {
+    background: #f2f2f2;
+    color: #0a0a0a;
+  }
 }
 
 /* Mobile touch polish: no tap delay/zoom, no gray flash on iOS */

@@ -161,14 +161,14 @@ export default function ProductPage({ productId }: { productId: string }) {
     <>
       <section className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-10 lg:py-14">
         {/* breadcrumb */}
-        <div className="mb-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-normal tracking-[0.2em] text-black/50">
-          <a href="/shop" className="flex items-center gap-1.5 hover:text-black">
+        <div className="mb-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-normal tracking-[0.2em] text-black/50 dark:text-white/50">
+          <a href="/shop" className="flex items-center gap-1.5 hover:text-black dark:hover:text-white">
             <ArrowLeft className="h-3.5 w-3.5" /> SHOP
           </a>
           <span>/</span>
           <span className="uppercase">{product.category}</span>
           <span>/</span>
-          <span className="text-black">{product.name}</span>
+          <span className="text-black dark:text-[#f2f2f2]">{product.name}</span>
         </div>
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
@@ -179,7 +179,7 @@ export default function ProductPage({ productId }: { productId: string }) {
               initial={{ opacity: 0.4 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="relative overflow-hidden rounded-[20px] bg-[#F4F4F4] ring-1 ring-black/10"
+              className="relative overflow-hidden rounded-[20px] bg-[#F4F4F4] dark:bg-white/[0.07] ring-1 ring-black/10 dark:ring-white/10"
             >
               <img
                 src={variant.image}
@@ -195,7 +195,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                 <span
                   className={`absolute left-4 top-4 rounded-full px-4 py-1.5 text-[10px] font-normal tracking-[0.2em] ${
                     product.tag === 'NEW'
-                      ? 'bg-white text-black ring-1 ring-black/10'
+                      ? 'bg-white text-black ring-1 ring-black/10 dark:bg-white dark:text-black dark:ring-white/20'
                       : 'bg-black/85 text-white backdrop-blur'
                   }`}
                 >
@@ -211,8 +211,8 @@ export default function ProductPage({ productId }: { productId: string }) {
                   onClick={() => pickVariant(i)}
                   className={`relative overflow-hidden rounded-xl bg-[#F4F4F4] ring-1 transition ${
                     i === variantIdx
-                      ? 'ring-2 ring-black ring-offset-2'
-                      : 'opacity-70 ring-black/10 hover:opacity-100'
+                      ? 'ring-2 ring-black ring-offset-2 dark:ring-white dark:ring-offset-black'
+                      : 'opacity-70 ring-black/10 hover:opacity-100 dark:ring-white/10'
                   }`}
                   title={v.name}
                 >
@@ -239,7 +239,7 @@ export default function ProductPage({ productId }: { productId: string }) {
 
           {/* Info */}
           <div>
-            <p className="text-[11px] font-normal tracking-[0.3em] text-black/50">
+            <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">
               {product.category.toUpperCase()} — EGYPT
             </p>
             <div className="flex items-start justify-between gap-3">
@@ -251,7 +251,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                 aria-label={wished ? 'Remove from wishlist' : 'Save to wishlist'}
                 title={wished ? 'Saved — tap to remove' : 'Save for later'}
                 className={`mt-3 grid h-12 w-12 shrink-0 place-items-center rounded-full border transition active:scale-95 ${
-                  wished ? 'border-black bg-black text-white' : 'border-black/15 hover:border-black'
+                  wished ? 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black' : 'border-black/15 hover:border-black dark:border-white/15 dark:hover:border-white'
                 }`}
               >
                 <Heart className="h-5 w-5" fill={wished ? 'currentColor' : 'none'} />
@@ -259,21 +259,21 @@ export default function ProductPage({ productId }: { productId: string }) {
             </div>
             <p className="mt-4 text-xl font-normal tracking-wider">{formatEGP(product.price)}</p>
             {product.sold > 0 && (
-              <p className="mt-2 flex items-center gap-1.5 text-[11px] font-normal tracking-[0.2em] text-black/50">
+              <p className="mt-2 flex items-center gap-1.5 text-[11px] font-normal tracking-[0.2em] text-black/50 dark:text-white/50">
                 <Flame className="h-3.5 w-3.5" aria-hidden="true" /> {product.sold}+ SOLD
               </p>
             )}
-            <p className="mt-4 max-w-lg text-[14px] leading-relaxed tracking-wide text-black/60">
+            <p className="mt-4 max-w-lg text-[14px] leading-relaxed tracking-wide text-black/60 dark:text-white/60">
               {product.description}
             </p>
             {product.fabric && (
-              <p className="mt-2 text-[12px] tracking-[0.12em] text-black/45">{product.fabric}</p>
+              <p className="mt-2 text-[12px] tracking-[0.12em] text-black/45 dark:text-white/45">{product.fabric}</p>
             )}
 
             {/* Colors */}
             <div className="mt-8">
               <p className="text-[12px] font-normal tracking-[0.22em]">
-                COLOR — <span className="text-black/60">{variant.name.toUpperCase()}</span>
+                COLOR — <span className="text-black/60 dark:text-white/60">{variant.name.toUpperCase()}</span>
               </p>
               <div className="mt-3.5 flex flex-wrap gap-2.5">
                 {product.variants.map((v, i) => (
@@ -282,12 +282,12 @@ export default function ProductPage({ productId }: { productId: string }) {
                     onClick={() => pickVariant(i)}
                     className={`flex items-center gap-2 rounded-full border px-5 py-3 transition sm:py-2.5 ${
                       i === variantIdx
-                        ? 'border-black bg-black text-white'
-                        : 'border-black/15 bg-white hover:border-black'
+                        ? 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black'
+                        : 'border-black/15 bg-white hover:border-black dark:border-white/15 dark:bg-[#101010] dark:hover:border-white'
                     } text-[11px] font-normal tracking-[0.15em]`}
                   >
                     <span
-                      className="h-3.5 w-3.5 rounded-full ring-1 ring-black/25"
+                      className="h-3.5 w-3.5 rounded-full ring-1 ring-black/25 dark:ring-white/25"
                       style={{ background: v.hex }}
                     />
                     {v.name.toUpperCase()}
@@ -303,7 +303,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                 {!oneSizeOnly && (
                   <button
                     onClick={() => setFinderOpen(true)}
-                    className="flex items-center gap-1.5 rounded-full border border-black/20 px-4 py-2 text-[11px] font-normal tracking-[0.15em] transition hover:border-black hover:bg-black hover:text-white"
+                    className="flex items-center gap-1.5 rounded-full border border-black/20 dark:border-white/20 px-4 py-2 text-[11px] font-normal tracking-[0.15em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
                   >
                     <Ruler className="h-3.5 w-3.5" /> FIND MY SIZE
                   </button>
@@ -321,10 +321,10 @@ export default function ProductPage({ productId }: { productId: string }) {
                       title={gone ? `${s} — sold out in ${variant.name}` : `${left} left in ${s}`}
                       className={`relative h-12 min-w-14 rounded-xl border px-3 text-[13px] font-normal transition active:scale-95 ${
                         size === s
-                          ? 'border-black bg-black text-white'
+                          ? 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black'
                           : gone
-                            ? 'cursor-not-allowed border-black/10 text-black/25 line-through'
-                            : 'border-black/15 hover:border-black'
+                            ? 'cursor-not-allowed border-black/10 text-black/25 line-through dark:border-white/10 dark:text-white/25'
+                            : 'border-black/15 hover:border-black dark:border-white/15 dark:hover:border-white'
                       }`}
                     >
                       {s}
@@ -340,19 +340,19 @@ export default function ProductPage({ productId }: { productId: string }) {
                   }
                   title="SIZE HELP"
                   submitLabel="ASK ON WHATSAPP"
-                  className="inline-flex items-center gap-1.5 text-[11px] font-normal tracking-[0.15em] text-black/60 underline-offset-4 hover:text-black hover:underline"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-normal tracking-[0.15em] text-black/60 dark:text-white/60 underline-offset-4 hover:text-black dark:hover:text-white hover:underline"
                 >
                   <MessageCircle className="h-3.5 w-3.5" />
                   BETWEEN SIZES? WE HELP YOU PICK ON WHATSAPP
                 </WaCta>
                 {lowCell && (
-                  <p className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-1.5 text-[10px] font-normal tracking-[0.2em] text-white">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+                  <p className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-1.5 text-[10px] font-normal tracking-[0.2em] text-white dark:bg-white dark:text-black">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white dark:bg-[#101010]" />
                     ONLY {cell} LEFT IN {variant.name.toUpperCase()} / {size}
                   </p>
                 )}
                 {comboGone && (
-                  <p className="inline-flex items-center gap-2 rounded-full border border-black/20 px-4 py-1.5 text-[10px] font-normal tracking-[0.2em] text-black/60">
+                  <p className="inline-flex items-center gap-2 rounded-full border border-black/20 dark:border-white/20 px-4 py-1.5 text-[10px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                     SOLD OUT IN {variant.name.toUpperCase()} / {size} — PICK ANOTHER SIZE
                   </p>
                 )}
@@ -361,10 +361,10 @@ export default function ProductPage({ productId }: { productId: string }) {
 
             {/* Qty + Add */}
             <div className="mt-8 flex gap-3">
-              <div className="flex shrink-0 items-center rounded-full border border-black/20">
+              <div className="flex shrink-0 items-center rounded-full border border-black/20 dark:border-white/20">
                 <button
                   onClick={() => setQtyLocal((q) => Math.max(1, q - 1))}
-                  className="p-4 hover:bg-black/5 active:bg-black/10 sm:p-3.5"
+                  className="p-4 hover:bg-black/5 dark:hover:bg-white/10 active:bg-black/10 dark:active:bg-white/15 sm:p-3.5"
                   aria-label="Decrease"
                 >
                   <Minus className="h-4 w-4" />
@@ -372,7 +372,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                 <span className="w-8 text-center font-normal">{qty}</span>
                 <button
                   onClick={() => setQtyLocal((q) => Math.min(maxQty, q + 1))}
-                  className="p-4 hover:bg-black/5 active:bg-black/10 sm:p-3.5"
+                  className="p-4 hover:bg-black/5 dark:hover:bg-white/10 active:bg-black/10 dark:active:bg-white/15 sm:p-3.5"
                   aria-label="Increase"
                 >
                   <Plus className="h-4 w-4" />
@@ -385,7 +385,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                   openCart();
                 }}
                 disabled={outOfStock || comboGone}
-                className="min-w-0 flex-1 rounded-full bg-black px-2 py-3.5 text-[11px] font-normal tracking-[0.14em] text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-black sm:text-[12px] sm:tracking-[0.22em]"
+                className="min-w-0 flex-1 rounded-full bg-black px-2 py-3.5 text-[11px] font-normal tracking-[0.14em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-black sm:text-[12px] sm:tracking-[0.22em] dark:bg-white dark:text-black"
               >
                 {outOfStock
                   ? 'SOLD OUT'
@@ -402,7 +402,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                 }
                 title="RESTOCK ALERT"
                 submitLabel="NOTIFY ME"
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border-2 border-black bg-transparent py-4 text-[12px] font-normal tracking-[0.22em] text-black transition hover:border-[#25D366] hover:bg-[#25D366] hover:text-white"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border-2 border-black dark:border-white bg-transparent py-4 text-[12px] font-normal tracking-[0.22em] text-black dark:text-[#f2f2f2] transition hover:border-[#25D366] hover:bg-[#25D366] hover:text-white dark:hover:text-black"
               >
                 <WhatsAppIcon className="h-4 w-4" />
                 ASK ABOUT RESTOCK
@@ -422,7 +422,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                 ]}
                 title="DELIVERY DETAILS"
                 submitLabel="SEND ORDER ON WHATSAPP"
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border-2 border-black bg-transparent py-4 text-[12px] font-normal tracking-[0.22em] text-black transition hover:border-[#25D366] hover:bg-[#25D366] hover:text-white"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border-2 border-black dark:border-white bg-transparent py-4 text-[12px] font-normal tracking-[0.22em] text-black dark:text-[#f2f2f2] transition hover:border-[#25D366] hover:bg-[#25D366] hover:text-white dark:hover:text-black"
               >
                 <WhatsAppIcon className="h-4 w-4" />
                 ORDER NOW ON WHATSAPP
@@ -430,20 +430,20 @@ export default function ProductPage({ productId }: { productId: string }) {
               </WaCta>
             )}
             {promo.enabled && promo.percent > 0 && (
-              <p className="mt-3 rounded-xl border border-black/10 bg-[#F8F8F8] px-3 py-3 text-center text-[11px] tracking-[0.12em] text-black/60">
-                Got a promo code? Mention <span className="font-normal text-black">{promo.code}</span> on
-                WhatsApp for <span className="font-normal text-black">{promo.percent}% off</span>.
+              <p className="mt-3 rounded-xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] px-3 py-3 text-center text-[11px] tracking-[0.12em] text-black/60 dark:text-white/60">
+                Got a promo code? Mention <span className="font-normal text-black dark:text-[#f2f2f2]">{promo.code}</span> on
+                WhatsApp for <span className="font-normal text-black dark:text-[#f2f2f2]">{promo.percent}% off</span>.
               </p>
             )}
 
             {/* perks */}
-            <div className="mt-7 space-y-2.5 border-t border-black/10 pt-6 text-[12px] tracking-[0.1em] text-black/60">
+            <div className="mt-7 space-y-2.5 border-t border-black/10 dark:border-white/10 pt-6 text-[12px] tracking-[0.1em] text-black/60 dark:text-white/60">
               <p className="flex items-center gap-2.5">
-                <Truck className="h-4 w-4 text-black" /> Delivery to all governorates —{' '}
+                <Truck className="h-4 w-4 text-black dark:text-[#f2f2f2]" /> Delivery to all governorates —{' '}
                 {formatEGP(shippingFee)} flat · within a week
               </p>
               <p className="flex items-center gap-2.5">
-                <Check className="h-4 w-4 text-black" /> Online payment — confirmed on WhatsApp
+                <Check className="h-4 w-4 text-black dark:text-[#f2f2f2]" /> Online payment — confirmed on WhatsApp
               </p>
             </div>
           </div>
@@ -453,15 +453,15 @@ export default function ProductPage({ productId }: { productId: string }) {
             Only renders when at least one pairing is live AND the current
             combo is available (otherwise the box would promise the impossible). */}
         {bundleItems.length > 0 && !outOfStock && !comboGone && (
-          <div className="mt-16 rounded-[20px] border border-black/10 bg-[#F8F8F8] p-5 sm:p-8">
-          <p className="text-[11px] font-normal tracking-[0.3em] text-black/50">ONE-CLICK BUNDLE</p>
+          <div className="mt-16 rounded-[20px] border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] p-5 sm:p-8">
+          <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">ONE-CLICK BUNDLE</p>
           <h2 className="font-display mt-2 text-2xl font-normal uppercase tracking-tight sm:text-3xl">
             Complete the look
           </h2>
           <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {/* This product — always included, with your current picks */}
-            <div className="flex items-center gap-3 rounded-xl border border-black bg-white p-3">
-              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-black bg-black text-white">
+            <div className="flex items-center gap-3 rounded-xl border border-black dark:border-white bg-white dark:bg-[#101010] p-3">
+              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full border border-black dark:border-white bg-black text-white dark:bg-white dark:text-black">
                 <Check className="h-3.5 w-3.5" />
               </span>
               <img
@@ -477,9 +477,9 @@ export default function ProductPage({ productId }: { productId: string }) {
               />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[12px] font-normal tracking-[0.12em]">
-                  {product.name} <span className="text-black/45">(THIS ITEM)</span>
+                  {product.name} <span className="text-black/45 dark:text-white/45">(THIS ITEM)</span>
                 </span>
-                <span className="text-[12px] tracking-wider text-black/55">
+                <span className="text-[12px] tracking-wider text-black/55 dark:text-white/55">
                   {formatEGP(product.price)} · {variant.name} / {size} × {qty}
                 </span>
               </span>
@@ -527,11 +527,11 @@ export default function ProductPage({ productId }: { productId: string }) {
                       <span className="block truncate text-[12px] font-normal tracking-[0.12em] underline-offset-4 hover:underline">
                         {b.product.name}
                       </span>
-                      <span className="text-[12px] tracking-wider text-black/55">
+                      <span className="text-[12px] tracking-wider text-black/55 dark:text-white/55">
                         {formatEGP(b.product.price)} · {b.variant} / {b.size}
                       </span>
                     </span>
-                    <ArrowRight className="h-4 w-4 shrink-0 text-black/35" />
+                    <ArrowRight className="h-4 w-4 shrink-0 text-black/35 dark:text-white/35" />
                   </a>
                 </div>
               );
@@ -539,7 +539,7 @@ export default function ProductPage({ productId }: { productId: string }) {
           </div>
           <button
             onClick={addBundle}
-            className="mt-4 w-full rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800"
+            className="mt-4 w-full rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
           >
             {`ADD ${bundleCount} ITEM${bundleCount > 1 ? 'S' : ''} — ${formatEGP(bundleTotal)}`}
           </button>
@@ -583,7 +583,7 @@ export default function ProductPage({ productId }: { productId: string }) {
             animate={{ y: 0 }}
             exit={{ y: 90 }}
             transition={{ type: 'tween', duration: 0.25 }}
-            className="fixed inset-x-0 bottom-0 z-40 rounded-t-[20px] border-t border-black/10 bg-white/97 pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.3)] backdrop-blur lg:hidden"
+            className="fixed inset-x-0 bottom-0 z-40 rounded-t-[20px] border-t border-black/10 dark:border-white/10 bg-white/97 dark:bg-[#0b0b0b]/97 pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.3)] backdrop-blur lg:hidden"
           >
             <div className="flex items-center gap-3 px-4 py-3">
               <img
@@ -599,7 +599,7 @@ export default function ProductPage({ productId }: { productId: string }) {
               />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[11px] font-normal tracking-[0.12em]">{product.name}</p>
-                <p className="text-[11px] tracking-wider text-black/55">
+                <p className="text-[11px] tracking-wider text-black/55 dark:text-white/55">
                   {variant.name} · {size} · {formatEGP(product.price * qty)}
                 </p>
               </div>
@@ -608,7 +608,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                   add(product, variant.name, size, qty);
                   openCart();
                 }}
-                className="shrink-0 rounded-full bg-black px-7 py-3.5 text-[11px] font-normal tracking-[0.2em] text-white transition active:bg-neutral-800"
+                className="shrink-0 rounded-full bg-black px-7 py-3.5 text-[11px] font-normal tracking-[0.2em] text-white transition active:bg-neutral-800 dark:bg-white dark:text-black"
               >
                 ADD +
               </button>

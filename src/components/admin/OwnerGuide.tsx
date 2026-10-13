@@ -8,12 +8,12 @@ export default function OwnerGuide() {
     ['4', 'Export a backup regularly — Overview → Backup. Data lives in this browser until the database is connected.'],
   ];
   return (
-    <div className="rounded-2xl border border-black/10 bg-[#F8F8F8] p-5 sm:p-6">
-      <p className="text-[11px] font-normal tracking-[0.24em] text-black/50">HOW TO RUN YOUR STORE</p>
+    <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] p-5 sm:p-6">
+      <p className="text-[11px] font-normal tracking-[0.24em] text-black/50 dark:text-white/50">HOW TO RUN YOUR STORE</p>
       <ol className="mt-3 space-y-2.5">
         {steps.map(([n, text]) => (
-          <li key={n} className="flex items-start gap-3 text-[13px] leading-relaxed text-black/70">
-            <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-black text-[11px] text-white">
+          <li key={n} className="flex items-start gap-3 text-[13px] leading-relaxed text-black/70 dark:text-white/70">
+            <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-black text-[11px] text-white dark:bg-white dark:text-black">
               {n}
             </span>
             <span>{text}</span>

@@ -280,8 +280,8 @@ function ProductEditor({
   };
 
   const input =
-    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black sm:text-[13px]';
-  const label = 'mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60';
+    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black dark:border-white/15 dark:bg-[#101010] dark:placeholder:text-white/35 dark:focus:border-white sm:text-[13px]';
+  const label = 'mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60';
 
   return (
     <div className="fixed inset-0 z-[70] flex items-end justify-center bg-black/60 p-0 backdrop-blur-[2px] sm:items-center sm:p-6">
@@ -290,20 +290,20 @@ function ProductEditor({
         role="dialog"
         aria-modal="true"
         aria-label={f.id ? 'Edit product' : 'New product'}
-        className="max-h-[92dvh] w-full max-w-3xl overflow-y-auto rounded-t-[24px] bg-white p-6 sm:rounded-[24px] sm:p-8"
+        className="max-h-[92dvh] w-full max-w-3xl overflow-y-auto rounded-t-[24px] bg-white dark:bg-[#101010] p-6 sm:rounded-[24px] sm:p-8"
       >
         <div className="flex items-center justify-between">
           <h2 className="font-display text-2xl font-normal uppercase">
             {f.id ? 'Edit product' : 'New product'}
           </h2>
-          <button onClick={onClose} aria-label="Close" className="rounded-full p-2.5 hover:bg-black/5">
+          <button onClick={onClose} aria-label="Close" className="rounded-full p-2.5 hover:bg-black/5 dark:hover:bg-white/10">
             <X className="h-5 w-5" />
           </button>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <p className="-mb-1 flex items-center gap-2.5 text-[12px] font-normal tracking-[0.22em] sm:col-span-2">
-            <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white">1</span>
+            <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white dark:bg-white dark:text-black">1</span>
             BASIC INFO — NAME, PRICE & DETAILS
           </p>
           <div className="sm:col-span-2">
@@ -330,7 +330,7 @@ function ProductEditor({
           </div>
           <div className="sm:col-span-2">
             <label className={label}>
-              <span className="mr-2 inline-grid h-5 w-5 place-items-center rounded-full bg-black align-middle text-[10px] text-white">3</span>
+              <span className="mr-2 inline-grid h-5 w-5 place-items-center rounded-full bg-black align-middle text-[10px] text-white dark:bg-white dark:text-black">3</span>
               SIZES YOU HAVE — TAP TO TOGGLE
             </label>
             <div className="flex flex-wrap gap-2">
@@ -347,8 +347,8 @@ function ProductEditor({
                     }
                     className={`rounded-full border px-5 py-2.5 text-[11px] font-normal tracking-[0.12em] transition active:scale-95 ${
                       on
-                        ? 'border-black bg-black text-white'
-                        : 'border-black/15 bg-white hover:border-black'
+                ? 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black'
+                : 'border-black/15 bg-white hover:border-black dark:border-white/15 dark:bg-[#101010] dark:hover:border-white'
                     }`}
                   >
                     {s}
@@ -389,30 +389,30 @@ function ProductEditor({
         {/* variants */}
         <div className="mt-6">
           <div className="flex items-center justify-between">
-            <p className="flex items-center gap-2.5 text-[11px] font-normal tracking-[0.2em] text-black/60">
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white">2</span>
+            <p className="flex items-center gap-2.5 text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white dark:bg-white dark:text-black">2</span>
               COLORS & PHOTOS ({f.variants.length})
             </p>
             <button
               onClick={() => set({ variants: [...f.variants, { ...blankVariant(), _file: null, _preview: '', _key: uid() }] })}
-              className="flex items-center gap-1.5 rounded-full border border-black/20 px-4 py-2 text-[11px] font-normal tracking-[0.15em] transition hover:border-black hover:bg-black hover:text-white"
+              className="flex items-center gap-1.5 rounded-full border border-black/20 dark:border-white/20 px-4 py-2 text-[11px] font-normal tracking-[0.15em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
             >
               <Plus className="h-3.5 w-3.5" /> ADD COLOR
             </button>
           </div>
-          <p className="mt-2 text-[11px] tracking-[0.08em] text-black/45">
+          <p className="mt-2 text-[11px] tracking-[0.08em] text-black/45 dark:text-white/45">
             {cloudinaryConfigured()
               ? 'Photos upload to Cloudinary (compressed WebP, shared on all devices).'
               : 'Cloudinary not set — photos stay on this device only. Add VITE_CLOUDINARY_* in .env.'}
           </p>
           <div className="mt-3 space-y-3">
             {f.variants.map((v) => (
-              <div key={v._key} className="flex gap-3 rounded-2xl border border-black/10 bg-[#F8F8F8] p-3">
-                <div className="h-24 w-20 shrink-0 overflow-hidden rounded-xl bg-[#e8e8e8]">
+              <div key={v._key} className="flex gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] p-3">
+                <div className="h-24 w-20 shrink-0 overflow-hidden rounded-xl bg-[#e8e8e8] dark:bg-white/10">
                   {v._preview ? (
                     <img src={v._preview} alt={v.name} className="h-full w-full object-cover" />
                   ) : (
-                    <span className="grid h-full w-full place-items-center text-black/30">
+                    <span className="grid h-full w-full place-items-center text-black/30 dark:text-white/30">
                       <ImagePlus className="h-6 w-6" />
                     </span>
                   )}
@@ -433,11 +433,11 @@ function ProductEditor({
                       onChange={(e) =>
                         set({ variants: f.variants.map((x) => (x._key === v._key ? { ...x, hex: e.target.value } : x)) })
                       }
-                      className="h-10 w-12 shrink-0 cursor-pointer rounded-lg border border-black/15 bg-white p-1"
+                      className="h-10 w-12 shrink-0 cursor-pointer rounded-lg border border-black/15 dark:border-white/15 bg-white dark:bg-[#101010] p-1"
                       title="Swatch color"
                     />
                   </div>
-                  <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-black/25 bg-white px-3 py-2.5 text-[11px] font-normal tracking-[0.12em] text-black/60 transition hover:border-black hover:text-black">
+                  <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-black/25 dark:border-white/25 bg-white dark:bg-[#101010] px-3 py-2.5 text-[11px] font-normal tracking-[0.12em] text-black/60 dark:text-white/60 transition hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white">
                     <ImagePlus className="h-4 w-4" />
                     {v._preview ? 'CHANGE PHOTO' : 'UPLOAD PHOTO'}
                     <input
@@ -452,7 +452,7 @@ function ProductEditor({
                   <button
                     onClick={() => set({ variants: f.variants.filter((x) => x._key !== v._key) })}
                     aria-label="Remove color"
-                    className="self-start rounded-full p-2 text-black/40 hover:bg-black/5 hover:text-black"
+                    className="self-start rounded-full p-2 text-black/40 dark:text-white/40 hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -465,24 +465,24 @@ function ProductEditor({
         {/* Stock matrix: exact pieces per color × size */}
         <div className="mt-6">
           <div className="flex items-center justify-between gap-2">
-            <p className="flex items-center gap-2.5 text-[11px] font-normal tracking-[0.2em] text-black/60">
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white">4</span>
+            <p className="flex items-center gap-2.5 text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white dark:bg-white dark:text-black">4</span>
               HOW MANY PIECES OF EACH?
             </p>
-            <span className="rounded-full bg-black px-4 py-1.5 text-[10px] font-normal tracking-[0.15em] text-white">
+            <span className="rounded-full bg-black px-4 py-1.5 text-[10px] font-normal tracking-[0.15em] text-white dark:bg-white dark:text-black">
               TOTAL {matrixTotal(f)}
             </span>
           </div>
           {f.sizes.length === 0 || f.variants.length === 0 ? (
-            <p className="mt-3 rounded-xl bg-[#F8F8F8] px-4 py-3 text-[12px] tracking-[0.06em] text-black/50">
+            <p className="mt-3 rounded-xl bg-[#F8F8F8] dark:bg-white/[0.05] px-4 py-3 text-[12px] tracking-[0.06em] text-black/50 dark:text-white/50">
               Pick sizes above and add at least one color to fill the stock table.
             </p>
           ) : (
-            <div className="no-scrollbar mt-3 overflow-x-auto rounded-2xl border border-black/10">
-              <table className="w-full min-w-[420px] border-collapse bg-white text-center">
+            <div className="no-scrollbar mt-3 overflow-x-auto rounded-2xl border border-black/10 dark:border-white/10">
+              <table className="w-full min-w-[420px] border-collapse bg-white dark:bg-[#101010] text-center">
                 <thead>
-                  <tr className="bg-[#F8F8F8]">
-                    <th className="sticky left-0 bg-[#F8F8F8] px-3 py-2.5 text-left text-[10px] font-normal tracking-[0.15em] text-black/50">
+                  <tr className="bg-[#F8F8F8] dark:bg-white/[0.05]">
+                    <th className="sticky left-0 bg-[#F8F8F8] dark:bg-white/[0.05] px-3 py-2.5 text-left text-[10px] font-normal tracking-[0.15em] text-black/50 dark:text-white/50">
                       COLOR ↓ · SIZE →
                     </th>
                     {f.sizes.map((s) => (
@@ -490,7 +490,7 @@ function ProductEditor({
                         {s}
                       </th>
                     ))}
-                    <th className="px-2 py-2.5 text-[10px] font-normal tracking-[0.12em] text-black/50">
+                    <th className="px-2 py-2.5 text-[10px] font-normal tracking-[0.12em] text-black/50 dark:text-white/50">
                       ROW
                     </th>
                   </tr>
@@ -502,11 +502,11 @@ function ProductEditor({
                       0,
                     );
                     return (
-                      <tr key={v._key} className="border-t border-black/10">
-                        <td className="sticky left-0 max-w-[110px] bg-white px-3 py-2 text-left">
+                      <tr key={v._key} className="border-t border-black/10 dark:border-white/10">
+                        <td className="sticky left-0 max-w-[110px] bg-white dark:bg-[#101010] px-3 py-2 text-left">
                           <span className="flex items-center gap-1.5 text-[11px] font-normal tracking-[0.08em]">
                             <span
-                              className="h-3 w-3 shrink-0 rounded-full ring-1 ring-black/25"
+                              className="h-3 w-3 shrink-0 rounded-full ring-1 ring-black/25 dark:ring-white/25"
                               style={{ background: v.hex }}
                             />
                             <span className="truncate">{v.name.trim().toUpperCase() || '—'}</span>
@@ -525,7 +525,7 @@ function ProductEditor({
                               }}
                               inputMode="numeric"
                               aria-label={`${v.name.trim() || 'color'} size ${s} pieces`}
-                              className="w-16 rounded-lg border border-black/15 bg-[#F8F8F8] py-3 text-center text-[16px] font-normal outline-none focus:border-black focus:bg-white sm:w-14 sm:py-2 sm:text-[13px]"
+                              className="w-16 rounded-lg border border-black/15 dark:border-white/15 bg-[#F8F8F8] dark:bg-white/[0.05] py-3 text-center text-[16px] font-normal outline-none focus:border-black dark:focus:border-white focus:bg-white sm:w-14 sm:py-2 sm:text-[13px]"
                             />
                           </td>
                         ))}
@@ -537,7 +537,7 @@ function ProductEditor({
               </table>
             </div>
           )}
-          <p className="mt-2 text-[11px] tracking-[0.06em] text-black/45">
+          <p className="mt-2 text-[11px] tracking-[0.06em] text-black/45 dark:text-white/45">
             Write how many pieces you have of each color in each size. Total updates by itself.
             {f.origStock > matrixTotal(f) && (
               <span className="font-normal text-red-700">
@@ -551,8 +551,8 @@ function ProductEditor({
 
         {/* Complete-the-look pairings: hand-picked, max 2 */}
         <div className="mt-6">
-          <p className="flex items-center gap-2.5 text-[11px] font-normal tracking-[0.2em] text-black/60">
-            <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white">5</span>
+          <p className="flex items-center gap-2.5 text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
+            <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white dark:bg-white dark:text-black">5</span>
             GOES WELL WITH — PICK UP TO 2 ({f.pairs.length}/2)
           </p>
           <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -571,17 +571,17 @@ function ProductEditor({
                         pairs: on ? f.pairs.filter((x) => x !== p.id) : [...f.pairs, p.id].slice(0, 2),
                       })
                     }
-                    className={`flex items-center gap-3 rounded-xl border bg-white p-2.5 text-left transition active:scale-[0.99] ${
+                    className={`flex items-center gap-3 rounded-xl border bg-white p-2.5 text-left transition active:scale-[0.99] dark:bg-[#101010] ${
                       on
-                        ? 'border-black'
+                        ? 'border-black dark:border-white'
                         : full
-                          ? 'border-black/10 hover:border-black'
-                          : 'cursor-not-allowed border-black/10 opacity-40'
+                          ? 'border-black/10 hover:border-black dark:border-white/10 dark:hover:border-white'
+                          : 'cursor-not-allowed border-black/10 opacity-40 dark:border-white/10'
                     }`}
                   >
                     <span
                       className={`grid h-6 w-6 shrink-0 place-items-center rounded-full border transition ${
-                        on ? 'border-black bg-black text-white' : 'border-black/25 text-transparent'
+                        on ? 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black' : 'border-black/25 text-transparent dark:border-white/25'
                       }`}
                     >
                       <Check className="h-3.5 w-3.5" />
@@ -597,7 +597,7 @@ function ProductEditor({
                       <span className="block truncate text-[12px] font-normal tracking-[0.08em]">
                         {p.name}
                       </span>
-                      <span className="text-[11px] tracking-wider text-black/50">
+                      <span className="text-[11px] tracking-wider text-black/50 dark:text-white/50">
                         {formatEGP(p.price)} · {p.stock > 0 ? `${p.stock} in stock` : 'sold out'}
                       </span>
                     </span>
@@ -605,7 +605,7 @@ function ProductEditor({
                 );
               })}
           </div>
-          <p className="mt-2 text-[11px] tracking-[0.06em] text-black/45">
+          <p className="mt-2 text-[11px] tracking-[0.06em] text-black/45 dark:text-white/45">
             Shown on this product's page. Sold-out or deleted picks hide automatically — if none
             are available, the whole section hides itself.
           </p>
@@ -615,14 +615,14 @@ function ProductEditor({
         <div className="mt-6 flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 rounded-full border border-black/20 py-4 text-[12px] font-normal tracking-[0.2em] transition hover:border-black"
+            className="flex-1 rounded-full border border-black/20 dark:border-white/20 py-4 text-[12px] font-normal tracking-[0.2em] transition hover:border-black dark:hover:border-white"
           >
             CANCEL
           </button>
           <button
             onClick={save}
             disabled={saving}
-            className="flex-[2] rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 disabled:opacity-50"
+            className="flex-[2] rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 dark:bg-white dark:text-black"
           >
             {saving ? 'SAVING…' : f.id ? 'SAVE CHANGES' : 'ADD PRODUCT'}
           </button>
@@ -700,7 +700,7 @@ export default function Admin() {
 
   if (server === 'checking') {
     return (
-      <p className="mx-auto max-w-md px-6 py-24 text-center text-[12px] tracking-[0.24em] text-black/50">
+      <p className="mx-auto max-w-md px-6 py-24 text-center text-[12px] tracking-[0.24em] text-black/50 dark:text-white/50">
         LOADING…
       </p>
     );
@@ -757,29 +757,29 @@ function Dashboard({ onLock }: { onLock: () => void }) {
       <ConfirmHost />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-[11px] font-normal tracking-[0.3em] text-black/50">PEARLIN · OWNER ONLY</p>
+          <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">PEARLIN · OWNER ONLY</p>
           <h1 className="font-display mt-1 text-4xl font-normal uppercase sm:text-5xl">Dashboard</h1>
-          <p className="mt-1.5 text-[13px] tracking-[0.04em] text-black/50">
+          <p className="mt-1.5 text-[13px] tracking-[0.04em] text-black/50 dark:text-white/50">
             Everything for your store, in one place — no code needed.
           </p>
         </div>
         <div className="flex gap-2">
           <a
             href="/"
-            className="rounded-full border border-black/20 px-5 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black"
+            className="rounded-full border border-black/20 dark:border-white/20 px-5 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black dark:hover:border-white"
           >
             VIEW STORE
           </a>
           <button
             onClick={onLock}
-            className="rounded-full bg-black px-5 py-2.5 text-[11px] font-normal tracking-[0.18em] text-white transition hover:bg-neutral-800"
+            className="rounded-full bg-black px-5 py-2.5 text-[11px] font-normal tracking-[0.18em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
           >
             LOCK
           </button>
         </div>
       </div>
 
-      <div className="no-scrollbar mt-7 flex gap-2.5 overflow-x-auto border-y border-black/10 py-4">
+      <div className="no-scrollbar mt-7 flex gap-2.5 overflow-x-auto border-y border-black/10 dark:border-white/10 py-4">
         {TABS.map(([id, label]) => (
           <a
             key={id}
@@ -789,7 +789,7 @@ function Dashboard({ onLock }: { onLock: () => void }) {
               goTab(id);
             }}
             className={`whitespace-nowrap rounded-full px-6 py-3 text-[11px] font-normal tracking-[0.2em] transition ${
-              tab === id ? 'bg-black text-white' : 'bg-[#F4F4F4] hover:bg-black hover:text-white'
+              tab === id ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-[#F4F4F4] hover:bg-black hover:text-white dark:bg-white/[0.07] dark:hover:bg-white dark:hover:text-black'
             }`}
           >
             {label}
@@ -929,7 +929,7 @@ function OverviewTab({
               requestAdminIntent({ action: 'new-invoice' });
               goTab('invoices');
             }}
-            className="flex items-center justify-center gap-2.5 rounded-2xl bg-black py-5 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800"
+            className="flex items-center justify-center gap-2.5 rounded-2xl bg-black py-5 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
           >
             <Receipt className="h-5 w-5" /> NEW INVOICE
           </button>
@@ -938,7 +938,7 @@ function OverviewTab({
               requestAdminIntent({ action: 'new-product' });
               goTab('products');
             }}
-            className="flex items-center justify-center gap-2.5 rounded-2xl border-2 border-dashed border-black/25 py-5 text-[12px] font-normal tracking-[0.22em] transition hover:border-black hover:bg-black hover:text-white"
+            className="flex items-center justify-center gap-2.5 rounded-2xl border-2 border-dashed border-black/25 dark:border-white/25 py-5 text-[12px] font-normal tracking-[0.22em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
           >
             <Plus className="h-5 w-5" /> ADD PRODUCT
           </button>
@@ -954,22 +954,22 @@ function OverviewTab({
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div className="rounded-2xl border border-black/10 p-5 sm:p-6">
+        <div className="rounded-2xl border border-black/10 dark:border-white/10 p-5 sm:p-6">
           <h3 className="text-[12px] font-normal tracking-[0.22em]">
             RUNNING LOW ({low.length})
           </h3>
           {low.length === 0 ? (
-            <p className="mt-3 flex items-center gap-2 text-[13px] text-black/60">
+            <p className="mt-3 flex items-center gap-2 text-[13px] text-black/60 dark:text-white/60">
               <Check className="h-4 w-4" /> Everything is stocked up.
             </p>
           ) : (
             <ul className="mt-3 space-y-2.5">
               {low.map((p) => (
-                <li key={p.id} className="flex items-center gap-3 rounded-xl bg-[#F8F8F8] p-3">
+                <li key={p.id} className="flex items-center gap-3 rounded-xl bg-[#F8F8F8] dark:bg-white/[0.05] p-3">
                   <img src={p.variants[0]?.image} alt={p.name} className="h-12 w-10 rounded-lg object-cover" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-[12px] font-normal tracking-[0.1em]">{p.name}</p>
-                    <p className={`text-[11px] font-normal tracking-[0.12em] ${p.stock === 0 ? 'text-red-700' : 'text-black/55'}`}>
+                    <p className={`text-[11px] font-normal tracking-[0.12em] ${p.stock === 0 ? 'text-red-700' : 'text-black/55 dark:text-white/55'}`}>
                       {p.stock === 0 ? 'SOLD OUT' : `${p.stock} LEFT`}
                     </p>
                   </div>
@@ -978,7 +978,7 @@ function OverviewTab({
                       requestAdminIntent({ action: 'edit-product', id: p.id });
                       goTab('products');
                     }}
-                    className="rounded-full bg-black px-4 py-2 text-[10px] font-normal tracking-[0.15em] text-white transition hover:bg-neutral-800"
+                    className="rounded-full bg-black px-4 py-2 text-[10px] font-normal tracking-[0.15em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
                   >
                     MANAGE
                   </button>
@@ -988,7 +988,7 @@ function OverviewTab({
           )}
         </div>
 
-        <div className="rounded-2xl border border-black/10 p-5 sm:p-6">
+        <div className="rounded-2xl border border-black/10 dark:border-white/10 p-5 sm:p-6">
           <h3 className="text-[12px] font-normal tracking-[0.22em]">CHANGE PASSWORD</h3>
           <input
             value={pinA}
@@ -996,7 +996,7 @@ function OverviewTab({
             type="text"
             autoComplete="off"
             placeholder="Current password"
-            className="mt-3 w-full rounded-xl border border-black/15 px-4 py-3 text-[15px] font-normal tracking-[0.15em] outline-none focus:border-black"
+            className="mt-3 w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[15px] font-normal tracking-[0.15em] outline-none focus:border-black dark:focus:border-white"
           />
           <input
             value={pinB}
@@ -1004,36 +1004,36 @@ function OverviewTab({
             type="text"
             autoComplete="off"
             placeholder="New password"
-            className="mt-2.5 w-full rounded-xl border border-black/15 px-4 py-3 text-[15px] font-normal tracking-[0.15em] outline-none focus:border-black"
+            className="mt-2.5 w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[15px] font-normal tracking-[0.15em] outline-none focus:border-black dark:focus:border-white"
           />
-          {pinMsg && <p className="mt-2 text-[12px] font-normal text-black/60">{pinMsg}</p>}
+          {pinMsg && <p className="mt-2 text-[12px] font-normal text-black/60 dark:text-white/60">{pinMsg}</p>}
           <button
             onClick={changePin}
-            className="mt-3 w-full rounded-full border border-black/20 py-3 text-[11px] font-normal tracking-[0.2em] transition hover:border-black hover:bg-black hover:text-white"
+            className="mt-3 w-full rounded-full border border-black/20 dark:border-white/20 py-3 text-[11px] font-normal tracking-[0.2em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
           >
             UPDATE PASSWORD
           </button>
           <button
             onClick={() => void reloadStats()}
-            className="mt-2 w-full py-2 text-[11px] tracking-[0.15em] text-black/45 underline-offset-4 hover:text-black hover:underline"
+            className="mt-2 w-full py-2 text-[11px] tracking-[0.15em] text-black/45 dark:text-white/45 underline-offset-4 hover:text-black dark:hover:text-white hover:underline"
           >
             Refresh invoice stats
           </button>
         </div>
 
-        <div className="rounded-2xl border border-black/10 p-5 sm:p-6 lg:col-span-2">
+        <div className="rounded-2xl border border-black/10 dark:border-white/10 p-5 sm:p-6 lg:col-span-2">
           <h3 className="text-[12px] font-normal tracking-[0.22em]">BACKUP & RESTORE</h3>
-          <p className="mt-1.5 text-[12px] leading-relaxed tracking-[0.04em] text-black/55">
+          <p className="mt-1.5 text-[12px] leading-relaxed tracking-[0.04em] text-black/55 dark:text-white/55">
             {isServerOn()
               ? 'Data lives in the database — Neon keeps automatic backups. Export below downloads a live JSON snapshot for your own records.'
               : 'All dashboard data lives in this browser. Export a backup file regularly and keep a copy elsewhere — restores products, stock, photos, invoices and settings.'}
           </p>
-          {backupMsg && <p className="mt-2 text-[12px] font-normal text-black/70">{backupMsg}</p>}
+          {backupMsg && <p className="mt-2 text-[12px] font-normal text-black/70 dark:text-white/70">{backupMsg}</p>}
           <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
             <button
               onClick={doExportBackup}
               disabled={backupBusy}
-              className="flex flex-1 items-center justify-center gap-2 rounded-full bg-black py-3.5 text-[11px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 disabled:opacity-50"
+              className="flex flex-1 items-center justify-center gap-2 rounded-full bg-black py-3.5 text-[11px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 dark:bg-white dark:text-black"
             >
               <Download className="h-4 w-4" /> {backupBusy ? 'WORKING…' : 'EXPORT BACKUP'}
             </button>
@@ -1041,7 +1041,7 @@ function OverviewTab({
               <button
                 onClick={() => fileRef.current?.click()}
                 disabled={backupBusy}
-                className="flex-1 rounded-full border border-black/20 py-3.5 text-[11px] font-normal tracking-[0.2em] transition hover:border-black hover:bg-black hover:text-white disabled:opacity-50"
+                className="flex-1 rounded-full border border-black/20 dark:border-white/20 py-3.5 text-[11px] font-normal tracking-[0.2em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black disabled:opacity-50 dark:hover:bg-white dark:hover:text-black"
               >
                 RESTORE FROM FILE
               </button>
@@ -1056,44 +1056,44 @@ function OverviewTab({
           </div>
         </div>
 
-        <div className="rounded-2xl border border-black/10 p-5 sm:p-6 lg:col-span-2">
+        <div className="rounded-2xl border border-black/10 dark:border-white/10 p-5 sm:p-6 lg:col-span-2">
           <h3 className="text-[12px] font-normal tracking-[0.22em]">
             BUSINESS INFO — PRINTED ON EVERY INVOICE
           </h3>
           <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">ADDRESS</label>
+              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">ADDRESS</label>
               <input
                 value={biz.address}
                 onChange={(e) => setBiz({ ...biz, address: e.target.value })}
                 placeholder="Cairo, Egypt"
-                className="w-full rounded-xl border border-black/15 px-4 py-3 text-[13px] outline-none focus:border-black"
+                className="w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">
+              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                 DEFAULT PAYMENT METHOD
               </label>
               <input
                 value={biz.paymentDefault}
                 onChange={(e) => setBiz({ ...biz, paymentDefault: e.target.value })}
                 placeholder="Online transfer"
-                className="w-full rounded-xl border border-black/15 px-4 py-3 text-[13px] outline-none focus:border-black"
+                className="w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">
+              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                 TERMS LINE (INVOICE FOOTER)
               </label>
               <input
                 value={biz.terms}
                 onChange={(e) => setBiz({ ...biz, terms: e.target.value })}
                 placeholder="Payment due on receipt…"
-                className="w-full rounded-xl border border-black/15 px-4 py-3 text-[13px] outline-none focus:border-black"
+                className="w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">
+              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                 WHATSAPP NUMBER (ORDERS GO HERE)
               </label>
               <input
@@ -1101,44 +1101,44 @@ function OverviewTab({
                 onChange={(e) => setBiz({ ...biz, whatsapp: e.target.value.replace(/[^\d+\s]/g, '') })}
                 inputMode="tel"
                 placeholder="0120… or 20120…"
-                className="w-full rounded-xl border border-black/15 px-4 py-3 text-[13px] outline-none focus:border-black"
+                className="w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">
+              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                 INSTAGRAM URL
               </label>
               <input
                 value={biz.instagram}
                 onChange={(e) => setBiz({ ...biz, instagram: e.target.value })}
                 placeholder="https://instagram.com/…"
-                className="w-full rounded-xl border border-black/15 px-4 py-3 text-[13px] outline-none focus:border-black"
+                className="w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">
+              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                 TIKTOK URL
               </label>
               <input
                 value={biz.tiktok}
                 onChange={(e) => setBiz({ ...biz, tiktok: e.target.value })}
                 placeholder="https://tiktok.com/…"
-                className="w-full rounded-xl border border-black/15 px-4 py-3 text-[13px] outline-none focus:border-black"
+                className="w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">
+              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                 SHIPPING FEE (EGP, ALL GOVERNORATES)
               </label>
               <input
                 value={String(biz.shippingFee)}
                 onChange={(e) => setBiz({ ...biz, shippingFee: Number(onlyDigits(e.target.value)) || 0 })}
                 inputMode="numeric"
-                className="w-full rounded-xl border border-black/15 px-4 py-3 text-[13px] outline-none focus:border-black"
+                className="w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60">
+              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                 PROMO CODE
               </label>
               <div className="flex gap-2">
@@ -1146,9 +1146,9 @@ function OverviewTab({
                   value={biz.promoCode}
                   onChange={(e) => setBiz({ ...biz, promoCode: e.target.value.toUpperCase().slice(0, 16) })}
                   placeholder="PEARLIN10"
-                  className="min-w-0 flex-[2] rounded-xl border border-black/15 px-4 py-3 text-[13px] outline-none focus:border-black"
+                  className="min-w-0 flex-[2] rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
                 />
-                <div className="flex min-w-0 flex-1 items-center rounded-xl border border-black/15 bg-white px-3 transition focus-within:border-black">
+                <div className="flex min-w-0 flex-1 items-center rounded-xl border border-black/15 dark:border-white/15 bg-white dark:bg-[#101010] px-3 transition focus-within:border-black dark:focus-within:border-white">
                   <input
                     value={String(biz.promoPercent)}
                     onChange={(e) => setBiz({ ...biz, promoPercent: Number(onlyDigits(e.target.value, 3)) || 0 })}
@@ -1157,23 +1157,23 @@ function OverviewTab({
                     title="Discount percent — just type the number"
                     className="min-w-0 flex-1 bg-transparent py-3 text-center text-[13px] font-normal outline-none"
                   />
-                  <span className="shrink-0 text-[13px] font-normal text-black">%</span>
+                  <span className="shrink-0 text-[13px] font-normal text-black dark:text-[#f2f2f2]">%</span>
                 </div>
                 <button
                   onClick={() => setBiz({ ...biz, promoEnabled: !biz.promoEnabled })}
                   className={`shrink-0 rounded-full px-5 text-[11px] font-normal tracking-[0.15em] transition ${
-                    biz.promoEnabled ? 'bg-black text-white' : 'border border-black/20 text-black/50'
+                    biz.promoEnabled ? 'bg-black text-white dark:bg-white dark:text-black' : 'border border-black/20 text-black/50 dark:border-white/20 dark:text-white/50'
                   }`}
                 >
                   {biz.promoEnabled ? 'ON' : 'OFF'}
                 </button>
               </div>
-              <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/45">
+              <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/45 dark:text-white/45">
                 Shown on the site — you apply the discount manually on WhatsApp.
               </p>
             </div>
           </div>
-          {bizMsg && <p className="mt-2 text-[12px] font-normal text-black/60">{bizMsg}</p>}
+          {bizMsg && <p className="mt-2 text-[12px] font-normal text-black/60 dark:text-white/60">{bizMsg}</p>}
           <button
             onClick={async () => {
               const clean = { ...biz, whatsapp: normalizeWhatsapp(biz.whatsapp) };
@@ -1186,7 +1186,7 @@ function OverviewTab({
                 setBizMsg(e instanceof Error ? e.message : 'Save failed.');
               }
             }}
-            className="mt-3 w-full rounded-full bg-black py-3.5 text-[11px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 sm:w-auto sm:px-10"
+            className="mt-3 w-full rounded-full bg-black py-3.5 text-[11px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 sm:w-auto sm:px-10 dark:bg-white dark:text-black"
           >
             SAVE BUSINESS INFO
           </button>
@@ -1274,11 +1274,11 @@ function CategoriesTab({ products, refresh }: { products: Product[]; refresh: ()
           onChange={(e) => setNeu(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && doAdd()}
           placeholder="New category name (e.g. DRESSES)"
-          className="flex-1 rounded-2xl border border-black/15 px-5 py-4 text-[13px] font-normal tracking-[0.1em] outline-none placeholder:font-normal placeholder:text-black/35 focus:border-black"
+          className="flex-1 rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-[13px] font-normal tracking-[0.1em] outline-none placeholder:font-normal placeholder:text-black/35 focus:border-black dark:focus:border-white"
         />
         <button
           onClick={doAdd}
-          className="flex items-center justify-center gap-2 rounded-2xl bg-black px-8 py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800"
+          className="flex items-center justify-center gap-2 rounded-2xl bg-black px-8 py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
         >
           <Plus className="h-4 w-4" /> ADD
         </button>
@@ -1289,33 +1289,33 @@ function CategoriesTab({ products, refresh }: { products: Product[]; refresh: ()
         {cats.map((c) => (
           <li
             key={c.id}
-            className="flex flex-col gap-3 rounded-2xl border border-black/10 bg-white p-4 sm:flex-row sm:items-center sm:p-5"
+            className="flex flex-col gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#101010] p-4 sm:flex-row sm:items-center sm:p-5"
           >
             <div className="min-w-0 flex-1">
               <div className="flex gap-2">
                 <input
                   value={labels[c.id] ?? c.label}
                   onChange={(e) => setLabels((m) => ({ ...m, [c.id]: e.target.value.toUpperCase() }))}
-                  className="min-w-0 flex-1 rounded-xl border border-black/15 bg-[#F8F8F8] px-4 py-2.5 text-[13px] font-normal tracking-[0.1em] outline-none focus:border-black"
+                  className="min-w-0 flex-1 rounded-xl border border-black/15 dark:border-white/15 bg-[#F8F8F8] dark:bg-white/[0.05] px-4 py-2.5 text-[13px] font-normal tracking-[0.1em] outline-none focus:border-black dark:focus:border-white"
                 />
                 <button
                   onClick={() => doRename(c.id)}
                   disabled={(labels[c.id] ?? c.label) === c.label}
-                  className="shrink-0 rounded-full bg-black px-6 py-2.5 text-[11px] font-normal tracking-[0.18em] text-white transition hover:bg-neutral-800 disabled:opacity-30"
+                  className="shrink-0 rounded-full bg-black px-6 py-2.5 text-[11px] font-normal tracking-[0.18em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-30 dark:bg-white dark:text-black"
                 >
                   SAVE
                 </button>
               </div>
-              <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-[0.12em] text-black/45">
+              <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-[0.12em] text-black/45 dark:text-white/45">
                 <span>
-                  Link: <span className="font-normal text-black/70">/shop/{c.id}</span> ·{' '}
+                  Link: <span className="font-normal text-black/70 dark:text-white/70">/shop/{c.id}</span> ·{' '}
                   {counts[c.id] ?? 0} product{(counts[c.id] ?? 0) === 1 ? '' : 's'}
                 </span>
                 <a
                   href={`/shop/${c.id}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 font-normal text-black underline underline-offset-4 hover:opacity-70"
+                  className="inline-flex items-center gap-1 font-normal text-black dark:text-[#f2f2f2] underline underline-offset-4 hover:opacity-70"
                 >
                   OPEN <ExternalLink className="h-3 w-3" />
                 </a>
@@ -1324,14 +1324,14 @@ function CategoriesTab({ products, refresh }: { products: Product[]; refresh: ()
             <button
               onClick={() => doDelete(c.id, c.label)}
               aria-label={`Delete ${c.label}`}
-              className="self-start rounded-full border border-black/20 p-2.5 text-black/50 transition hover:border-red-700 hover:bg-red-700 hover:text-white sm:self-center"
+              className="self-start rounded-full border border-black/20 dark:border-white/20 p-2.5 text-black/50 dark:text-white/50 transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black sm:self-center"
             >
               <Trash2 className="h-4 w-4" />
             </button>
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-[11px] leading-relaxed tracking-[0.06em] text-black/45">
+      <p className="mt-4 text-[11px] leading-relaxed tracking-[0.06em] text-black/45 dark:text-white/45">
         Renaming updates the whole site instantly (chips, footer, titles). IDs stay fixed so shared
         links never break. A category can only be deleted when no products use it.
       </p>
@@ -1388,7 +1388,7 @@ function HomepageTab({ refresh }: { refresh: () => Promise<void> }) {
   return (
     <div className="mt-8 space-y-4">
       {msg && (
-        <p className="rounded-xl bg-black px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-white">
+        <p className="rounded-xl bg-black px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-white dark:bg-white dark:text-black">
           {msg}
         </p>
       )}
@@ -1399,9 +1399,9 @@ function HomepageTab({ refresh }: { refresh: () => Promise<void> }) {
       )}
 
       {/* Hero slides */}
-      <div className="rounded-2xl border border-black/10 p-5 sm:p-6">
+      <div className="rounded-2xl border border-black/10 dark:border-white/10 p-5 sm:p-6">
         <h3 className="text-[12px] font-normal tracking-[0.22em]">HERO SLIDER (3 SLOTS)</h3>
-        <p className="mt-1 text-[12px] tracking-[0.06em] text-black/50">
+        <p className="mt-1 text-[12px] tracking-[0.06em] text-black/50 dark:text-white/50">
           Pick the product — and its color — shown in each hero slide.
         </p>
         <div className="mt-4 space-y-3">
@@ -1409,8 +1409,8 @@ function HomepageTab({ refresh }: { refresh: () => Promise<void> }) {
             const slot = home.hero[i] ?? { productId: '', variant: '' };
             const p = products.find((x) => x.id === slot.productId);
             return (
-              <div key={i} className="flex flex-col gap-2.5 rounded-2xl bg-[#F8F8F8] p-3 sm:flex-row sm:items-center">
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-black text-[12px] font-normal text-white">
+              <div key={i} className="flex flex-col gap-2.5 rounded-2xl bg-[#F8F8F8] dark:bg-white/[0.05] p-3 sm:flex-row sm:items-center">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-black text-[12px] font-normal text-white dark:bg-white dark:text-black">
                   {i + 1}
                 </span>
                 {p && (
@@ -1510,25 +1510,25 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
     <div className="mt-8">
       <button
         onClick={() => setEditing(blankForm())}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-black/20 py-5 text-[12px] font-normal tracking-[0.22em] transition hover:border-black hover:bg-black hover:text-white sm:w-auto sm:px-10"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-black/20 dark:border-white/20 py-5 text-[12px] font-normal tracking-[0.22em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black sm:w-auto sm:px-10 dark:hover:bg-white dark:hover:text-black"
       >
         <Plus className="h-4 w-4" /> ADD NEW PRODUCT
       </button>
 
       <div className="relative mt-4">
-        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35 dark:text-white/35" />
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search products…"
-          className="w-full rounded-2xl border border-black/10 bg-[#F8F8F8] py-3.5 pl-11 pr-4 text-[13px] outline-none placeholder:text-black/35 focus:border-black"
+          className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] py-3.5 pl-11 pr-4 text-[13px] outline-none placeholder:text-black/35 focus:border-black dark:focus:border-white"
         />
       </div>
 
       {msg && <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700">{msg}</p>}
 
       {visible.length === 0 ? (
-        <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/45">
+        <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/45 dark:text-white/45">
           No products match “{q}”.
         </p>
       ) : (
@@ -1536,33 +1536,33 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
           {visible.map((p) => (
           <li
             key={p.id}
-            className="flex flex-col gap-4 rounded-2xl border border-black/10 bg-white p-4 sm:flex-row sm:items-center sm:p-5"
+            className="flex flex-col gap-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#101010] p-4 sm:flex-row sm:items-center sm:p-5"
           >
             <img
               src={p.variants[0]?.image}
               alt={p.name}
-              className="h-28 w-24 shrink-0 rounded-xl bg-[#F4F4F4] object-cover"
+              className="h-28 w-24 shrink-0 rounded-xl bg-[#F4F4F4] dark:bg-white/[0.07] object-cover"
             />
             <div className="min-w-0 flex-1">
               <p className="truncate text-[13px] font-normal tracking-[0.12em]">{p.name}</p>
-              <p className="mt-1 text-[12px] tracking-wider text-black/55">
+              <p className="mt-1 text-[12px] tracking-wider text-black/55 dark:text-white/55">
                 {formatEGP(p.price)} · {p.category.toUpperCase()} · {p.variants.length} color
                 {p.variants.length > 1 ? 's' : ''} · {p.sold}+ sold
               </p>
               <div className="mt-2.5 flex flex-wrap items-center gap-2.5">
-                <span className="rounded-full bg-black px-4 py-1.5 text-[11px] font-normal tracking-[0.15em] text-white">
+                <span className="rounded-full bg-black px-4 py-1.5 text-[11px] font-normal tracking-[0.15em] text-white dark:bg-white dark:text-black">
                   IN STOCK: {p.stock} {p.stock === 1 ? 'PIECE' : 'PIECES'}
                 </span>
                 {p.stock <= LOW_STOCK && (
                   <span
                     className={`rounded-full px-3 py-1 text-[10px] font-normal tracking-[0.15em] ${
-                      p.stock === 0 ? 'bg-red-700 text-white' : 'border border-black/25 text-black/60'
+                      p.stock === 0 ? 'bg-red-700 text-white' : 'border border-black/25 text-black/60 dark:border-white/25 dark:text-white/60'
                     }`}
                   >
                     {p.stock === 0 ? 'SOLD OUT' : `ONLY ${p.stock} LEFT`}
                   </span>
                 )}
-                <span className="text-[11px] tracking-[0.1em] text-black/40">
+                <span className="text-[11px] tracking-[0.1em] text-black/40 dark:text-white/40">
                   Tap EDIT to change colors, sizes & pieces
                 </span>
               </div>
@@ -1573,20 +1573,20 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
                 target="_blank"
                 rel="noreferrer"
                 title="Preview on store (new tab)"
-                className="inline-flex items-center gap-1.5 rounded-full border border-black/20 px-5 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black hover:bg-black hover:text-white"
+                className="inline-flex items-center gap-1.5 rounded-full border border-black/20 dark:border-white/20 px-5 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
               >
                 VIEW <ExternalLink className="h-3.5 w-3.5" />
               </a>
               <button
                 onClick={() => setEditing(draftFromProduct(p))}
-                className="flex-1 rounded-full border border-black/20 px-6 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black hover:bg-black hover:text-white sm:flex-none"
+                className="flex-1 rounded-full border border-black/20 dark:border-white/20 px-6 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black sm:flex-none dark:hover:bg-white dark:hover:text-black"
               >
                 EDIT
               </button>
               <button
                 onClick={() => remove(p)}
                 aria-label={`Delete ${p.name}`}
-                className="rounded-full border border-black/20 p-2.5 text-black/50 transition hover:border-red-700 hover:bg-red-700 hover:text-white"
+                className="rounded-full border border-black/20 dark:border-white/20 p-2.5 text-black/50 dark:text-white/50 transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black"
               >
                 <Trash2 className="h-4 w-4" />
               </button>
@@ -1853,15 +1853,15 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
   };
 
   const input =
-    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black sm:text-[13px]';
-  const label = 'mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60';
+    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black dark:border-white/15 dark:bg-[#101010] dark:placeholder:text-white/35 dark:focus:border-white sm:text-[13px]';
+  const label = 'mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60';
 
   if (detail) {
     return (
       <div className="mt-8">
         <button
           onClick={() => setDetail(null)}
-          className="flex items-center gap-1.5 text-[12px] font-normal tracking-[0.2em] text-black/60 hover:text-black"
+          className="flex items-center gap-1.5 text-[12px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" /> ALL INVOICES
         </button>
@@ -1870,7 +1870,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
           <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700">{exportErr}</p>
         )}
         {exportOk && (
-          <p className="mt-3 rounded-xl bg-black px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-white">
+          <p className="mt-3 rounded-xl bg-black px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-white dark:bg-white dark:text-black">
             {exportOk}
           </p>
         )}
@@ -1878,13 +1878,13 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
           <button
             onClick={() => doExport(detail)}
             disabled={busy}
-            className="flex flex-1 items-center justify-center gap-2 rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 disabled:opacity-50"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 dark:bg-white dark:text-black"
           >
             <Download className="h-4 w-4" /> {busy ? 'PREPARING…' : 'SAVE AS IMAGE (PNG)'}
           </button>
           <button
             onClick={() => removeInvoice(detail)}
-            className="flex items-center justify-center gap-2 rounded-full border border-black/20 px-8 py-4 text-[12px] font-normal tracking-[0.2em] transition hover:border-red-700 hover:bg-red-700 hover:text-white"
+            className="flex items-center justify-center gap-2 rounded-full border border-black/20 dark:border-white/20 px-8 py-4 text-[12px] font-normal tracking-[0.2em] transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black"
           >
             <Trash2 className="h-4 w-4" /> DELETE
           </button>
@@ -1920,13 +1920,13 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
             setCreating(false);
             resetBuilder();
           }}
-          className="flex items-center gap-1.5 text-[12px] font-normal tracking-[0.2em] text-black/60 hover:text-black"
+          className="flex items-center gap-1.5 text-[12px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" /> {saved ? 'ALL INVOICES' : 'CANCEL'}
         </button>
 
         {saved ? (
-          <div className="mt-4 rounded-2xl bg-black p-5 text-white sm:p-6">
+          <div className="mt-4 rounded-2xl bg-black p-5 text-white sm:p-6 dark:bg-white dark:text-black">
             <p className="flex items-center gap-2 text-[13px] font-normal tracking-[0.15em]">
               <Check className="h-5 w-5" /> INVOICE {saved.number} SAVED — STOCK UPDATED
             </p>
@@ -1936,9 +1936,9 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
           </div>
         ) : (
           <div className="mt-4 grid min-w-0 grid-cols-1 gap-4 lg:grid-cols-2">
-            <div className="min-w-0 rounded-2xl border border-black/10 p-5 sm:p-6">
+            <div className="min-w-0 rounded-2xl border border-black/10 dark:border-white/10 p-5 sm:p-6">
               <h3 className="flex items-center gap-2.5 text-[12px] font-normal tracking-[0.22em]">
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white">1</span>
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white dark:bg-white dark:text-black">1</span>
                 ITEMS
               </h3>
               <div className="mt-3 flex gap-2">
@@ -1960,7 +1960,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                   onClick={addLine}
                   disabled={!pick}
                   aria-label="Add item"
-                  className="grid w-12 shrink-0 place-items-center rounded-xl bg-black text-white transition hover:bg-neutral-800 disabled:opacity-40"
+                  className="grid w-12 shrink-0 place-items-center rounded-xl bg-black text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-40 dark:bg-white dark:text-black"
                 >
                   <Plus className="h-5 w-5" />
                 </button>
@@ -1970,13 +1970,13 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                   const p = products.find((x) => x.id === l.productId)!;
                   const max = Math.max(0, cellQty(p, l.variant, l.size));
                   return (
-                    <li key={i} className="rounded-xl bg-[#F8F8F8] p-3">
+                    <li key={i} className="rounded-xl bg-[#F8F8F8] dark:bg-white/[0.05] p-3">
                       <div className="flex items-center justify-between gap-2">
                         <p className="truncate text-[12px] font-normal tracking-[0.08em]">{p.name}</p>
                         <button
                           onClick={() => setLines((ls) => ls.filter((_, j) => j !== i))}
                           aria-label="Remove item"
-                          className="rounded-full p-1.5 text-black/40 hover:text-black"
+                          className="rounded-full p-1.5 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white"
                         >
                           <X className="h-4 w-4" />
                         </button>
@@ -2009,7 +2009,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                           disabledValues={sizeOptions(p, l.variant).disabled}
                         />
                         <div
-                          className="flex items-center justify-between rounded-lg border border-black/15 bg-white px-2"
+                          className="flex items-center justify-between rounded-lg border border-black/15 dark:border-white/15 bg-white dark:bg-[#101010] px-2"
                           title={`Max ${max} in stock`}
                         >
                           <button
@@ -2025,7 +2025,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                           </button>
                           <span className="text-center text-[12px] font-normal">
                             {l.qty}
-                            <span className="block text-[9px] font-normal text-black/45">max {max}</span>
+                            <span className="block text-[9px] font-normal text-black/45 dark:text-white/45">max {max}</span>
                           </span>
                           <button
                             onClick={() =>
@@ -2050,7 +2050,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
               </ul>
 
               <h3 className="mt-6 flex items-center gap-2.5 text-[12px] font-normal tracking-[0.22em]">
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white">2</span>
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white dark:bg-white dark:text-black">2</span>
                 BUYER & PAYMENT
               </h3>
               <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
@@ -2094,22 +2094,22 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
 
               {err && <p className="mt-3 text-[12px] font-normal tracking-[0.1em] text-red-700">{err}</p>}
               <h3 className="mt-5 flex items-center gap-2.5 text-[12px] font-normal tracking-[0.22em]">
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white">3</span>
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-black text-[11px] text-white dark:bg-white dark:text-black">3</span>
                 REVIEW & SAVE
               </h3>
               <button
                 onClick={save}
-                className="mt-4 w-full rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800"
+                className="mt-4 w-full rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
               >
                 SAVE INVOICE — {formatEGP(totals.total)}
               </button>
-              <p className="mt-2 text-center text-[11px] tracking-[0.08em] text-black/45">
+              <p className="mt-2 text-center text-[11px] tracking-[0.08em] text-black/45 dark:text-white/45">
                 Saving decrements stock automatically.
               </p>
             </div>
 
             <div className="min-w-0">
-              <p className="mb-2 text-[11px] font-normal tracking-[0.2em] text-black/55">
+              <p className="mb-2 text-[11px] font-normal tracking-[0.2em] text-black/55 dark:text-white/55">
                 LIVE PREVIEW ({preview.number})
               </p>
               <FitInvoice invoice={preview} />
@@ -2124,7 +2124,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
               <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700">{exportErr}</p>
             )}
             {exportOk && (
-              <p className="mt-3 rounded-xl bg-black px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-white">
+              <p className="mt-3 rounded-xl bg-black px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-white dark:bg-white dark:text-black">
                 {exportOk}
               </p>
             )}
@@ -2132,7 +2132,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
               <button
                 onClick={() => doExport(saved)}
                 disabled={busy}
-                className="flex flex-1 items-center justify-center gap-2 rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 disabled:opacity-50"
+                className="flex flex-1 items-center justify-center gap-2 rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 dark:bg-white dark:text-black"
               >
                 <Download className="h-4 w-4" /> {busy ? 'PREPARING…' : 'SAVE AS IMAGE (PNG)'}
               </button>
@@ -2142,7 +2142,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                   setCreating(true);
                   void reloadInvoices();
                 }}
-                className="rounded-full border border-black/20 px-8 py-4 text-[12px] font-normal tracking-[0.2em] transition hover:border-black hover:bg-black hover:text-white"
+                className="rounded-full border border-black/20 dark:border-white/20 px-8 py-4 text-[12px] font-normal tracking-[0.2em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
               >
                 NEW INVOICE
               </button>
@@ -2160,32 +2160,32 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
           resetBuilder();
           setCreating(true);
         }}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-black/20 py-5 text-[12px] font-normal tracking-[0.22em] transition hover:border-black hover:bg-black hover:text-white sm:w-auto sm:px-10"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-black/20 dark:border-white/20 py-5 text-[12px] font-normal tracking-[0.22em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black sm:w-auto sm:px-10 dark:hover:bg-white dark:hover:text-black"
       >
         <Plus className="h-4 w-4" /> NEW INVOICE
       </button>
 
       {invoices.length === 0 ? (
         <div className="flex flex-col items-center py-16 text-center">
-          <FileText className="h-10 w-10 text-black/15" />
+          <FileText className="h-10 w-10 text-black/15 dark:text-white/15" />
           <p className="mt-4 text-[13px] font-normal tracking-[0.2em]">NO INVOICES YET</p>
-          <p className="mt-1 max-w-xs text-[12px] tracking-wider text-black/50">
+          <p className="mt-1 max-w-xs text-[12px] tracking-wider text-black/50 dark:text-white/50">
             Create your first invoice — stock decrements automatically on save.
           </p>
         </div>
       ) : (
         <>
           <div className="relative mt-4">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/35 dark:text-white/35" />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search by buyer, number or phone…"
-              className="w-full rounded-2xl border border-black/10 bg-[#F8F8F8] py-3.5 pl-11 pr-4 text-[13px] outline-none placeholder:text-black/35 focus:border-black"
+              className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] py-3.5 pl-11 pr-4 text-[13px] outline-none placeholder:text-black/35 focus:border-black dark:focus:border-white"
             />
           </div>
           {visibleInvoices.length === 0 ? (
-            <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/45">
+            <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/45 dark:text-white/45">
               No invoices match “{q}”.
             </p>
           ) : (
@@ -2193,16 +2193,16 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
               {visibleInvoices.map((inv) => (
             <li
               key={inv.id}
-              className="flex flex-col gap-3 rounded-2xl border border-black/10 bg-white p-4 sm:flex-row sm:items-center sm:p-5"
+              className="flex flex-col gap-3 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#101010] p-4 sm:flex-row sm:items-center sm:p-5"
             >
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-black text-white">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-black text-white dark:bg-white dark:text-black">
                 <Receipt className="h-5 w-5" />
               </span>
               <div className="min-w-0 flex-1">
                 <p className="text-[13px] font-normal tracking-[0.12em]">
                   {inv.number} · {formatEGP(inv.total)}
                 </p>
-                <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[12px] tracking-wide text-black/55">
+                <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[12px] tracking-wide text-black/55 dark:text-white/55">
                   <span className="flex items-center gap-1">
                     <User className="h-3.5 w-3.5" /> {inv.buyerName}
                   </span>
@@ -2222,21 +2222,21 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
               <div className="flex shrink-0 gap-2">
                 <button
                   onClick={() => setDetail(inv)}
-                  className="rounded-full border border-black/20 px-6 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black hover:bg-black hover:text-white"
+                  className="rounded-full border border-black/20 dark:border-white/20 px-6 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
                 >
                   VIEW
                 </button>
                 <button
                   onClick={() => duplicateInvoice(inv)}
                   title="New invoice prefilled from this one"
-                  className="rounded-full border border-black/20 px-6 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black hover:bg-black hover:text-white"
+                  className="rounded-full border border-black/20 dark:border-white/20 px-6 py-2.5 text-[11px] font-normal tracking-[0.18em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
                 >
                   COPY
                 </button>
                 <button
                   onClick={() => removeInvoice(inv)}
                   aria-label={`Void ${inv.number}`}
-                  className="rounded-full border border-black/20 p-2.5 text-black/50 transition hover:border-red-700 hover:bg-red-700 hover:text-white"
+                  className="rounded-full border border-black/20 dark:border-white/20 p-2.5 text-black/50 dark:text-white/50 transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -2248,9 +2248,9 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
         </>
       )}
 
-      <div className="mt-6 flex items-center gap-2 rounded-2xl bg-[#F8F8F8] p-4 text-[12px] tracking-[0.08em] text-black/55">
-        <BadgeDollarSign className="h-4 w-4 shrink-0 text-black" />
-        Total invoiced so far: <span className="font-normal text-black">{formatEGP(invoices.reduce((s, i) => s + i.total, 0))}</span>
+      <div className="mt-6 flex items-center gap-2 rounded-2xl bg-[#F8F8F8] dark:bg-white/[0.05] p-4 text-[12px] tracking-[0.08em] text-black/55 dark:text-white/55">
+        <BadgeDollarSign className="h-4 w-4 shrink-0 text-black dark:text-[#f2f2f2]" />
+        Total invoiced so far: <span className="font-normal text-black dark:text-[#f2f2f2]">{formatEGP(invoices.reduce((s, i) => s + i.total, 0))}</span>
       </div>
     </div>
   );
