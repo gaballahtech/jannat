@@ -5,8 +5,9 @@ import { idbForget, idbUrl, refKey } from '../admin/db';
 import { getCategories, mergeCatalog, type Category } from '../admin/adminData';
 
 /* Live catalog: static seeds + admin overrides, with `idb:` image refs
-   resolved to object URLs. Every storefront component reads from here,
-   so admin edits appear instantly across the whole site. */
+   resolved to object URLs. https:// URLs (e.g. Cloudinary) pass through
+   untouched, so they work on every device. Every storefront component reads
+   from here, so admin edits appear instantly across the whole site. */
 
 type CatalogValue = {
   products: Product[];

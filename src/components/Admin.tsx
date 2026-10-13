@@ -78,7 +78,8 @@ import {
   type BizSettings,
   type Invoice,
 } from '../admin/adminData';
-import { idbDel, refKey, storeUpload } from '../admin/db';
+import { idbDel, refKey } from '../admin/db';
+import { cloudinaryConfigured, storeProductImage } from '../lib/cloudinary';
 
 /* ================= PIN gate ================= */
 
@@ -555,9 +556,9 @@ function ProductEditor({
         const v = f.variants[i];
         let ref = v.image;
         if (v._file) {
-          // remove replaced upload
+          // remove replaced local upload (Cloudinary URLs need no cleanup)
           const oldKey = refKey(v.image);
-          ref = await storeUpload(v._file, `img_${id}_${i}_${Date.now()}`);
+          ref = await storeProductImage(v._file, `img_${id}_${i}_${Date.now()}`);
           if (oldKey) await idbDel(oldKey);
         }
         variants.push({ name: v.name.trim(), hex: v.hex, image: ref });
@@ -737,6 +738,11 @@ function ProductEditor({
               <Plus className="h-3.5 w-3.5" /> ADD COLOR
             </button>
           </div>
+          <p className="mt-2 text-[11px] tracking-[0.08em] text-black/45">
+            {cloudinaryConfigured()
+              ? 'Photos upload to Cloudinary (compressed WebP, shared on all devices).'
+              : 'Cloudinary not set — photos stay on this device only. Add VITE_CLOUDINARY_* in .env.'}
+          </p>
           <div className="mt-3 space-y-3">
             {f.variants.map((v) => (
               <div key={v._key} className="flex gap-3 rounded-2xl border border-black/10 bg-[#F8F8F8] p-3">
