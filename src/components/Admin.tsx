@@ -276,7 +276,7 @@ function ProductEditor({
   };
 
   const input =
-    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[13px] outline-none placeholder:text-black/35 focus:border-black';
+    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black sm:text-[13px]';
   const label = 'mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60';
 
   return (
@@ -478,7 +478,7 @@ function ProductEditor({
               <table className="w-full min-w-[420px] border-collapse bg-white text-center">
                 <thead>
                   <tr className="bg-[#F8F8F8]">
-                    <th className="px-3 py-2.5 text-left text-[10px] font-normal tracking-[0.15em] text-black/50">
+                    <th className="sticky left-0 bg-[#F8F8F8] px-3 py-2.5 text-left text-[10px] font-normal tracking-[0.15em] text-black/50">
                       COLOR ↓ · SIZE →
                     </th>
                     {f.sizes.map((s) => (
@@ -499,7 +499,7 @@ function ProductEditor({
                     );
                     return (
                       <tr key={v._key} className="border-t border-black/10">
-                        <td className="px-3 py-2 text-left">
+                        <td className="sticky left-0 max-w-[110px] bg-white px-3 py-2 text-left">
                           <span className="flex items-center gap-1.5 text-[11px] font-normal tracking-[0.08em]">
                             <span
                               className="h-3 w-3 shrink-0 rounded-full ring-1 ring-black/25"
@@ -520,7 +520,8 @@ function ProductEditor({
                                 set({ cells: { ...f.cells, [`${v._key}|${s}`]: n } });
                               }}
                               inputMode="numeric"
-                              className="w-14 rounded-lg border border-black/15 bg-[#F8F8F8] py-2 text-center text-[13px] font-normal outline-none focus:border-black focus:bg-white"
+                              aria-label={`${v.name.trim() || 'color'} size ${s} pieces`}
+                              className="w-16 rounded-lg border border-black/15 bg-[#F8F8F8] py-3 text-center text-[16px] font-normal outline-none focus:border-black focus:bg-white sm:w-14 sm:py-2 sm:text-[13px]"
                             />
                           </td>
                         ))}
@@ -1698,7 +1699,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
   };
 
   const input =
-    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[13px] outline-none placeholder:text-black/35 focus:border-black';
+    'w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[16px] outline-none placeholder:text-black/35 focus:border-black sm:text-[13px]';
   const label = 'mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60';
 
   if (detail) {

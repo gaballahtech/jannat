@@ -1,5 +1,5 @@
 import { ArrowRight, Search, X } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useCatalog, useCategories } from '../catalog/CatalogContext';
 import { navigate, searchPath, shopPath, useRoute } from '../router';
 import ProductCard from './ProductCard';
@@ -13,11 +13,18 @@ export default function SearchPage() {
   // Local input state for smooth typing; the URL (?q=) is the shareable source of truth.
   const [draft, setDraft] = useState(initial);
   const q = route.view === 'search' ? route.q : '';
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Keep the input in sync when arriving via back/forward or a shared link.
   useEffect(() => {
     setDraft(q);
   }, [q]);
+
+  // Focus on load for keyboard users only — on touch phones autofocus would
+  // pop the keyboard up and cover the page before anything is read.
+  useEffect(() => {
+    if (window.matchMedia('(pointer: fine)').matches) inputRef.current?.focus();
+  }, []);
 
   const results = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -44,9 +51,9 @@ export default function SearchPage() {
       <div className="mt-5 flex items-center gap-3 border-b-2 border-black pb-4">
         <Search className="h-6 w-6 shrink-0" aria-hidden="true" />
         <input
+          ref={inputRef}
           type="search"
           aria-label="Search products"
-          autoFocus
           value={draft}
           onChange={(e) => onType(e.target.value)}
           placeholder="Hoodie, cargo, jacket..."

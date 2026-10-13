@@ -55,6 +55,16 @@ img {
   text-orientation: mixed;
 }
 
+/* iOS auto-zooms on focus when an input's font is < 16px.
+   Keep every form field at 16px on phones (desktop keeps its own sizes). */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 /* hide scrollbar for filter rows */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
