@@ -938,7 +938,7 @@ function OverviewTab({
               requestAdminIntent({ action: 'new-product' });
               goTab('products');
             }}
-            className="flex items-center justify-center gap-2.5 rounded-2xl border-2 border-dashed border-black/25 dark:border-white/25 py-5 text-[12px] font-normal tracking-[0.22em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
+            className="flex items-center justify-center gap-2.5 rounded-2xl border-2 border-dashed border-black/25 py-5 text-[12px] font-normal tracking-[0.22em] transition hover:border-black hover:bg-black hover:text-white dark:border-white/25 dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
           >
             <Plus className="h-5 w-5" /> ADD PRODUCT
           </button>
@@ -947,7 +947,7 @@ function OverviewTab({
       <div className="mt-4 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {stats.map(([label, value]) => (
           <div key={label} className="rounded-2xl bg-[#0B0B0B] p-5 text-white sm:p-6">
-            <p className="text-[10px] font-normal tracking-[0.2em] text-white/45">{label}</p>
+            <p className="text-[10px] font-normal tracking-[0.2em] text-white/60">{label}</p>
             <p className="font-display mt-2 text-2xl font-normal sm:text-3xl">{value}</p>
           </div>
         ))}
