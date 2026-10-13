@@ -1,0 +1,34 @@
+/* Egypt governorates + cities — source: Tech-Labs/egypt-governorates-and-cities-db
+   (396 cities across 27 governorates). Used by the pre-WhatsApp address form. */
+
+export type Governorate = { name: string; nameAr: string; cities: string[] };
+
+export const GOVERNORATES: Governorate[] = [
+  { name: "Cairo", nameAr: "القاهرة", cities: ["10th of Ramadan City", "15 May", "Abaseya", "Abdeen", "Ain Shams", "Al Azbakeyah", "Al Basatin", "Aldarb Alahmar", "Ataba", "Bab al-Shereia", "Badr City", "Bolaq", "Cairo Downtown", "Capital New", "Dar Al Salam", "El Daher", "El Marg", "El Salam", "El Sharabeya", "El darrasa", "El-Gamaleya", "El-Khalifa", "El-Zaytoun", "Ezbet el Nakhl", "Garden City", "Hadayek El-Kobba", "Helmeyat Alzaytoun", "Helwan", "Kasr El Nile", "Katameya", "Maadi", "Maasara", "Madinty", "Mansheya Nasir", "Manyal", "Masr Al Qadima", "Matareya", "Mokattam", "Mosky", "Nasr City", "New Cairo", "New Heliopolis", "New Nozha", "Nozha", "Obour City", "Rehab", "Rod Alfarag", "Sahel", "Sayeda Zeinab", "Sheraton", "Shorouk", "Shubra", "Tebin", "Tura", "Waily", "Zamalek", "Zawya al-Hamra"] },
+  { name: "Giza", nameAr: "الجيزة", cities: ["Abu Nomros", "Abu Rawash", "Agouza", "Al Ayat", "Al Badrasheen", "Al Wahat Al Baharia", "Al-Bawaiti", "Ard Ellwaa", "Atfih", "Bin Alsarayat", "Boulaq Dakrour", "Cheikh Zayed", "Dokki", "Faisal", "Giza", "Hadayek Alahram", "Hadayek October", "Haram", "Haraneya", "Hawamdiyah", "Imbaba", "Kafr Ghati", "Kerdasa", "Kit Kat", "Manshiyet Al Bakari", "ManshiyetAl Qanater", "Mohandessin", "Moneeb", "Oaseem", "Omraneya", "Saf", "Saft Allaban", "Sixth of October", "Smart Village", "Warraq"] },
+  { name: "Alexandria", nameAr: "الإسكندرية", cities: ["Abu Qir", "Agamy", "Al Ibrahimeyah", "Al Mafrouza", "Al Mamurah", "Al Mandara", "Al Max", "Alattarin", "Alhadra", "Ambrozo", "Ameria", "Anfoushi", "Asafra", "Azarita", "Bab Sharq", "Bakos", "Boulkly", "Bourj Alarab", "Camp Shizar", "Cleopatra", "Dekheila", "El Labban", "El Montaza", "El Soyof", "Elgomrok", "Elshatby", "Fleming", "Gheet Alenab", "Glim", "Karmooz", "Mahta Alraml", "Mansheya", "Marina", "Mina El-Basal", "Moharam Bek", "Naseria", "North Coast/sahel", "Shads", "Sidi Bishr", "Sidi Gaber", "Sidi Kerir", "Smouha", "Stanley", "Victoria"] },
+  { name: "Dakahlia", nameAr: "الدقهلية", cities: ["Aga", "Al Manzala", "Bani Ubaid", "Belqas", "Dekernes", "El Kurdi", "Gamasa", "Mahalat Damana", "Mansoura", "Mataria", "Meet Salsil", "Menia El Nasr", "Mitt Ghamr", "Nabroh", "Sherbin", "Sinbillawin", "Talkha", "aljamalia", "tami al'amdid"] },
+  { name: "Red Sea", nameAr: "البحر الأحمر", cities: ["Aldahar", "El Qusiar", "Halaib", "Hurghada", "Marsa Alam", "Ras Ghareb", "Safaga", "Shalatin"] },
+  { name: "Beheira", nameAr: "البحيرة", cities: ["Abu Homs", "Abu al-Matamir", "Alnoubareya", "Badr", "Damanhour", "Delengat", "Edco", "Housh Eissa", "Itai Baroud", "Kafr El Dawar", "Kom Hamada", "Mahmoudiyah", "New Nubaria", "Rahmaniyah", "Rashid", "Shubrakhit", "Wadi Natrun"] },
+  { name: "Fayoum", nameAr: "الفيوم", cities: ["Algamaa", "Atsa", "Epschway", "Etsa", "Fayoum", "Fayoum El Gedida", "Hadqa", "Sayala", "Snores", "Tamiya", "Yusuf El Sediaq"] },
+  { name: "Gharbiya", nameAr: "الغربية", cities: ["Al Mahalla Al Kobra", "Basion", "El Santa", "Kafr El Zayat", "Qutour", "Samannoud", "Tanta", "Zefta"] },
+  { name: "Ismailia", nameAr: "الإسماعيلية", cities: ["Abu Sawir", "El Tal El Kabier", "Fayed", "Ismailia", "Kasasien El Gedida", "Nefesha", "Qantara Gharb", "Qantara Sharq", "Sheikh Zayed"] },
+  { name: "Menofia", nameAr: "المنوفية", cities: ["Al Bagor", "Al Shohada", "Ashmon", "Berkat El Saba", "Menouf", "Quesna", "Sadat City", "Sars El-Layan", "Shbeen El Koom", "Tala"] },
+  { name: "Minya", nameAr: "المنيا", cities: ["Abu Qurqas", "Ard Sultan", "Bani Mazar", "Deir Mawas", "El Adwa", "Madinat El Fekria", "Magagha", "Mattay", "Meloy", "Minya", "Minya El Gedida", "Samalut"] },
+  { name: "Qaliubiya", nameAr: "القليوبية", cities: ["Al Qanater Charity", "Banha", "Kafr Shukr", "Khanka", "Khosous", "Mostorod", "Obour", "Qaha", "Qalyub", "Shibin Al Qanater", "Shubra Al Khaimah", "Tukh"] },
+  { name: "New Valley", nameAr: "الوادي الجديد", cities: ["Balat", "Dakhla", "El Kharga", "Farafra", "Mout", "Paris"] },
+  { name: "Suez", nameAr: "السويس", cities: ["Ain Sokhna", "Alganayen", "Ataqah", "Faysal", "Suez"] },
+  { name: "Aswan", nameAr: "أسوان", cities: ["Abo Simbl Al Siyahia", "Al Basilia", "Al Sibaeia", "Al-Radisiyah", "Aswan", "Aswan El Gedida", "Drau", "Edfu", "Kalabsha", "Kom Ombo", "Marsa Alam", "Nasr Al Nuba"] },
+  { name: "Assiut", nameAr: "أسيوط", cities: ["Abnoub", "Abu Tig", "Assiut", "Assiut El Gedida", "Dayrout", "El Badari", "El Ghanaim", "Manfalut", "Qusiya", "Sahel Selim", "Sidfa"] },
+  { name: "Beni Suef", nameAr: "بني سويف", cities: ["Al Wasta", "Alabbaseri", "Bani Sweif", "Beni Suef El Gedida", "Ehnasia", "Fashn", "Mokbel", "Naser", "Somasta", "beba"] },
+  { name: "Port Said", nameAr: "بورسعيد", cities: ["Alarab", "Aldawahi", "Almanakh", "Alsharq", "Mubarak", "PorSaid", "Port Fouad", "Zohour"] },
+  { name: "Damietta", nameAr: "دمياط", cities: ["Azbet Al Burg", "Damietta", "Faraskour", "Kafr El-Batikh", "Kafr Saad", "Meet Abou Ghalib", "New Damietta", "Ras El Bar", "Zarqa", "alruwda", "alsaru"] },
+  { name: "Sharkia", nameAr: "الشرقية", cities: ["Abu Hammad", "Abu Kabir", "Al Ashr Men Ramadan", "Al Ibrahimiyah", "Awlad Saqr", "Belbeis", "Deirb Negm", "El Qurain", "El Salihia El Gedida", "Faccus", "Hehia", "Husseiniya", "Kafr Saqr", "Manshayat Abu Omar", "Mashtoul El Souq", "Minya Al Qamh", "Qenaiat", "Zagazig", "san alhajar alqablia"] },
+  { name: "South Sinai", nameAr: "جنوب سيناء", cities: ["Abu Redis", "Abu Zenaima", "Al Toor", "Dahab", "Nuweiba", "Ras Sidr", "Saint Catherine", "Sharm El-Shaikh", "Taba"] },
+  { name: "Kafr Al Sheikh", nameAr: "كفر الشيخ", cities: ["Baltim", "Bella", "Burg Al Burullus", "Desouq", "Fooh", "Hamol", "Kafr El Sheikh", "Kafr El Sheikh Downtown", "Masief Baltim", "Metobas", "Qellen", "Riyadh", "Sidi Ghazi", "Sidi Salm"] },
+  { name: "Matrouh", nameAr: "مطروح", cities: ["Al-Nagila", "Alamein", "Dabaa", "El Hamam", "Marina", "Marsa Matrouh", "North Coast", "Salloum", "Sidi Brani", "Siwa"] },
+  { name: "Luxor", nameAr: "الأقصر", cities: ["Al Bayadieh", "Al Qarna", "Al Tud", "Al ziynia", "Armant", "Esna", "Luxor", "New Luxor", "New Tiba"] },
+  { name: "Qena", nameAr: "قنا", cities: ["Abu Tesht", "Alwaqf", "Deshna", "Farshout", "Nag Hammadi", "Naqada", "New Qena", "Qaft", "Qena", "Quos"] },
+  { name: "North Sinai", nameAr: "شمال سيناء", cities: ["Al Hasana", "Arish", "Bir al-Abed", "Nakhl", "Rafah", "Sheikh Zowaid"] },
+  { name: "Sohag", nameAr: "سوهاج", cities: ["Akhmeem", "Akhmim El Gedida", "Albalina", "Alkawthar", "Dar AISalaam", "El Maragha", "Gerga", "Jahina Al Gharbia", "Saqilatuh", "Sohag", "Sohag El Gedida", "Tahta", "Tama", "almunsha'a"] },
+];

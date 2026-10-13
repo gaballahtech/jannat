@@ -1,0 +1,25 @@
+export default function NotFound({ title = 'Page not found', hint = 'This link is old, moved, or mistyped.' }: { title?: string; hint?: string }) {
+  return (
+    <section className="mx-auto flex max-w-[1400px] flex-col items-center px-4 py-24 text-center sm:px-6 lg:px-10">
+      <p className="text-[11px] font-normal tracking-[0.3em] text-black/50">404 — PEARLIN</p>
+      <h1 className="font-display mt-4 text-5xl font-normal uppercase tracking-tight sm:text-6xl">
+        {title}
+      </h1>
+      <p className="mt-3 max-w-sm text-[13px] leading-relaxed tracking-wide text-black/55">{hint}</p>
+      <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <a
+          href="/shop"
+          className="rounded-full bg-black px-8 py-3.5 text-[12px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800"
+        >
+          SHOP ALL
+        </a>
+        <a
+          href="/"
+          className="rounded-full border border-black/20 px-8 py-3.5 text-[12px] font-normal tracking-[0.2em] transition hover:border-black hover:bg-black hover:text-white"
+        >
+          HOME
+        </a>
+      </div>
+    </section>
+  );
+}
