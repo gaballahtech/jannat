@@ -1,10 +1,12 @@
-/* Admin data layer — small JSON records in localStorage (one key per concern,
-   never one giant blob), images in IndexedDB (see db.ts).
-   NOTE: this is device-local storage. It works today with zero servers;
-   when the business grows, swap these functions for Supabase/Firebase calls —
-   every consumer goes through this module + CatalogContext, so the UI won't change. */
+/* Admin data layer — local mode: small JSON records in localStorage (one key per
+   concern, never one giant blob), images in IndexedDB (see db.ts).
+   Server mode: /api/* on Neon Postgres takes over (see src/lib/api.ts) —
+   getSettings/getHome prefer the server snapshot, CatalogContext prefers server
+   products/categories. Every consumer goes through this module + CatalogContext,
+   so the UI doesn't care which mode is live. */
 
 import { PRODUCTS, SHIPPING_FEE, type Product, type ProductVariant } from '../data/store';
+import { getServerBiz, getServerHome } from '../lib/api';
 import { blobToDataUrl, dataUrlToBlob, idbAll, idbClear, idbDel, idbSet, refKey } from './db';
 
 /* ================= categories (admin-managed) ================= */
@@ -98,6 +100,9 @@ export function defaultHome(): HomeSettings {
 }
 
 export function getHome(): HomeSettings {
+  // Server snapshot wins when the database is connected (see src/lib/api.ts).
+  const server = getServerHome();
+  if (server) return { hero: server.hero.slice(0, 3) };
   const v = read<Partial<HomeSettings>>(HOME_KEY, {});
   const d = defaultHome();
   const hero = Array.isArray(v?.hero) && v.hero.length > 0 ? v.hero : d.hero;
@@ -167,6 +172,9 @@ const DEFAULT_BIZ: BizSettings = {
 };
 
 export function getSettings(): BizSettings {
+  // Server snapshot wins when the database is connected (see src/lib/api.ts).
+  const server = getServerBiz();
+  if (server) return { ...DEFAULT_BIZ, ...server };
   const v = read<Partial<BizSettings>>('pearlin-admin-settings-v1', {});
   return { ...DEFAULT_BIZ, ...(v && typeof v === 'object' ? v : {}) };
 }

@@ -61,20 +61,14 @@ src/
   components/Admin.tsx  owner dashboard (products, stock matrix, invoices…)
 ```
 
-## Backend status (intentionally frontend-only for now)
+## Backend status
 
-All truth is **device-local** until a real database is connected:
-
-- `localStorage` keys `pearlin-admin-*`, `pearlin-cart-v1`, `pearlin-wishlist`
-- `IndexedDB pearlin/images` for admin uploads (other devices see a
-  `PEARLIN` placeholder via `MISSING_IMAGE`)
-- Manual JSON backup/restore in `/admin → overview`
-
-When the backend lands, replace `src/admin/adminData.ts` +
-`src/catalog/CatalogContext.tsx` + `src/admin/db.ts` with API calls.
-`sold` counts are currently `0` (no fake social proof) — real sales figures
-should come from the backend. Image hotlinks are Unsplash placeholders with
-`loading=lazy` + `onError` fallback; self-host before launch.
+Live on **Neon Postgres + Vercel Functions** — see `db/BACKEND.md` for the
+one-time setup (run 2 SQL files, set `DATABASE_URL`, create the owner at
+`/admin`). Auth is real email/password sessions; catalog, settings, invoices
+serve per device from the database. `CatalogContext` still falls back to local
+seeds when offline, and `/admin` falls back to the device PIN when the API is
+unreachable — so the shop never goes blank.
 
 ## Production checklist
 

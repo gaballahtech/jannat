@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { PRODUCTS, type Product } from '../data/store';
 import { idbForget, idbUrl, refKey } from '../admin/db';
 import { getCategories, mergeCatalog, type Category } from '../admin/adminData';
+import { clearServerSnapshot, fetchCatalog, setServerSnapshot } from '../lib/api';
 
 /* Live catalog: static seeds + admin overrides, with `idb:` image refs
    resolved to object URLs. https:// URLs (e.g. Cloudinary) pass through
@@ -51,11 +52,29 @@ export function CatalogProvider({ children }: { children: ReactNode }) {
 
   const refresh = useCallback(async () => {
     try {
-      const merged = mergeCatalog();
-      setProducts(await resolveImages(merged));
-      setCategories(getCategories());
+      // Server first (Neon via /api/catalog): one bundle, live for every device.
+      const bundle = await fetchCatalog();
+      if (Array.isArray(bundle.products) && bundle.products.length > 0) {
+        setServerSnapshot(bundle);
+        setProducts(await resolveImages(bundle.products as Product[]));
+        if (Array.isArray(bundle.categories)) {
+          setCategories(
+            (bundle.categories as Category[]).filter((c) => c && typeof c.id === 'string'),
+          );
+        }
+        return;
+      }
+      throw new Error('empty catalog');
     } catch {
-      /* keep last good catalog */
+      // No backend / offline / migration not run yet → local seeds + admin overrides.
+      clearServerSnapshot();
+      try {
+        const merged = mergeCatalog();
+        setProducts(await resolveImages(merged));
+        setCategories(getCategories());
+      } catch {
+        /* keep last good catalog */
+      }
     } finally {
       setLoading(false);
     }

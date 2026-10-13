@@ -26,8 +26,10 @@ import { useLockBody } from '../utils/useLockBody';
 import { askConfirm, ConfirmHost } from './Confirm';
 import Dropdown from './Dropdown';
 import PinGate from './admin/PinGate';
+import ServerAuth from './admin/ServerGate';
 import { FitInvoice } from './admin/InvoiceViews';
 import OwnerGuide from './admin/OwnerGuide';
+import { apiLogout, apiMe, fetchAuthStatus } from '../lib/api';
 import {
   LOW_STOCK,
   KNOWN_SIZES,
@@ -666,7 +668,52 @@ function todayLocal(): string {
 }
 
 export default function Admin() {
+  // Server mode (database connected) → real email/password sessions.
+  // Local mode (no backend yet) → the legacy device PIN.
+  const [server, setServer] = useState<'checking' | 'on' | 'off'>('checking');
+  const [serverEmail, setServerEmail] = useState<string | null>(null);
   const [authed, setAuthed] = useState(() => isUnlocked());
+
+  useEffect(() => {
+    let live = true;
+    fetchAuthStatus().then(
+      (s) => {
+        if (!live) return;
+        if (s.mode === 'server') {
+          setServer('on');
+          apiMe().then(
+            (r) => live && setServerEmail(r.owner.email),
+            () => live && setServerEmail(null),
+          );
+        } else {
+          setServer('off');
+        }
+      },
+      () => live && setServer('off'),
+    );
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  if (server === 'checking') {
+    return (
+      <p className="mx-auto max-w-md px-6 py-24 text-center text-[12px] tracking-[0.24em] text-black/50">
+        LOADING…
+      </p>
+    );
+  }
+  if (server === 'on') {
+    if (!serverEmail) return <ServerAuth onAuthed={(e) => setServerEmail(e)} />;
+    return (
+      <Dashboard
+        onLock={() => {
+          apiLogout().catch(() => {});
+          setServerEmail(null);
+        }}
+      />
+    );
+  }
   if (!authed) return <PinGate onUnlock={() => setAuthed(true)} />;
   return <Dashboard onLock={() => { setUnlocked(false); setAuthed(false); }} />;
 }
