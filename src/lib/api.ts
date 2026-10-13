@@ -93,23 +93,23 @@ export function getServerHome(): { hero: { productId: string; variant: string }[
 export type AuthStatus = { mode: 'server'; hasOwner: boolean } | { mode: 'local' };
 
 export function fetchAuthStatus(signal?: AbortSignal): Promise<AuthStatus> {
-  return req<AuthStatus>('/api/auth/status', { signal });
+  return req<AuthStatus>('/api/auth?action=status', { signal });
 }
 
 export function apiMe(): Promise<{ owner: { email: string } }> {
-  return req('/api/auth/me');
+  return req('/api/auth?action=me');
 }
 
 export function apiLogin(email: string, password: string): Promise<{ owner: { email: string } }> {
-  return req('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+  return req('/api/auth?action=login', { method: 'POST', body: JSON.stringify({ email, password }) });
 }
 
 export function apiSetup(email: string, password: string): Promise<{ owner: { email: string } }> {
-  return req('/api/auth/setup', { method: 'POST', body: JSON.stringify({ email, password }) });
+  return req('/api/auth?action=setup', { method: 'POST', body: JSON.stringify({ email, password }) });
 }
 
 export function apiLogout(): Promise<{ ok: boolean }> {
-  return req('/api/auth/logout', { method: 'POST' });
+  return req('/api/auth?action=logout', { method: 'POST' });
 }
 
 /* ---------- admin writes (server mode) ---------- */

@@ -15,7 +15,7 @@ No Supabase, no ORM — plain SQL over `@neondatabase/serverless` (HTTP, pooled)
    - (Cloudinary keys from before stay as they are)
 5. Redeploy (Deployments → Redeploy), then open `/admin` → **create the owner
    account** (email + 8+ char password). That form appears exactly once —
-   `/api/auth/setup` 403s forever after.
+   `/api/auth?action=setup` 403s forever after.
 6. Verify: `/api/health` → `{"ok":true}`, `/api/catalog` → products JSON.
    The storefront now reads the database on every device; the owner login
    works on all devices (30-day httpOnly sessions).
@@ -25,11 +25,11 @@ No Supabase, no ORM — plain SQL over `@neondatabase/serverless` (HTTP, pooled)
 | Route | Auth | What |
 |---|---|---|
 | `GET /api/health` | — | liveness |
-| `GET /api/auth/status` | — | `{mode:'server',hasOwner}` or `{mode:'local'}` |
-| `POST /api/auth/setup` | once | create first owner (403 after) |
-| `POST /api/auth/login` | — | scrypt verify → session cookie |
-| `POST /api/auth/logout` | cookie | destroy session |
-| `GET /api/auth/me` | cookie | session check |
+| `GET /api/auth?action=status` | — | `{mode:'server',hasOwner}` or `{mode:'local'}` |
+| `POST /api/auth?action=setup` | once | create first owner (403 after) |
+| `POST /api/auth?action=login` | — | scrypt verify → session cookie |
+| `POST /api/auth?action=logout` | cookie | destroy session |
+| `GET /api/auth?action=me` | cookie | session check |
 | `GET /api/catalog` | — | products + categories + settings + home in one shot |
 | `GET/POST /api/admin/products` | cookie | list / create (slug + unique id) |
 | `PUT/DELETE /api/admin/products/[id]` | cookie | update (stock recomputed) / delete |
@@ -60,7 +60,7 @@ db/migrations/002_stock.sql   denormalized stock totals
 api/_lib/db.ts                neon client, scrypt auth, session cookies
 api/_lib/catalog.ts           row→Product mapper, cell math, slug ids
 api/health.ts api/catalog.ts
-api/auth/{setup,login,logout,me,status}.ts
+api/auth.ts (setup/login/logout/me/status via ?action=)
 api/admin/products.ts api/admin/products/[id].ts
 api/admin/categories.ts api/admin/categories/[id].ts
 api/admin/settings.ts
