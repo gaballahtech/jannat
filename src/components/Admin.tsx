@@ -4,12 +4,9 @@ import {
   CalendarDays,
   Check,
   Download,
-  Eye,
-  EyeOff,
   ExternalLink,
   FileText,
   ImagePlus,
-  Lock,
   Minus,
   Package,
   Phone,
@@ -28,6 +25,9 @@ import { useFocusTrap } from '../utils/useFocusTrap';
 import { useLockBody } from '../utils/useLockBody';
 import { askConfirm, ConfirmHost } from './Confirm';
 import Dropdown from './Dropdown';
+import PinGate from './admin/PinGate';
+import { FitInvoice } from './admin/InvoiceViews';
+import OwnerGuide from './admin/OwnerGuide';
 import {
   LOW_STOCK,
   KNOWN_SIZES,
@@ -52,18 +52,13 @@ import {
   exportBackup,
   findAdminProduct,
   getCategories,
-  getContact,
   getHome,
   getInvoices,
   getOverrides,
   getSettings,
-  hasPin,
   isUnlocked,
   mergeCatalog as mergeCatalogSafe,
   normalizeWhatsapp,
-  pinWaitSec,
-  recordPinFail,
-  resetPinAttempts,
   peekInvoiceNumber,
   importBackup,
   renameCategory,
@@ -81,345 +76,8 @@ import {
 import { idbDel, refKey } from '../admin/db';
 import { cloudinaryConfigured, storeProductImage } from '../lib/cloudinary';
 
-/* ================= PIN gate ================= */
-
-function PinGate({ onUnlock }: { onUnlock: () => void }) {
-  const setup = !hasPin();
-  const [a, setA] = useState('');
-  const [b, setB] = useState('');
-  const [err, setErr] = useState('');
-  // Visible by default so you always see what you type; tap the eye to mask it.
-  const [show, setShow] = useState(true);
-  // Letters + numbers allowed (max 16 chars).
-  const clean = (v: string) => v.slice(0, 16);
-  const [busy, setBusy] = useState(false);
-  // Live countdown while brute-force lockout is active.
-  const [wait, setWait] = useState(() => pinWaitSec());
-  useEffect(() => {
-    if (wait <= 0) return;
-    const t = window.setInterval(() => setWait(pinWaitSec()), 1000);
-    return () => window.clearInterval(t);
-  }, [wait > 0]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const submit = async () => {
-    if (busy) return;
-    const locked = pinWaitSec();
-    if (locked > 0) {
-      setWait(locked);
-      return setErr(`Too many wrong tries — wait ${locked}s.`);
-    }
-    setErr('');
-    if (setup) {
-      if (a.trim().length < 4)
-        return setErr('Password must be at least 4 characters (letters & numbers allowed).');
-      if (a !== b) return setErr('Passwords do not match.');
-      setBusy(true);
-      try {
-        await setPin(a.trim());
-        resetPinAttempts();
-        setUnlocked(true);
-        onUnlock();
-      } finally {
-        setBusy(false);
-      }
-    } else {
-      setBusy(true);
-      try {
-        if (await checkPin(a.trim())) {
-          resetPinAttempts();
-          setUnlocked(true);
-          onUnlock();
-        } else {
-          const w = recordPinFail();
-          if (w > 0) {
-            setWait(w);
-            setErr(`Wrong password. Locked for ${w}s.`);
-          } else {
-            setErr('Wrong password. Try again.');
-          }
-        }
-      } finally {
-        setBusy(false);
-      }
-    }
-  };
-
-  return (
-    <section className="mx-auto flex min-h-[70vh] max-w-md flex-col items-center justify-center px-6 py-16 text-center">
-      <span className="grid h-14 w-14 place-items-center rounded-full bg-black text-white">
-        <Lock className="h-6 w-6" />
-      </span>
-      <h1 className="font-display mt-6 text-4xl font-normal uppercase">Admin</h1>
-      <p className="mt-2 text-[13px] tracking-[0.12em] text-black/55">
-        {setup ? 'Create a password to lock your dashboard.' : 'Enter your password to continue.'}
-      </p>
-      <div className="relative mt-6 w-full">
-        <input
-          value={a}
-          onChange={(e) => setA(clean(e.target.value))}
-          onKeyDown={(e) => e.key === 'Enter' && submit()}
-          type={show ? 'text' : 'password'}
-          placeholder={setup ? 'New password' : 'Password'}
-          autoComplete="off"
-          className="w-full rounded-2xl border border-black/15 py-4 pl-5 pr-12 text-center text-xl font-normal tracking-[0.2em] outline-none placeholder:text-black/25 placeholder:tracking-[0.1em] focus:border-black"
-        />
-        <button
-          onClick={() => setShow((s) => !s)}
-          aria-label={show ? 'Hide PIN' : 'Show PIN'}
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2.5 text-black/45 transition hover:text-black"
-        >
-          {show ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-        </button>
-      </div>
-      {setup && (
-        <input
-          value={b}
-          onChange={(e) => setB(clean(e.target.value))}
-          onKeyDown={(e) => e.key === 'Enter' && submit()}
-          type={show ? 'text' : 'password'}
-          placeholder="Confirm password"
-          autoComplete="off"
-          className="mt-3 w-full rounded-2xl border border-black/15 px-5 py-4 text-center text-xl font-normal tracking-[0.2em] outline-none placeholder:text-black/25 placeholder:tracking-[0.1em] focus:border-black"
-        />
-      )}
-      {err && <p className="mt-3 text-[12px] font-normal tracking-[0.12em] text-red-700">{err}</p>}
-      <button
-        onClick={submit}
-        disabled={busy || wait > 0}
-        className="mt-5 w-full rounded-full bg-black py-4 text-[12px] font-normal tracking-[0.24em] text-white transition hover:bg-neutral-800 disabled:opacity-50"
-      >
-        {wait > 0 ? `WAIT ${wait}S` : setup ? 'CREATE & UNLOCK' : 'UNLOCK'}
-      </button>
-      <p className="mt-4 max-w-xs text-[11px] leading-relaxed tracking-[0.08em] text-black/40">
-        Device-level lock only — anyone with this browser can clear site data. Real multi-user
-        security needs a server backend later.
-      </p>
-    </section>
-  );
-}
-
-/* ================= invoice card (PNG export target) ================= */
-
-export function InvoiceCard({ invoice }: { invoice: Invoice }) {
-  const products = useCatalogList();
-  const biz = getSettings();
-  const contact = getContact();
-  const discount = invoice.discount ?? 0;
-  const d = new Date(invoice.createdAt);
-  const dateStr = Number.isNaN(d.getTime())
-    ? invoice.createdAt
-    : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-  const loc = [invoice.buyerCity, invoice.buyerAddress].filter(Boolean).join(' · ');
-  const thumb = (productId: string, variant: string): string | undefined => {
-    const p = products.find((x) => x.id === productId);
-    return (
-      p?.variants.find((v) => v.name === variant)?.image ?? p?.variants[0]?.image ?? undefined
-    );
-  };
-  const SERIF = "Didot, 'Playfair Display', Georgia, 'Times New Roman', serif";
-  const SANS = "Arial, Helvetica, sans-serif";
-  return (
-    <div
-      style={{ fontFamily: SANS, width: 640, minWidth: 640, background: '#fff', color: '#111' }}
-    >
-      {/* Brand band */}
-      <div style={{ background: '#0a0a0a', color: '#fff', padding: '28px 40px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <img src="/logo-white.png" alt="pearlin" style={{ height: 40 }} />
-          <div style={{ textAlign: 'right' }}>
-            <p style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 700, letterSpacing: 3 }}>
-              Invoice
-            </p>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: 2, marginTop: 2 }}>
-              {invoice.number}
-            </p>
-            <p style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>
-              Issued {dateStr}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ padding: '28px 40px 32px' }}>
-        <div style={{ display: 'flex', gap: 12 }}>
-          <div style={{ flex: 1.2, background: '#f4f4f4', borderRadius: 14, padding: '16px 20px' }}>
-            <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2.5, color: '#777' }}>
-              BILL TO
-            </p>
-            <p style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, marginTop: 4 }}>
-              {invoice.buyerName || '—'}
-            </p>
-            <p style={{ fontSize: 13, color: '#333', marginTop: 2 }}>{invoice.buyerPhone || ''}</p>
-            {loc && <p style={{ fontSize: 12, color: '#555', marginTop: 4 }}>{loc}</p>}
-            {invoice.notes && (
-              <p style={{ fontSize: 12, color: '#666', marginTop: 6 }}>{invoice.notes}</p>
-            )}
-          </div>
-          <div style={{ flex: 1, background: '#f4f4f4', borderRadius: 14, padding: '16px 20px' }}>
-            <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2.5, color: '#777' }}>
-              SELLER
-            </p>
-            <p style={{ fontSize: 13, fontWeight: 800, marginTop: 6 }}>pearlin</p>
-            <p style={{ fontSize: 11.5, marginTop: 3, color: '#444' }}>{biz.address}</p>
-            <p style={{ fontSize: 11.5, marginTop: 3, color: '#444' }}>
-              WhatsApp {contact.whatsappDisplay}
-            </p>
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', gap: 12, marginTop: 12 }}>
-          <div style={{ flex: 1, background: '#f4f4f4', borderRadius: 14, padding: '12px 20px', fontSize: 12, color: '#333' }}>
-            <span style={{ fontWeight: 800 }}>Payment:</span> {invoice.paymentMethod || biz.paymentDefault}
-          </div>
-          <div style={{ flex: 1, background: '#f4f4f4', borderRadius: 14, padding: '12px 20px', fontSize: 12, color: '#333' }}>
-            <span style={{ fontWeight: 800 }}>Delivery:</span> within a week · {formatEGP(invoice.shipping)} flat
-          </div>
-        </div>
-
-        <table style={{ width: '100%', marginTop: 26, borderCollapse: 'collapse', fontSize: 13 }}>
-          <thead>
-            <tr style={{ textAlign: 'left' }}>
-              <th style={{ padding: '0 4px 10px', fontSize: 10, letterSpacing: 2, color: '#888' }}>#</th>
-              <th style={{ padding: '0 4px 10px', fontSize: 10, letterSpacing: 2, color: '#888' }}>ITEM</th>
-              <th style={{ padding: '0 4px 10px', fontSize: 10, letterSpacing: 2, color: '#888', textAlign: 'center' }}>QTY</th>
-              <th style={{ padding: '0 4px 10px', fontSize: 10, letterSpacing: 2, color: '#888', textAlign: 'right' }}>PRICE</th>
-              <th style={{ padding: '0 4px 10px', fontSize: 10, letterSpacing: 2, color: '#888', textAlign: 'right' }}>TOTAL</th>
-            </tr>
-          </thead>
-          <tbody>
-            {invoice.items.map((l, i) => {
-              const img = thumb(l.productId, l.variant);
-              return (
-                <tr key={i} style={{ borderTop: '1px solid #ececec' }}>
-                  <td style={{ padding: '12px 4px', color: '#999', verticalAlign: 'middle' }}>{i + 1}</td>
-                  <td style={{ padding: '12px 4px', verticalAlign: 'middle' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      {img && (
-                        <img
-                          src={img}
-                          alt=""
-                          style={{ width: 46, height: 56, objectFit: 'cover', borderRadius: 10, background: '#f0f0f0' }}
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).style.display = 'none';
-                          }}
-                        />
-                      )}
-                      <div>
-                        <div style={{ fontWeight: 800, fontSize: 13.5 }}>{l.name}</div>
-                        <div style={{ fontSize: 11, color: '#777', marginTop: 2 }}>
-                          {l.variant} · Size {l.size}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td style={{ padding: '12px 4px', textAlign: 'center', verticalAlign: 'middle' }}>{l.qty}</td>
-                  <td style={{ padding: '12px 4px', textAlign: 'right', verticalAlign: 'middle', color: '#444' }}>
-                    {formatEGP(l.price)}
-                  </td>
-                  <td style={{ padding: '12px 4px', textAlign: 'right', verticalAlign: 'middle', fontWeight: 800 }}>
-                    {formatEGP(l.price * l.qty)}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-
-        <div style={{ marginTop: 22, fontSize: 13.5 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: '#555', padding: '7px 4px' }}>
-            <span>Subtotal</span>
-            <span>{formatEGP(invoice.subtotal)}</span>
-          </div>
-          {discount > 0 && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#555', padding: '7px 4px', borderTop: '1px solid #f0f0f0' }}>
-              <span>Discount</span>
-              <span>−{formatEGP(discount)}</span>
-            </div>
-          )}
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: '#555', padding: '7px 4px', borderTop: '1px solid #f0f0f0' }}>
-            <span>Shipping</span>
-            <span>{formatEGP(invoice.shipping)}</span>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: 12,
-              background: '#0a0a0a',
-              color: '#fff',
-              borderRadius: 12,
-              padding: '15px 20px',
-            }}
-          >
-            <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: 2.5 }}>TOTAL DUE</span>
-            <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 21 }}>
-              {formatEGP(invoice.total)}
-            </span>
-          </div>
-        </div>
-
-        <div style={{ borderTop: '1px solid #ececec', marginTop: 28, paddingTop: 16, textAlign: 'center' }}>
-          <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 15, color: '#111' }}>
-            Thank you for shopping with pearlin.
-          </p>
-          <p style={{ fontSize: 11, color: '#888', marginTop: 6 }}>
-            Questions? WhatsApp {contact.whatsappDisplay} · Instagram {contact.instagramHandle}
-          </p>
-          <p style={{ fontSize: 10.5, color: '#999', marginTop: 4 }}>{biz.terms}</p>
-        </div>
-      </div>
-      <div
-        style={{
-          background: '#0a0a0a',
-          color: '#fff',
-          textAlign: 'center',
-          fontSize: 11,
-          fontWeight: 800,
-          letterSpacing: 2,
-          padding: '17px 0',
-        }}
-      >
-        PEARLIN · CAIRO, EGYPT
-      </div>
-    </div>
-  );
-}
-
-/* Post-capture: single download, then a small inline confirmation.
-   No second modal, no second button — one click, one file. */
-
-/* Fit-to-screen preview: the invoice is a fixed 640px document, but the
-   preview scales it (via zoom, which affects layout) to always show it
-   COMPLETELY — no sideways scrolling, no cut-off parts. The downloaded PNG
-   is always rendered full-size from canvas. */
-function FitInvoice({ invoice }: { invoice: Invoice }) {
-  const outer = useRef<HTMLDivElement>(null);
-  const [s, setS] = useState(1);
-  useEffect(() => {
-    const update = () => {
-      const w = outer.current?.clientWidth ?? 640;
-      setS(Math.min(1, w / 640));
-    };
-    update();
-    window.addEventListener('resize', update);
-    const t = window.setTimeout(update, 400);
-    return () => {
-      window.removeEventListener('resize', update);
-      window.clearTimeout(t);
-    };
-  }, [invoice]);
-  return (
-    <div
-      ref={outer}
-      className="overflow-hidden rounded-2xl border border-black/10 bg-[#F8F8F8] py-6"
-    >
-      <div style={{ width: 640, margin: '0 auto', zoom: s }}>
-        <InvoiceCard invoice={invoice} />
-      </div>
-    </div>
-  );
-}
+/* PIN gate, invoice views and owner guide live in ./admin/*.
+   See src/components/admin/PinGate.tsx, InvoiceViews.tsx, OwnerGuide.tsx. */
 
 /* ================= product editor ================= */
 
@@ -1188,8 +846,9 @@ function OverviewTab({
 
   return (
     <div className="mt-8">
+      <OwnerGuide />
       {/* Quick actions */}
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <button
             onClick={() => {
               requestAdminIntent({ action: 'new-invoice' });

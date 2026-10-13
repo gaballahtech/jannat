@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import AnnouncementBanner from './components/AnnouncementBanner';
-import Admin from './components/Admin';
 import CartDrawer from './components/CartDrawer';
 import ErrorBoundary from './components/ErrorBoundary';
 import FeaturedProducts from './components/FeaturedProducts';
@@ -19,6 +18,9 @@ import { CATEGORIES } from './data/store';
 import { consumeLegacyHash, consumePendingSection, initLinkInterception, scrollToSection, useRoute } from './router';
 import { CatalogProvider, useCatalog, useCategories } from './catalog/CatalogContext';
 import { ShopProvider, useShop } from './store/CartContext';
+
+// Owner dashboard loads on demand — shoppers never download it.
+const Admin = lazy(() => import('./components/Admin'));
 
 function Toast() {
   const { toast } = useShop();
@@ -122,7 +124,15 @@ function Shell() {
         </main>
       ) : route.view === 'admin' ? (
         <main>
-          <Admin />
+          <Suspense
+            fallback={
+              <p className="mx-auto max-w-[1200px] px-4 py-24 text-center text-[12px] tracking-[0.24em] text-black/50">
+                LOADING DASHBOARD…
+              </p>
+            }
+          >
+            <Admin />
+          </Suspense>
         </main>
       ) : route.view === 'notfound' ? (
         <main>
