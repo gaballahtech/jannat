@@ -37,10 +37,10 @@ export default async function handler(req: ServerReq, res: ServerRes): Promise<v
     const stock = Object.values(p.inventory).reduce<number>((a, n) => a + n, 0);
     const created = typeof b.createdAt === 'string' ? b.createdAt : new Date().toISOString();
     const rows = (await sql()`insert into products
-      (id, name, price, category_id, description, fabric, tag, sold, sizes, variants, inventory, pairs_with, stock, created_at)
+      (id, name, price, category_id, description, fabric, tag, sold, sizes, variants, inventory, pairs_with, stock, created_at, video_url)
       values (${id}, ${p.name}, ${p.price}, ${p.category_id}, ${p.description}, ${p.fabric}, ${p.tag},
         ${p.sold}, ${JSON.stringify(p.sizes)}::jsonb, ${JSON.stringify(p.variants)}::jsonb,
-        ${JSON.stringify(p.inventory)}::jsonb, ${JSON.stringify(p.pairs_with)}::jsonb, ${stock}, ${created}::timestamptz)
+        ${JSON.stringify(p.inventory)}::jsonb, ${JSON.stringify(p.pairs_with)}::jsonb, ${stock}, ${created}::timestamptz, ${p.video_url})
       returning *`) as DbProduct[];
     return json(res, 201, { product: rowToProduct(rows[0]) });
   }

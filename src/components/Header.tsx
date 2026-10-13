@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getContact } from '../admin/adminData';
 import { goHome, useRoute } from '../router';
 import { useShop } from '../store/CartContext';
-import { InstagramIcon, TikTokIcon, WhatsAppIcon } from './icons';
+import { TikTokIcon, WhatsAppIcon } from './icons';
 import Logo from './Logo';
 import WaCta from './WaCta';
 
@@ -56,8 +56,8 @@ export default function Header() {
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
-          <a href="/" aria-label="pearlin — home" className="shrink-0">
-            <Logo className="h-8 w-auto sm:h-9" />
+          <a href="/" aria-label="Jannat — home" className="shrink-0">
+            <Logo className="h-9 w-9 sm:h-10 sm:w-10" />
           </a>
           <span className="hidden rounded-full bg-[#F4F4F4] px-2.5 py-1 text-[10px] font-normal tracking-[0.18em] text-black/60 sm:inline dark:bg-white/10 dark:text-white/60">
             EGYPT
@@ -82,7 +82,7 @@ export default function Header() {
         <div className="flex items-center gap-1 sm:gap-2">
           <WaCta
             mode="name"
-            message={(info) => `Hi pearlin! I'm ${info.name}.`}
+            message={(info) => `Hi jannat! I'm ${info.name}.`}
             title="QUICK HELLO"
             submitLabel="CONTINUE TO WHATSAPP"
             ariaLabel="WhatsApp"
@@ -90,15 +90,6 @@ export default function Header() {
           >
             <WhatsAppIcon />
           </WaCta>
-          <a
-            href={contact.instagram}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram"
-            className={`hidden sm:block ${iconBtn}`}
-          >
-            <InstagramIcon className="h-4 w-4" />
-          </a>
           <a
             href={contact.tiktok}
             target="_blank"
@@ -170,7 +161,7 @@ export default function Header() {
             <div className="mt-2 flex gap-2 border-t border-black/10 pt-4 dark:border-white/10">
               <WaCta
                 mode="name"
-                message={(info) => `Hi pearlin! I'm ${info.name}.`}
+                message={(info) => `Hi jannat! I'm ${info.name}.`}
                 title="QUICK HELLO"
                 submitLabel="CONTINUE TO WHATSAPP"
                 ariaLabel="WhatsApp"
@@ -178,10 +169,7 @@ export default function Header() {
               >
                 <WhatsAppIcon />
               </WaCta>
-              <a href={contact.instagram} target="_blank" rel="noreferrer" className="rounded-full bg-black p-3 text-white dark:bg-white dark:text-black">
-                <InstagramIcon className="h-4 w-4" />
-              </a>
-              <a href={contact.tiktok} target="_blank" rel="noreferrer" className="rounded-full bg-black p-3 text-white dark:bg-white dark:text-black">
+              <a href={contact.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok" className="rounded-full bg-black p-3 text-white dark:bg-white dark:text-black">
                 <TikTokIcon />
               </a>
             </div>

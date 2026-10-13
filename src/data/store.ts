@@ -27,6 +27,9 @@ export type Product = {
   /** Hand-picked "complete the look" product ids (max 2) — chosen in /admin.
       Missing or sold-out picks are hidden automatically. */
   pairsWith: string[];
+  /** Optional product video (YouTube/TikTok/Instagram/Vimeo/direct URL).
+      Parsed client-side — see src/lib/video.ts. */
+  videoUrl?: string;
 };
 
 const img = (id: string, w = 900) =>
@@ -249,7 +252,7 @@ export function buildWhatsAppOrderLink(
   const who = customer?.name ? ` — ${customer.name}` : '';
   const where = [customer?.city, customer?.governorate].filter(Boolean).join(', ');
   const body = [
-    `Hi pearlin! I want to order${who}:`,
+    `Hi jannat! I want to order${who}:`,
     '',
     ...lines.map(
       (l) =>

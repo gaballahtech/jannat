@@ -1,4 +1,4 @@
-/* Typed client for the pearlin server API (/api/*).
+/* Typed client for the jannat server API (/api/*).
    Every call fails soft (throws) — callers decide fallback (usually: local data). */
 
 export type ApiProduct = {
@@ -16,6 +16,7 @@ export type ApiProduct = {
   inventory: Record<string, number>;
   createdAt: string;
   pairsWith: string[];
+  videoUrl?: string;
 };
 
 export type ApiCategory = { id: string; label: string };

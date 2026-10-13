@@ -146,7 +146,7 @@ export async function renderInvoicePng(
     ctx.fillStyle = '#fff';
     ctx.textAlign = 'left';
     ctx.font = `700 30px ${SERIF}`;
-    ctx.fillText('pearlin', PAD, bandH / 2 + 10);
+    ctx.fillText('jannat', PAD, bandH / 2 + 10);
   }
   ctx.textAlign = 'right';
   ctx.fillStyle = '#ffffff';
@@ -200,7 +200,7 @@ export async function renderInvoicePng(
   const dw = rightW - 40;
   ctx.fillStyle = '#111111';
   ctx.font = `800 14px ${SANS}`;
-  ctx.fillText(ellipsis(ctx, 'pearlin', dw), dx, cardsY + 54);
+  ctx.fillText(ellipsis(ctx, 'jannat', dw), dx, cardsY + 54);
   ctx.fillStyle = '#444444';
   ctx.font = `11.5px ${SANS}`;
   ctx.fillText(ellipsis(ctx, biz.address, dw), dx, cardsY + 74);
@@ -324,13 +324,13 @@ export async function renderInvoicePng(
   ctx.textAlign = 'center';
   ctx.fillStyle = '#111111';
   ctx.font = `italic 700 15px ${SERIF}`;
-  ctx.fillText('Thank you for shopping with pearlin.', W / 2, fy + 30);
+  ctx.fillText('Thank you for shopping with jannat.', W / 2, fy + 30);
   ctx.fillStyle = '#888888';
   ctx.font = `11px ${SANS}`;
   ctx.fillText(
     ellipsis(
       ctx,
-      `Pay: ${inv.paymentMethod || biz.paymentDefault} · WhatsApp ${contact.whatsappDisplay} · ${contact.instagramHandle}`,
+      `Pay: ${inv.paymentMethod || biz.paymentDefault} · WhatsApp ${contact.whatsappDisplay} · TikTok ${contact.tiktokHandle}`,
       W - PAD * 2,
     ),
     W / 2,
@@ -347,7 +347,7 @@ export async function renderInvoicePng(
   ctx.font = `800 11px ${SANS}`;
   ls(ctx, '2px');
   ctx.textAlign = 'center';
-  ctx.fillText('PEARLIN · CAIRO, EGYPT', W / 2, H - stripH / 2 + 4);
+  ctx.fillText('JANNAT · CAIRO, EGYPT', W / 2, H - stripH / 2 + 4);
   ls(ctx, '0px');
 
   return new Promise<Blob>((res, rej) => {

@@ -63,6 +63,7 @@ import {
 } from '../admin/adminData';
 import { idbDel, refKey } from '../admin/db';
 import { cloudinaryConfigured, storeProductImage } from '../lib/cloudinary';
+import { VIDEO_HELP, isValidVideoUrl, parseVideoUrl } from '../lib/video';
 import {
   bridgeAddCategory,
   bridgeChangePassword,
@@ -103,6 +104,8 @@ type FormState = {
   origStock: number;
   /** Hand-picked "complete the look" product ids (max 2). */
   pairs: string[];
+  /** Optional product video link (YouTube/TikTok/Instagram/Vimeo/.mp4). */
+  videoUrl: string;
 };
 
 const uid = () => Math.random().toString(36).slice(2, 9);
@@ -146,6 +149,7 @@ function draftFromProduct(p: Product): FormState {
     cells,
     origStock: full.stock,
     pairs: Array.isArray(full.pairsWith) ? full.pairsWith.filter((x) => x !== p.id).slice(0, 2) : [],
+    videoUrl: p.videoUrl ?? '',
   };
 }
 
@@ -163,6 +167,7 @@ const blankForm = (): FormState => ({
   cells: {},
   origStock: 0,
   pairs: [],
+  videoUrl: '',
 });
 
 function ProductEditor({
@@ -210,6 +215,8 @@ function ProductEditor({
     const names = f.variants.map((v) => v.name.trim().toLowerCase());
     if (new Set(names).size !== names.length)
       return setErr('Color names must be unique (each color × size has its own count).');
+    if (!isValidVideoUrl(f.videoUrl))
+      return setErr('That video link won’t embed. Use a YouTube, TikTok, Instagram, Vimeo or .mp4 URL.');
     setSaving(true);
     try {
       const id = f.id ?? slugId(f.name);
@@ -268,6 +275,7 @@ function ProductEditor({
           ? (all.find((x) => x.id === f.id)?.createdAt ?? new Date().toISOString())
           : new Date().toISOString(),
         pairsWith: f.pairs.filter((x) => x !== id).slice(0, 2),
+        videoUrl: f.videoUrl.trim() || undefined,
       };
       await bridgeSaveProduct(record, !f.id);
       onSaved();
@@ -384,6 +392,29 @@ function ProductEditor({
             <label className={label}>FABRIC (OPTIONAL)</label>
             <input value={f.fabric} onChange={(e) => set({ fabric: e.target.value })} placeholder="480 GSM brushed fleece" className={input} />
           </div>
+          <div className="sm:col-span-2">
+            <label className={label}>VIDEO URL (OPTIONAL)</label>
+            <input
+              value={f.videoUrl}
+              onChange={(e) => set({ videoUrl: e.target.value })}
+              placeholder="https://www.youtube.com/watch?v=…"
+              inputMode="url"
+              className={input}
+            />
+            <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/45 dark:text-white/60">
+              {f.videoUrl.trim() === '' ? (
+                VIDEO_HELP
+              ) : parseVideoUrl(f.videoUrl) ? (
+                <span className="font-normal text-black dark:text-white">
+                  ✓ Will play as an embedded {parseVideoUrl(f.videoUrl)!.label} video.
+                </span>
+              ) : (
+                <span className="font-normal text-red-700 dark:text-red-400">
+                  Won’t embed — use a YouTube, TikTok, Instagram, Vimeo or .mp4 link.
+                </span>
+              )}
+            </p>
+          </div>
         </div>
 
         {/* variants */}
@@ -395,7 +426,7 @@ function ProductEditor({
             </p>
             <button
               onClick={() => set({ variants: [...f.variants, { ...blankVariant(), _file: null, _preview: '', _key: uid() }] })}
-              className="flex items-center gap-1.5 rounded-full border border-black/20 dark:border-white/20 px-4 py-2 text-[11px] font-normal tracking-[0.15em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:text-black dark:hover:bg-white dark:hover:text-black"
+              className="flex items-center gap-1.5 rounded-full border border-black/20 dark:border-white/20 px-4 py-2 text-[11px] font-normal tracking-[0.15em] transition hover:border-black dark:hover:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
             >
               <Plus className="h-3.5 w-3.5" /> ADD COLOR
             </button>
@@ -757,7 +788,7 @@ function Dashboard({ onLock }: { onLock: () => void }) {
       <ConfirmHost />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">PEARLIN · OWNER ONLY</p>
+          <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">JANNAT · OWNER ONLY</p>
           <h1 className="font-display mt-1 text-4xl font-normal uppercase sm:text-5xl">Dashboard</h1>
           <p className="mt-1.5 text-[13px] tracking-[0.04em] text-black/60 dark:text-white/60">
             Everything for your store, in one place — no code needed.
@@ -881,7 +912,7 @@ function OverviewTab({
       setBackupMsg('Backup restored — reloading…');
       window.setTimeout(() => window.location.reload(), 800);
     } catch {
-      setBackupMsg('That file is not a valid pearlin backup.');
+      setBackupMsg('That file is not a valid jannat backup.');
       setBackupBusy(false);
       if (fileRef.current) fileRef.current.value = '';
     }
@@ -1106,17 +1137,6 @@ function OverviewTab({
             </div>
             <div>
               <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
-                INSTAGRAM URL
-              </label>
-              <input
-                value={biz.instagram}
-                onChange={(e) => setBiz({ ...biz, instagram: e.target.value })}
-                placeholder="https://instagram.com/…"
-                className="w-full rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
-              />
-            </div>
-            <div>
-              <label className="mb-1.5 block text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                 TIKTOK URL
               </label>
               <input
@@ -1145,7 +1165,7 @@ function OverviewTab({
                 <input
                   value={biz.promoCode}
                   onChange={(e) => setBiz({ ...biz, promoCode: e.target.value.toUpperCase().slice(0, 16) })}
-                  placeholder="PEARLIN10"
+                  placeholder="JANNAT10"
                   className="min-w-0 flex-[2] rounded-xl border border-black/15 dark:border-white/15 px-4 py-3 text-[13px] outline-none focus:border-black dark:focus:border-white"
                 />
                 <div className="flex min-w-0 flex-1 items-center rounded-xl border border-black/15 dark:border-white/15 bg-white dark:bg-[#101010] px-3 transition focus-within:border-black dark:focus-within:border-white">
@@ -1678,7 +1698,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
       const blob = await renderInvoicePng(inv, thumbs);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.download = `pearlin-invoice-${inv.number}.png`;
+      a.download = `jannat-invoice-${inv.number}.png`;
       a.href = url;
       document.body.appendChild(a);
       a.click();

@@ -68,7 +68,7 @@ export default function Hero() {
           <br />
           hoodies.
           <br />
-          <em className="font-normal normal-case italic">Made for Egypt.</em>
+          <em className="font-normal normal-case italic text-[#7c5f36] dark:text-[#d3b183]">Made for Egypt.</em>
         </motion.h1>
         <p className="mt-7 max-w-md text-[14px] leading-relaxed tracking-wider text-black/60 dark:text-white/60">
           Premium hoodies & essentials, delivered to your door anywhere in Egypt. Order in 1
@@ -84,7 +84,7 @@ export default function Hero() {
           </a>
           <WaCta
             mode="name"
-            message={(info) => `Hi pearlin! I'm ${info.name}. I want to order.`}
+            message={(info) => `Hi jannat! I'm ${info.name}. I want to order.`}
             title="QUICK HELLO"
             submitLabel="CONTINUE TO WHATSAPP"
             className="inline-flex items-center gap-2 rounded-full border-2 border-black dark:border-white px-9 py-4 text-[12px] font-normal tracking-[0.22em] transition hover:border-[#25D366] hover:bg-[#25D366] hover:text-white dark:hover:text-black"

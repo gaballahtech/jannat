@@ -61,24 +61,24 @@ function titlesFor(
   productName?: string,
   cats: readonly { readonly id: string; readonly label: string }[] = CATEGORIES,
 ): string {
-  const base = 'pearlin — Hoodies & Essentials | Egypt';
+  const base = 'jannat — Hoodies & Essentials | Egypt';
   if (route.view === 'product') {
-    return productName ? `${productName} | pearlin Egypt` : base;
+    return productName ? `${productName} | jannat Egypt` : base;
   }
   if (route.view === 'shop') {
-    if (route.saved) return 'Wishlist | pearlin Egypt';
+    if (route.saved) return 'Wishlist | jannat Egypt';
     const cat = cats.find((c) => c.id === route.category);
-    return cat && cat.id !== 'all' ? `${cat.label} | pearlin Egypt` : `Shop All | pearlin Egypt`;
+    return cat && cat.id !== 'all' ? `${cat.label} | jannat Egypt` : `Shop All | jannat Egypt`;
   }
   if (route.view === 'search') {
-    return route.q ? `Search: ${route.q} | pearlin Egypt` : 'Search | pearlin Egypt';
+    return route.q ? `Search: ${route.q} | jannat Egypt` : 'Search | jannat Egypt';
   }
   if (route.view === 'admin') {
     const t = route.tab.charAt(0).toUpperCase() + route.tab.slice(1);
-    return `Admin — ${t} | pearlin`;
+    return `Admin — ${t} | jannat`;
   }
   if (route.view === 'notfound') {
-    return 'Page not found | pearlin Egypt';
+    return 'Page not found | jannat Egypt';
   }
   return base;
 }

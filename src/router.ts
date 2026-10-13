@@ -61,7 +61,7 @@ export function parsePath(path: string): Route {
   return { view: 'notfound', path };
 }
 
-const ROUTE_EVENT = 'pearlin:route';
+const ROUTE_EVENT = 'jannat:route';
 
 export function navigate(to: string, opts?: { replace?: boolean }) {
   if (typeof window === 'undefined') return;

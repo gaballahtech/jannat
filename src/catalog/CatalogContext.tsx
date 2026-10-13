@@ -27,7 +27,7 @@ const CatalogContext = createContext<CatalogValue>({
 /* Neutral placeholder when an uploaded image can't be resolved on THIS device
    (admin uploads live in the owner's browser only — see audit notes). */
 export const MISSING_IMAGE =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='800'%3E%3Crect width='100%25' height='100%25' fill='%23e9e9e9'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='30' letter-spacing='6' fill='%23999999' text-anchor='middle'%3EPEARLIN%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='800'%3E%3Crect width='100%25' height='100%25' fill='%23e9e9e9'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='30' letter-spacing='6' fill='%23999999' text-anchor='middle'%3EJANNAT%3C/text%3E%3C/svg%3E";
 
 async function resolveImages(list: Product[]): Promise<Product[]> {
   return Promise.all(
@@ -87,7 +87,7 @@ export function CatalogProvider({ children }: { children: ReactNode }) {
   // Keep the tab fresh if the admin saves in another tab.
   useEffect(() => {
     const onStorage = (e: StorageEvent) => {
-      if (e.key?.startsWith('pearlin-admin-')) refresh();
+      if (e.key?.startsWith('jannat-admin-')) refresh();
     };
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);

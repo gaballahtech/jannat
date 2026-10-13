@@ -13,7 +13,7 @@ export function TrustStrip() {
     { icon: BadgeCheck, top: 'ONLINE PAYMENT', sub: 'Confirmed 1-to-1 on WhatsApp' },
   ];
   return (
-    <section aria-label="Why shop with pearlin" className="border-y border-black/10 dark:border-white/10 bg-white dark:bg-[#101010]">
+    <section aria-label="Why shop with jannat" className="border-y border-black/10 dark:border-white/10 bg-white dark:bg-[#101010]">
       <div className="mx-auto grid max-w-[1400px] grid-cols-2 gap-y-5 px-4 py-6 sm:px-6 lg:grid-cols-4 lg:px-10">
         {items.map((it) => (
           <div key={it.top} className="flex items-center gap-3">

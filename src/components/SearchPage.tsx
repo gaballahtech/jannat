@@ -47,7 +47,7 @@ export default function SearchPage() {
 
   return (
     <section className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-10 lg:py-16">
-      <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">SEARCH PEARLIN</p>
+      <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">SEARCH JANNAT</p>
       <div className="mt-5 flex items-center gap-3 border-b-2 border-black dark:border-white pb-4">
         <Search className="h-6 w-6 shrink-0" aria-hidden="true" />
         <input
@@ -140,7 +140,7 @@ export default function SearchPage() {
               Can’t find your size or color?{' '}
               <WaCta
                 mode="name"
-                message={(info) => `Hi pearlin! I'm ${info.name}. I'm looking for: ${q.trim()}`}
+                message={(info) => `Hi jannat! I'm ${info.name}. I'm looking for: ${q.trim()}`}
                 title="ASK US"
                 submitLabel="ASK ON WHATSAPP"
                 className="font-normal text-black dark:text-[#f2f2f2] underline underline-offset-4"

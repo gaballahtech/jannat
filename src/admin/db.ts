@@ -3,7 +3,7 @@
    - IndexedDB is async + large quota: the right home for compressed image Blobs.
    Product records only keep a tiny `idb:<key>` reference; blobs resolve to object URLs at render. */
 
-const DB_NAME = 'pearlin';
+const DB_NAME = 'jannat';
 const STORE = 'images';
 const DB_VERSION = 1;
 

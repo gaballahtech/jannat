@@ -16,6 +16,7 @@ export type CleanProduct = {
   variants: { name: string; hex: string; image: string }[];
   inventory: Record<string, number>;
   pairs_with: string[];
+  video_url: string | null;
 };
 
 export function cleanProductInput(b: Record<string, unknown>): CleanProduct {
@@ -61,5 +62,11 @@ export function cleanProductInput(b: Record<string, unknown>): CleanProduct {
           .filter((x): x is string => typeof x === 'string')
           .slice(0, 2)
       : [],
+    video_url:
+      typeof b.videoUrl === 'string' && b.videoUrl.trim()
+        ? b.videoUrl.trim().slice(0, 2000)
+        : typeof b.video_url === 'string' && (b.video_url as string).trim()
+          ? (b.video_url as string).trim().slice(0, 2000)
+          : null,
   };
 }

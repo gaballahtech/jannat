@@ -13,7 +13,7 @@ export default class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, info: { componentStack: string }) {
     // Visible in devtools / Vercel logs; no backend reporting yet.
-    console.error('[pearlin] UI crash:', error, info.componentStack);
+    console.error('[jannat] UI crash:', error, info.componentStack);
   }
 
   render() {

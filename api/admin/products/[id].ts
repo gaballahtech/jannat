@@ -32,6 +32,7 @@ export default async function handler(req: ServerReq, res: ServerRes): Promise<v
       category_id=${p.category_id}, description=${p.description}, fabric=${p.fabric}, tag=${p.tag},
       sold=${p.sold}, sizes=${JSON.stringify(p.sizes)}::jsonb, variants=${JSON.stringify(p.variants)}::jsonb,
       inventory=${JSON.stringify(p.inventory)}::jsonb, pairs_with=${JSON.stringify(p.pairs_with)}::jsonb,
+      video_url=${p.video_url},
       stock=${stock}, updated_at=now() where id=${id} returning *`) as DbProduct[];
     if (rows.length === 0) return json(res, 404, { error: 'Not found.' });
     return json(res, 200, { product: rowToProduct(rows[0]) });

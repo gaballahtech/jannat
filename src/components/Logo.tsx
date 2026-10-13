@@ -1,21 +1,12 @@
-/* Adaptive brand mark: black on light mode, white on dark mode.
-   Follows the OS setting automatically (no toggle) via Tailwind's dark: variant. */
-export default function Logo({ className = 'h-8 w-auto' }: { className?: string }) {
+/* Jannat brand mark — circular artwork (beige/gold), cropped round so it sits
+   cleanly on light and dark backgrounds. File: public/logo-jannat.png */
+export default function Logo({ className = 'h-9 w-9' }: { className?: string }) {
   return (
-    <span className={`inline-flex shrink-0 ${className}`} role="img" aria-label="pearlin">
-      <img
-        src="/logo-black.png"
-        alt=""
-        decoding="async"
-        className="h-full w-auto dark:hidden"
-      />
-      <img
-        src="/logo-white.png"
-        alt=""
-        aria-hidden="true"
-        decoding="async"
-        className="hidden h-full w-auto dark:block"
-      />
-    </span>
+    <img
+      src="/logo-jannat.png"
+      alt="Jannat"
+      decoding="async"
+      className={`shrink-0 rounded-full object-cover ring-1 ring-black/10 dark:ring-white/25 ${className}`}
+    />
   );
 }

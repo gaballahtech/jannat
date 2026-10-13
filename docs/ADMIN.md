@@ -1,4 +1,4 @@
-# pearlin — Owner manual (`/admin`)
+# jannat — Owner manual (`/admin`)
 
 Open `/admin`, enter your dashboard password (created on first visit).
 Everything below needs no code. Data lives in **this browser** until the
@@ -20,7 +20,7 @@ database backend is connected — export a backup after every change day.
 2. Stock drops automatically. Low stock (≤ 5) shows `ONLY X LEFT` on the site.
 3. New photos upload to Cloudinary as compressed WebP when `VITE_CLOUDINARY_*`
    is set (see `.env.example`); otherwise they stay on this device only
-   (`PEARLIN` placeholder elsewhere).
+   (`JANNAT` placeholder elsewhere).
 
 ## Files (for the developer)
 
@@ -31,7 +31,7 @@ src/components/admin/PinGate.tsx    password gate (device-level lock, NOT real a
 src/components/admin/InvoiceViews.tsx InvoiceCard (PNG target) + FitInvoice preview
                                     — keep in sync with src/admin/invoiceCanvas.ts
 src/components/admin/OwnerGuide.tsx "How to run your store" box on Overview
-src/admin/adminData.ts              localStorage data layer (keys pearlin-admin-*)
+src/admin/adminData.ts              localStorage data layer (keys jannat-admin-*)
 src/admin/db.ts                     IndexedDB image blobs (fallback when Cloudinary unset)
 src/lib/cloudinary.ts               browser WebP compress + unsigned upload
 ```

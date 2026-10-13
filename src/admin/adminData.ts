@@ -13,7 +13,7 @@ import { blobToDataUrl, dataUrlToBlob, idbAll, idbClear, idbDel, idbSet, refKey 
 
 export type Category = { id: string; label: string };
 
-const CATS_KEY = 'pearlin-admin-cats-v1';
+const CATS_KEY = 'jannat-admin-cats-v1';
 
 export function defaultCategories(): Category[] {
   return [
@@ -87,7 +87,7 @@ export type HomeSettings = {
   hero: HeroSlide[];
 };
 
-const HOME_KEY = 'pearlin-admin-home-v1';
+const HOME_KEY = 'jannat-admin-home-v1';
 
 export function defaultHome(): HomeSettings {
   return {
@@ -139,7 +139,7 @@ export type Invoice = {
   paymentMethod: string; // e.g. "Online transfer"
   items: InvoiceItem[];
   subtotal: number;
-  discount: number; // EGP amount off (e.g. PEARLIN10 honored manually)
+  discount: number; // EGP amount off (e.g. JANNAT10 honored manually)
   shipping: number;
   total: number; // subtotal - discount + shipping
 };
@@ -162,11 +162,11 @@ const DEFAULT_BIZ: BizSettings = {
   address: 'Cairo, Egypt',
   paymentDefault: 'Online transfer',
   terms: 'Payment due on receipt. Please check your items on delivery.',
-  whatsapp: '201203252464',
-  instagram: 'https://www.instagram.com/pearlin.eg/',
-  tiktok: 'https://www.tiktok.com/@pearlin.eg',
+  whatsapp: '201229081831',
+  instagram: '',
+  tiktok: 'https://www.tiktok.com/@2jannat.samy1',
   shippingFee: 70,
-  promoCode: 'PEARLIN10',
+  promoCode: 'JANNAT10',
   promoPercent: 10,
   promoEnabled: true,
 };
@@ -175,12 +175,12 @@ export function getSettings(): BizSettings {
   // Server snapshot wins when the database is connected (see src/lib/api.ts).
   const server = getServerBiz();
   if (server) return { ...DEFAULT_BIZ, ...server };
-  const v = read<Partial<BizSettings>>('pearlin-admin-settings-v1', {});
+  const v = read<Partial<BizSettings>>('jannat-admin-settings-v1', {});
   return { ...DEFAULT_BIZ, ...(v && typeof v === 'object' ? v : {}) };
 }
 
 export function saveSettings(s: BizSettings) {
-  write('pearlin-admin-settings-v1', s);
+  write('jannat-admin-settings-v1', s);
 }
 
 /** Shared totals math — builder, canvas and preview must never disagree. */
@@ -192,11 +192,11 @@ export function calcTotals(subtotal: number, discount: number, shipping: number)
 }
 
 const K = {
-  products: 'pearlin-admin-products-v1',
-  deleted: 'pearlin-admin-deleted-v1',
-  invoices: 'pearlin-admin-invoices-v1',
-  counter: 'pearlin-admin-counter-v1',
-  pin: 'pearlin-admin-pin',
+  products: 'jannat-admin-products-v1',
+  deleted: 'jannat-admin-deleted-v1',
+  invoices: 'jannat-admin-invoices-v1',
+  counter: 'jannat-admin-counter-v1',
+  pin: 'jannat-admin-pin',
 };
 
 function read<T>(key: string, fallback: T): T {
@@ -420,7 +420,7 @@ export function getShippingFee(): number {
 export function getPromo(): { code: string; percent: number; enabled: boolean } {
   const s = getSettings();
   return {
-    code: (s.promoCode || 'PEARLIN10').toUpperCase(),
+    code: (s.promoCode || 'JANNAT10').toUpperCase(),
     percent: Math.max(0, Number(s.promoPercent) || 0),
     enabled: s.promoEnabled !== false,
   };
@@ -454,17 +454,17 @@ function handleFromUrl(url: string, fallback: string): string {
 /** Live contact info — every WhatsApp/social button on the site reads this. */
 export function getContact() {
   const s = getSettings();
-  const wa = normalizeWhatsapp(s.whatsapp || '') || '201203252464';
-  const instagram = s.instagram?.trim() || 'https://www.instagram.com/pearlin.eg/';
-  const tiktok = s.tiktok?.trim() || 'https://www.tiktok.com/@pearlin.eg';
+  const wa = normalizeWhatsapp(s.whatsapp || '') || '201229081831';
+  const instagram = s.instagram?.trim() || '';
+  const tiktok = s.tiktok?.trim() || 'https://www.tiktok.com/@2jannat.samy1';
   return {
     whatsapp: wa,
     whatsappDisplay: egyptDisplay(wa),
     whatsappLink: (text: string) => `https://wa.me/${wa}?text=${encodeURIComponent(text)}`,
     instagram,
-    instagramHandle: handleFromUrl(instagram, '@pearlin.eg'),
+    instagramHandle: handleFromUrl(instagram, ''),
     tiktok,
-    tiktokHandle: handleFromUrl(tiktok, '@pearlin.eg'),
+    tiktokHandle: handleFromUrl(tiktok, '@2jannat.samy1'),
   };
 }
 
@@ -477,7 +477,7 @@ async function hashPin(pin: string): Promise<string> {
     if (typeof crypto !== 'undefined' && crypto.subtle) {
       const buf = await crypto.subtle.digest(
         'SHA-256',
-        new TextEncoder().encode(`pearlin-admin:${pin}`),
+        new TextEncoder().encode(`jannat-admin:${pin}`),
       );
       return `sha256:${[...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('')}`;
     }
@@ -527,7 +527,7 @@ export async function setPin(pin: string) {
 
 /* ----- brute-force throttle: 5 wrong tries → escalating lockout ----- */
 type AttState = { count: number; lockedUntil: number };
-const ATT_KEY = 'pearlin-admin-attempts';
+const ATT_KEY = 'jannat-admin-attempts';
 const MAX_FREE_TRIES = 5;
 
 function readAtt(): AttState {
@@ -574,7 +574,7 @@ export function resetPinAttempts() {
   writeAtt({ count: 0, lockedUntil: 0 });
 }
 
-const UNLOCK_KEY = 'pearlin-admin-unlocked';
+const UNLOCK_KEY = 'jannat-admin-unlocked';
 
 export function isUnlocked(): boolean {
   try {
@@ -599,7 +599,7 @@ export function setUnlocked(v: boolean) {
    can be wiped. Images are embedded as compressed dataURLs. */
 
 export type BackupFile = {
-  app: 'pearlin-backup';
+  app: 'jannat-backup';
   version: 1;
   exportedAt: string;
   localStorage: Record<string, string>;
@@ -607,15 +607,15 @@ export type BackupFile = {
 };
 
 const BACKUP_LS_KEYS = [
-  'pearlin-admin-products-v1',
-  'pearlin-admin-deleted-v1',
-  'pearlin-admin-invoices-v1',
-  'pearlin-admin-counter-v1',
-  'pearlin-admin-pin',
-  'pearlin-admin-settings-v1',
-  'pearlin-admin-cats-v1',
-  'pearlin-admin-home-v1',
-  'pearlin-wishlist',
+  'jannat-admin-products-v1',
+  'jannat-admin-deleted-v1',
+  'jannat-admin-invoices-v1',
+  'jannat-admin-counter-v1',
+  'jannat-admin-pin',
+  'jannat-admin-settings-v1',
+  'jannat-admin-cats-v1',
+  'jannat-admin-home-v1',
+  'jannat-wishlist',
 ];
 
 export async function exportBackup(): Promise<{ filename: string; url: string; sizeKb: number }> {
@@ -637,7 +637,7 @@ export async function exportBackup(): Promise<{ filename: string; url: string; s
     }
   }
   const file: BackupFile = {
-    app: 'pearlin-backup',
+    app: 'jannat-backup',
     version: 1,
     exportedAt: new Date().toISOString(),
     localStorage,
@@ -647,12 +647,12 @@ export async function exportBackup(): Promise<{ filename: string; url: string; s
   const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
   const d = new Date();
   const stamp = `${d.getFullYear()}-${`${d.getMonth() + 1}`.padStart(2, '0')}-${`${d.getDate()}`.padStart(2, '0')}`;
-  return { filename: `pearlin-backup-${stamp}.json`, url, sizeKb: Math.round(json.length / 1024) };
+  return { filename: `jannat-backup-${stamp}.json`, url, sizeKb: Math.round(json.length / 1024) };
 }
 
 export async function importBackup(file: BackupFile): Promise<void> {
-  if (!file || file.app !== 'pearlin-backup' || file.version !== 1) {
-    throw new Error('Not a pearlin backup file.');
+  if (!file || file.app !== 'jannat-backup' || file.version !== 1) {
+    throw new Error('Not a jannat backup file.');
   }
   if (file.localStorage && typeof file.localStorage === 'object') {
     for (const [k, v] of Object.entries(file.localStorage)) {

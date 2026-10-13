@@ -1,4 +1,4 @@
--- pearlin backend — initial schema + seed.
+-- jannat backend — initial schema + seed.
 -- Run once in the Neon SQL editor (or psql). Safe to re-run: seeds use ON CONFLICT DO NOTHING.
 -- Needs: pgcrypto for gen_random_uuid (allowlisted on Neon).
 
@@ -87,7 +87,7 @@ insert into categories (id, label, position) values
 on conflict (id) do nothing;
 
 insert into settings (key, value) values
-  ('biz', '{"address":"Cairo, Egypt","paymentDefault":"Online transfer","terms":"Payment due on receipt. Please check your items on delivery.","whatsapp":"201203252464","instagram":"https://www.instagram.com/pearlin.eg/","tiktok":"https://www.tiktok.com/@pearlin.eg","shippingFee":70,"promoCode":"PEARLIN10","promoPercent":10,"promoEnabled":true}'),
+  ('biz', '{"address":"Cairo, Egypt","paymentDefault":"Online transfer","terms":"Payment due on receipt. Please check your items on delivery.","whatsapp":"201229081831","instagram":"","tiktok":"https://www.tiktok.com/@2jannat.samy1","shippingFee":70,"promoCode":"JANNAT10","promoPercent":10,"promoEnabled":true}'),
   ('home', '{"hero":[{"productId":"tech-cargo-hoodie","variant":"Black"},{"productId":"utility-hoodie","variant":"Beige"},{"productId":"shell-jacket","variant":"Camel"}]}')
 on conflict (key) do nothing;
 

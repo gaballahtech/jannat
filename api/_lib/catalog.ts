@@ -17,6 +17,7 @@ export type DbProduct = {
   inventory: Record<string, number>;
   pairs_with: string[];
   created_at: string;
+  video_url: string | null;
 };
 
 export const cellKey = (variant: string, size: string): string => `${variant}||${size}`;
@@ -52,6 +53,7 @@ export type Product = {
   inventory: Record<string, number>;
   createdAt: string;
   pairsWith: string[];
+  videoUrl?: string;
 };
 
 export function rowToProduct(r: DbProduct): Product {
@@ -68,6 +70,7 @@ export function rowToProduct(r: DbProduct): Product {
   const pairsWith = Array.isArray(r.pairs_with)
     ? r.pairs_with.filter((x): x is string => typeof x === 'string').slice(0, 2)
     : [];
+  const videoUrl = typeof r.video_url === 'string' && r.video_url.length > 0 ? r.video_url : undefined;
   return {
     id: r.id,
     name: r.name,
@@ -83,6 +86,7 @@ export function rowToProduct(r: DbProduct): Product {
     inventory,
     createdAt: typeof r.created_at === 'string' ? r.created_at.slice(0, 10) : '',
     pairsWith,
+    ...(videoUrl ? { videoUrl } : {}),
   };
 }
 

@@ -41,7 +41,7 @@ export async function compressToWebP(file: File, maxDim = 1000, quality = 0.8): 
   }
 }
 
-export async function uploadToCloudinary(file: File, folder = 'pearlin/products'): Promise<string> {
+export async function uploadToCloudinary(file: File, folder = 'jannat/products'): Promise<string> {
   if (!CLOUD || !PRESET) throw new Error('Cloudinary not configured — set VITE_CLOUDINARY_* in .env');
   const blob = await compressToWebP(file);
   const fd = new FormData();

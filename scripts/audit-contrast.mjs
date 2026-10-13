@@ -1,4 +1,4 @@
-/* Automated dark/light contrast proof for pearlin.
+/* Automated dark/light contrast proof for jannat.
    Serves the production build, visits every route in both color schemes,
    runs axe-core's color-contrast rule, and saves dark screenshots.
    Exit 1 on any violation. Usage: node scripts/audit-contrast.mjs */

@@ -72,7 +72,7 @@ export async function verifyPassword(password: string, stored: string): Promise<
 
 /* ---------- sessions (opaque token + httpOnly cookie) ---------- */
 
-const COOKIE = 'pearlin_sid';
+const COOKIE = 'jannat_sid';
 const SESSION_DAYS = 30;
 
 export function newToken(): string {

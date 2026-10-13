@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check, Flame, Heart, MessageCircle, Minus, Plus, Ruler, Truck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Flame, Heart, MessageCircle, Minus, Play, Plus, Ruler, Truck, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import {
   LOW_STOCK,
   SIZES,
   formatEGP,
 } from '../data/store';
+import { parseVideoUrl } from '../lib/video';
 import { cellQty, getPromo, getShippingFee } from '../admin/adminData';
 import { MISSING_IMAGE, useCatalog } from '../catalog/CatalogContext';
 import { navigate, productPath, useRoute } from '../router';
@@ -72,6 +73,7 @@ export default function ProductPage({ productId }: { productId: string }) {
   const [showSticky, setShowSticky] = useState(false);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [finderOpen, setFinderOpen] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setShowSticky(window.scrollY > 650);
@@ -79,6 +81,21 @@ export default function ProductPage({ productId }: { productId: string }) {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Video modal: lock scroll + Escape to close (unmount stops playback).
+  useEffect(() => {
+    if (!videoOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setVideoOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [videoOpen]);
 
   const variant = product?.variants[variantIdx] ?? product?.variants[0];
   const sizes = product && product.sizes.length > 0 ? product.sizes : [...SIZES];
@@ -122,6 +139,7 @@ export default function ProductPage({ productId }: { productId: string }) {
 
   if (!product || !variant) return null;
   const wished = isWished(product.id);
+  const video = parseVideoUrl(product.videoUrl ?? '');
 
   // Keep the URL in sync (replace, so back-button stays clean) — every
   // color/size combo is a real shareable link like /product/x?color=Beige&size=L.
@@ -235,6 +253,17 @@ export default function ProductPage({ productId }: { productId: string }) {
                 </button>
               ))}
             </div>
+            {video && (
+              <button
+                onClick={() => setVideoOpen(true)}
+                className="mt-4 flex w-full items-center justify-center gap-2.5 rounded-2xl border border-black/15 bg-[#F8F8F8] py-4 text-[12px] font-normal tracking-[0.2em] transition hover:border-black hover:bg-black hover:text-white dark:border-white/15 dark:bg-white/[0.05] dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
+              >
+                <span className="grid h-8 w-8 place-items-center rounded-full bg-black text-white dark:bg-white dark:text-black">
+                  <Play className="h-3.5 w-3.5 fill-current" />
+                </span>
+                WATCH VIDEO · {video.label.toUpperCase()}
+              </button>
+            )}
           </div>
 
           {/* Info */}
@@ -336,7 +365,7 @@ export default function ProductPage({ productId }: { productId: string }) {
                 <WaCta
                   mode="name"
                   message={(info) =>
-                    `Hi pearlin! I'm ${info.name}. I need size help for ${product.name} (${variant.name}). My height: __ cm, weight: __ kg. Which size fits me?`
+                    `Hi jannat! I'm ${info.name}. I need size help for ${product.name} (${variant.name}). My height: __ cm, weight: __ kg. Which size fits me?`
                   }
                   title="SIZE HELP"
                   submitLabel="ASK ON WHATSAPP"
@@ -398,7 +427,7 @@ export default function ProductPage({ productId }: { productId: string }) {
               <WaCta
                 mode="name"
                 message={(info) =>
-                  `Hi pearlin! I'm ${info.name}. Please tell me when ${product.name} (${variant.name}) is back in stock.`
+                  `Hi jannat! I'm ${info.name}. Please tell me when ${product.name} (${variant.name}) is back in stock.`
                 }
                 title="RESTOCK ALERT"
                 submitLabel="NOTIFY ME"
@@ -574,6 +603,64 @@ export default function ProductPage({ productId }: { productId: string }) {
         category={product.category}
         onApply={(s) => pickSize(s)}
       />
+
+      {/* Product video — embedded player per platform, unmounts on close to stop playback */}
+      <AnimatePresence>
+        {videoOpen && video && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 p-4 backdrop-blur-[2px] sm:p-8"
+            onClick={() => setVideoOpen(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${product.name} video on ${video.label}`}
+          >
+            <motion.div
+              initial={{ scale: 0.94, y: 12 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.94, y: 12 }}
+              transition={{ type: 'tween', duration: 0.22 }}
+              className="w-full max-w-3xl overflow-hidden rounded-[20px] bg-black shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between px-5 py-3.5">
+                <p className="truncate text-[11px] font-normal tracking-[0.2em] text-white/70">
+                  {product.name} · {video.label.toUpperCase()}
+                </p>
+                <button
+                  onClick={() => setVideoOpen(false)}
+                  aria-label="Close video"
+                  className="rounded-full p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="aspect-video w-full bg-black">
+                {video.platform === 'direct' ? (
+                  <video
+                    src={video.embedUrl}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="h-full w-full"
+                  />
+                ) : (
+                  <iframe
+                    src={video.embedUrl}
+                    title={`${product.name} video`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                    className="h-full w-full border-0"
+                  />
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Sticky mobile buy bar */}
       <AnimatePresence>

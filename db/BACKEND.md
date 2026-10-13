@@ -1,11 +1,11 @@
-# pearlin backend — Neon Postgres + Vercel Functions
+# jannat backend — Neon Postgres + Vercel Functions
 
 The shop is static hosting + serverless API (`/api/*`) on Postgres.
 No Supabase, no ORM — plain SQL over `@neondatabase/serverless` (HTTP, pooled).
 
 ## One-time setup (you do this in dashboards, ~10 min)
 
-1. **Neon:** console.neon.tech → New Project `pearlin` (any EU region) → SQL Editor.
+1. **Neon:** console.neon.tech → New Project `jannat` (any EU region) → SQL Editor.
 2. Paste `db/migrations/001_init.sql` → Run. Then `002_stock.sql` → Run.
    Seeds: 5 categories, shop settings, hero slots, all 9 products with stock.
 3. Neon → Connection Details → **pooled** connection string (has `-pooler`).

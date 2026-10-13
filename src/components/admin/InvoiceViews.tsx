@@ -30,7 +30,7 @@ export function InvoiceCard({ invoice }: { invoice: Invoice }) {
       {/* Brand band */}
       <div style={{ background: '#0a0a0a', color: '#fff', padding: '28px 40px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <img src="/logo-white.png" alt="pearlin" style={{ height: 40 }} />
+          <img src="/logo-white.png" alt="jannat" style={{ height: 40 }} />
           <div style={{ textAlign: 'right' }}>
             <p style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 700, letterSpacing: 3 }}>
               Invoice
@@ -64,7 +64,7 @@ export function InvoiceCard({ invoice }: { invoice: Invoice }) {
             <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2.5, color: '#777' }}>
               SELLER
             </p>
-            <p style={{ fontSize: 13, fontWeight: 800, marginTop: 6 }}>pearlin</p>
+            <p style={{ fontSize: 13, fontWeight: 800, marginTop: 6 }}>jannat</p>
             <p style={{ fontSize: 11.5, marginTop: 3, color: '#444' }}>{biz.address}</p>
             <p style={{ fontSize: 11.5, marginTop: 3, color: '#444' }}>
               WhatsApp {contact.whatsappDisplay}
@@ -166,10 +166,10 @@ export function InvoiceCard({ invoice }: { invoice: Invoice }) {
 
         <div style={{ borderTop: '1px solid #ececec', marginTop: 28, paddingTop: 16, textAlign: 'center' }}>
           <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 15, color: '#111' }}>
-            Thank you for shopping with pearlin.
+            Thank you for shopping with jannat.
           </p>
           <p style={{ fontSize: 11, color: '#888', marginTop: 6 }}>
-            Questions? WhatsApp {contact.whatsappDisplay} · Instagram {contact.instagramHandle}
+            Questions? WhatsApp {contact.whatsappDisplay} · TikTok {contact.tiktokHandle}
           </p>
           <p style={{ fontSize: 10.5, color: '#999', marginTop: 4 }}>{biz.terms}</p>
         </div>
@@ -185,7 +185,7 @@ export function InvoiceCard({ invoice }: { invoice: Invoice }) {
           padding: '17px 0',
         }}
       >
-        PEARLIN · CAIRO, EGYPT
+        JANNAT · CAIRO, EGYPT
       </div>
     </div>
   );

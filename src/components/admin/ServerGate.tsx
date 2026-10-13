@@ -69,7 +69,7 @@ export default function ServerAuth({ onAuthed }: { onAuthed: (username: string) 
         onKeyDown={(e) => e.key === 'Enter' && submit()}
         type="text"
         autoComplete="username"
-        placeholder="e.g. pearlin_owner"
+        placeholder="e.g. jannat_owner"
         aria-label="Username"
         className="mt-6 w-full rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-center text-[16px] outline-none placeholder:text-black/25 dark:placeholder:text-white/60 focus:border-black dark:focus:border-white sm:text-xl"
       />

@@ -1,4 +1,4 @@
-# pearlin — Hoodies & Essentials | Egypt
+# jannat — Hoodies & Essentials | Egypt
 
 Single-page storefront for a Cairo-based heavyweight streetwear brand.
 Browse → bag → WhatsApp checkout (`wa.me` order link with lines + shipping + total).

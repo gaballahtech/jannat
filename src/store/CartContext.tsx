@@ -5,7 +5,7 @@ import { useCatalog, useCatalogReady } from '../catalog/CatalogContext';
 import type { Product } from '../data/store';
 import { goHome, navigate, productPath, savedPath, shopPath, useRoute } from '../router';
 
-const CART_KEY = 'pearlin-cart-v1';
+const CART_KEY = 'jannat-cart-v1';
 
 export type CartItem = {
   product: Product;
@@ -112,7 +112,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const wishOnly = route.view === 'shop' && route.saved;
   const [wishlist, setWishlist] = useState<string[]>(() => {
     try {
-      const raw = localStorage.getItem('pearlin-wishlist');
+      const raw = localStorage.getItem('jannat-wishlist');
       const parsed: unknown = raw ? JSON.parse(raw) : [];
       return Array.isArray(parsed) ? parsed.filter((x): x is string => typeof x === 'string') : [];
     } catch {
@@ -122,7 +122,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem('pearlin-wishlist', JSON.stringify(wishlist));
+      localStorage.setItem('jannat-wishlist', JSON.stringify(wishlist));
     } catch {
       /* storage unavailable — wishlist just won't persist */
     }

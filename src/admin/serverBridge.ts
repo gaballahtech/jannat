@@ -195,7 +195,7 @@ export async function bridgeExportBackup(): Promise<{ sizeKb: number }> {
   });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.download = `pearlin-server-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = `jannat-server-backup-${new Date().toISOString().slice(0, 10)}.json`;
   a.href = url;
   document.body.appendChild(a);
   a.click();

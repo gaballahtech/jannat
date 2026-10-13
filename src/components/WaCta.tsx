@@ -9,7 +9,7 @@ import { WhatsAppIcon } from './icons';
 import { useFocusTrap } from '../utils/useFocusTrap';
 import { useLockBody } from '../utils/useLockBody';
 
-const LS_KEY = 'pearlin-customer';
+const LS_KEY = 'jannat-customer';
 
 function loadSaved(): CustomerInfo {
   try {
@@ -90,7 +90,7 @@ export default function WaCta({
     const contact = getContact();
     const url = lines
       ? buildWhatsAppOrderLink(lines, getShippingFee(), contact.whatsapp, info)
-      : contact.whatsappLink(message ? message(info) : `Hi pearlin! I'm ${info.name}.`);
+      : contact.whatsappLink(message ? message(info) : `Hi jannat! I'm ${info.name}.`);
     setOpen(false);
     window.open(url, '_blank', 'noopener');
   };
