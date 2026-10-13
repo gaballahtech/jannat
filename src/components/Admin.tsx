@@ -668,10 +668,10 @@ function todayLocal(): string {
 }
 
 export default function Admin() {
-  // Server mode (database connected) → real email/password sessions.
+  // Server mode (database connected) → real username/password sessions.
   // Local mode (no backend yet) → the legacy device PIN.
   const [server, setServer] = useState<'checking' | 'on' | 'off'>('checking');
-  const [serverEmail, setServerEmail] = useState<string | null>(null);
+  const [serverUser, setServerUser] = useState<string | null>(null);
   const [authed, setAuthed] = useState(() => isUnlocked());
 
   useEffect(() => {
@@ -682,8 +682,8 @@ export default function Admin() {
         if (s.mode === 'server') {
           setServer('on');
           apiMe().then(
-            (r) => live && setServerEmail(r.owner.email),
-            () => live && setServerEmail(null),
+            (r) => live && setServerUser(r.owner.username),
+            () => live && setServerUser(null),
           );
         } else {
           setServer('off');
@@ -704,12 +704,12 @@ export default function Admin() {
     );
   }
   if (server === 'on') {
-    if (!serverEmail) return <ServerAuth onAuthed={(e) => setServerEmail(e)} />;
+    if (!serverUser) return <ServerAuth onAuthed={(u) => setServerUser(u)} />;
     return (
       <Dashboard
         onLock={() => {
           apiLogout().catch(() => {});
-          setServerEmail(null);
+          setServerUser(null);
         }}
       />
     );

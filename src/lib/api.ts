@@ -96,16 +96,16 @@ export function fetchAuthStatus(signal?: AbortSignal): Promise<AuthStatus> {
   return req<AuthStatus>('/api/auth?action=status', { signal });
 }
 
-export function apiMe(): Promise<{ owner: { email: string } }> {
+export function apiMe(): Promise<{ owner: { username: string } }> {
   return req('/api/auth?action=me');
 }
 
-export function apiLogin(email: string, password: string): Promise<{ owner: { email: string } }> {
-  return req('/api/auth?action=login', { method: 'POST', body: JSON.stringify({ email, password }) });
+export function apiLogin(username: string, password: string): Promise<{ owner: { username: string } }> {
+  return req('/api/auth?action=login', { method: 'POST', body: JSON.stringify({ username, password }) });
 }
 
-export function apiSetup(email: string, password: string): Promise<{ owner: { email: string } }> {
-  return req('/api/auth?action=setup', { method: 'POST', body: JSON.stringify({ email, password }) });
+export function apiSetup(username: string, password: string): Promise<{ owner: { username: string } }> {
+  return req('/api/auth?action=setup', { method: 'POST', body: JSON.stringify({ username, password }) });
 }
 
 export function apiLogout(): Promise<{ ok: boolean }> {

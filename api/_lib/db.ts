@@ -114,7 +114,7 @@ export function sessionTokenFrom(req: ServerReq): string | null {
   return null;
 }
 
-export type Owner = { id: string; email: string };
+export type Owner = { id: string; username: string };
 
 export async function createSession(ownerId: string): Promise<{ token: string; maxAge: number }> {
   const token = newToken();
@@ -128,7 +128,7 @@ export async function createSession(ownerId: string): Promise<{ token: string; m
 export async function requireOwner(req: ServerReq): Promise<Owner | null> {
   const token = sessionTokenFrom(req);
   if (!token) return null;
-  const rows = await sql()`select o.id, o.email from sessions s
+  const rows = await sql()`select o.id, o.username from sessions s
     join owners o on o.id = s.owner_id
     where s.token = ${token} and s.expires_at > now() limit 1`;
   if (rows.length === 0) {
