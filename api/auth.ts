@@ -20,7 +20,8 @@ import {
    POST /api/auth?action=setup — first owner only (403 after)
    POST /api/auth?action=login
    POST /api/auth?action=logout
-   GET  /api/auth?action=me */
+   GET  /api/auth?action=me
+   POST /api/auth?action=password — change password (authed, needs current) */
 
 function actionOf(req: ServerReq): string {
   const q = req.query?.action;
@@ -95,6 +96,23 @@ export default async function handler(req: ServerReq, res: ServerRes): Promise<v
   if (req.method === 'POST' && action === 'logout') {
     await destroySession(req);
     res.setHeader('Set-Cookie', clearSessionCookie());
+    return json(res, 200, { ok: true });
+  }
+
+  if (req.method === 'POST' && action === 'password') {
+    const owner = await requireOwner(req);
+    if (!owner) return json(res, 401, { error: 'Not logged in.' });
+    const { current, next } = await readBody<{ current?: unknown; next?: unknown }>(req);
+    if (typeof current !== 'string' || typeof next !== 'string' || next.length < 8) {
+      return json(res, 400, { error: 'Current password + new 8+ char password required.' });
+    }
+    const rows = (await sql()`select password_hash from owners where id = ${owner.id}`) as {
+      password_hash: string;
+    }[];
+    if (!rows[0] || !(await verifyPassword(current, rows[0].password_hash))) {
+      return json(res, 401, { error: 'Current password is wrong.' });
+    }
+    await sql()`update owners set password_hash = ${await hashPassword(next)} where id = ${owner.id}`;
     return json(res, 200, { ok: true });
   }
 

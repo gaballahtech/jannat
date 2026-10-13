@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { adminPath, navigate, useRoute } from '../router';
-import { useCatalogRefresh, useCatalog as useCatalogList } from '../catalog/CatalogContext';
+import { useCatalogRefresh, useCatalog as useCatalogList, useCategories } from '../catalog/CatalogContext';
 import { normalizeDigits, onlyDigits, onlyPhoneChars } from '../utils/numbers';
 import { useFocusTrap } from '../utils/useFocusTrap';
 import { useLockBody } from '../utils/useLockBody';
@@ -29,7 +29,7 @@ import PinGate from './admin/PinGate';
 import ServerAuth from './admin/ServerGate';
 import { FitInvoice } from './admin/InvoiceViews';
 import OwnerGuide from './admin/OwnerGuide';
-import { apiLogout, apiMe, fetchAuthStatus } from '../lib/api';
+import { apiLogout, apiMe, fetchAuthStatus, isServerOn } from '../lib/api';
 import {
   LOW_STOCK,
   KNOWN_SIZES,
@@ -43,40 +43,41 @@ import { renderInvoicePng } from '../admin/invoiceCanvas';
 import {
   blankVariant,
   calcTotals,
-  addCategory,
   cellKey,
   cellQty,
   ensureMatrix,
   checkPin,
-  deleteCategory,
-  deleteProduct,
   defaultShipping,
-  exportBackup,
-  findAdminProduct,
   getCategories,
   getHome,
-  getInvoices,
   getOverrides,
   getSettings,
   isUnlocked,
-  mergeCatalog as mergeCatalogSafe,
   normalizeWhatsapp,
-  peekInvoiceNumber,
   importBackup,
-  renameCategory,
-  saveHome,
-  saveInvoice,
-  saveOverride,
-  saveSettings,
   setPin,
   setUnlocked,
   slugId,
-  voidInvoice,
   type BizSettings,
   type Invoice,
 } from '../admin/adminData';
 import { idbDel, refKey } from '../admin/db';
 import { cloudinaryConfigured, storeProductImage } from '../lib/cloudinary';
+import {
+  bridgeAddCategory,
+  bridgeChangePassword,
+  bridgeCreateInvoice,
+  bridgeDeleteCategory,
+  bridgeDeleteProduct,
+  bridgeExportBackup,
+  bridgeListInvoices,
+  bridgePeekNumber,
+  bridgeRenameCategory,
+  bridgeSaveHome,
+  bridgeSaveProduct,
+  bridgeSaveSettings,
+  bridgeVoidInvoice,
+} from '../admin/serverBridge';
 
 /* PIN gate, invoice views and owner guide live in ./admin/*.
    See src/components/admin/PinGate.tsx, InvoiceViews.tsx, OwnerGuide.tsx. */
@@ -181,6 +182,7 @@ function ProductEditor({
   const panelRef = useRef<HTMLDivElement>(null);
   useLockBody(true); // editor mounts as a modal
   useFocusTrap(true, panelRef);
+  const cats = useCategories();
   const set = (patch: Partial<FormState>) => setF((p) => ({ ...p, ...patch }));
 
   const pickFile = (key: string, file: File | null) => {
@@ -263,11 +265,11 @@ function ProductEditor({
         inventory,
         // New products are "added now" (front of New Arrivals); edits keep the original date.
         createdAt: f.id
-          ? (findAdminProduct(f.id)?.createdAt ?? new Date().toISOString())
+          ? (all.find((x) => x.id === f.id)?.createdAt ?? new Date().toISOString())
           : new Date().toISOString(),
         pairsWith: f.pairs.filter((x) => x !== id).slice(0, 2),
       };
-      saveOverride(record);
+      await bridgeSaveProduct(record, !f.id);
       onSaved();
       onClose();
     } catch (e) {
@@ -320,7 +322,7 @@ function ProductEditor({
               label="Category"
               variant="field"
               className="w-full"
-              options={getCategories().map((c) => ({
+              options={cats.map((c) => ({
                 value: c.id,
                 label: c.label,
               }))}
@@ -796,11 +798,11 @@ function Dashboard({ onLock }: { onLock: () => void }) {
       </div>
 
       {tab === 'overview' && (
-        <OverviewTab products={products} goTab={goTab} />
+        <OverviewTab products={products} goTab={goTab} refresh={refresh} />
       )}
       {tab === 'products' && <ProductsTab products={products} refresh={refresh} />}
-      {tab === 'categories' && <CategoriesTab refresh={refresh} />}
-      {tab === 'homepage' && <HomepageTab />}
+      {tab === 'categories' && <CategoriesTab products={products} refresh={refresh} />}
+      {tab === 'homepage' && <HomepageTab refresh={refresh} />}
       {tab === 'invoices' && <InvoicesTab refresh={refresh} />}
     </section>
   );
@@ -811,11 +813,13 @@ function Dashboard({ onLock }: { onLock: () => void }) {
 function OverviewTab({
   products,
   goTab,
+  refresh,
 }: {
   products: Product[];
   goTab: (t: Tab) => void;
+  refresh: () => Promise<void>;
 }) {
-  const [invoices, setInvoices] = useState(() => getInvoices());
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [pinA, setPinA] = useState('');
   const [pinB, setPinB] = useState('');
   const [pinMsg, setPinMsg] = useState('');
@@ -825,18 +829,25 @@ function OverviewTab({
   const [backupBusy, setBackupBusy] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const reloadStats = async () => {
+    try {
+      setInvoices(await bridgeListInvoices());
+    } catch {
+      /* keep last good stats */
+    }
+  };
+
+  useEffect(() => {
+    setBiz(getSettings());
+    void reloadStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [products]);
+
   const doExportBackup = async () => {
     setBackupMsg('');
     setBackupBusy(true);
     try {
-      const { filename, url, sizeKb } = await exportBackup();
-      const a = document.createElement('a');
-      a.download = filename;
-      a.href = url;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+      const { sizeKb } = await bridgeExportBackup();
       setBackupMsg(`Backup saved (${sizeKb} KB) — keep a copy off this device.`);
     } catch {
       setBackupMsg('Backup failed on this browser.');
@@ -847,6 +858,11 @@ function OverviewTab({
 
   const doImportBackup = async (file: File | undefined) => {
     if (!file) return;
+    if (isServerOn()) {
+      setBackupMsg('Restore is disabled while the database is connected — restores run from a database backup (ask your developer).');
+      if (fileRef.current) fileRef.current.value = '';
+      return;
+    }
     setBackupMsg('');
     const proceed = await askConfirm({
       title: 'Restore backup?',
@@ -877,6 +893,17 @@ function OverviewTab({
 
   const changePin = async () => {
     setPinMsg('');
+    if (isServerOn()) {
+      if (pinB.trim().length < 8) return setPinMsg('New password must be 8+ characters.');
+      try {
+        await bridgeChangePassword(pinA, pinB.trim());
+      } catch (e) {
+        return setPinMsg(e instanceof Error ? e.message : 'Password change failed.');
+      }
+      setPinA('');
+      setPinB('');
+      return setPinMsg('Password changed — it works on all devices now.');
+    }
     if (!(await checkPin(pinA.trim()))) return setPinMsg('Current password is wrong.');
     if (pinB.trim().length < 4) return setPinMsg('New password must be 4+ characters.');
     await setPin(pinB.trim());
@@ -987,7 +1014,7 @@ function OverviewTab({
             UPDATE PASSWORD
           </button>
           <button
-            onClick={() => setInvoices(getInvoices())}
+            onClick={() => void reloadStats()}
             className="mt-2 w-full py-2 text-[11px] tracking-[0.15em] text-black/45 underline-offset-4 hover:text-black hover:underline"
           >
             Refresh invoice stats
@@ -997,8 +1024,9 @@ function OverviewTab({
         <div className="rounded-2xl border border-black/10 p-5 sm:p-6 lg:col-span-2">
           <h3 className="text-[12px] font-normal tracking-[0.22em]">BACKUP & RESTORE</h3>
           <p className="mt-1.5 text-[12px] leading-relaxed tracking-[0.04em] text-black/55">
-            All dashboard data lives in this browser. Export a backup file regularly and keep a
-            copy elsewhere — restores products, stock, photos, invoices and settings.
+            {isServerOn()
+              ? 'Data lives in the database — Neon keeps automatic backups. Export below downloads a live JSON snapshot for your own records.'
+              : 'All dashboard data lives in this browser. Export a backup file regularly and keep a copy elsewhere — restores products, stock, photos, invoices and settings.'}
           </p>
           {backupMsg && <p className="mt-2 text-[12px] font-normal text-black/70">{backupMsg}</p>}
           <div className="mt-3 flex flex-col gap-2.5 sm:flex-row">
@@ -1009,13 +1037,15 @@ function OverviewTab({
             >
               <Download className="h-4 w-4" /> {backupBusy ? 'WORKING…' : 'EXPORT BACKUP'}
             </button>
-            <button
-              onClick={() => fileRef.current?.click()}
-              disabled={backupBusy}
-              className="flex-1 rounded-full border border-black/20 py-3.5 text-[11px] font-normal tracking-[0.2em] transition hover:border-black hover:bg-black hover:text-white disabled:opacity-50"
-            >
-              RESTORE FROM FILE
-            </button>
+            {!isServerOn() && (
+              <button
+                onClick={() => fileRef.current?.click()}
+                disabled={backupBusy}
+                className="flex-1 rounded-full border border-black/20 py-3.5 text-[11px] font-normal tracking-[0.2em] transition hover:border-black hover:bg-black hover:text-white disabled:opacity-50"
+              >
+                RESTORE FROM FILE
+              </button>
+            )}
             <input
               ref={fileRef}
               type="file"
@@ -1145,11 +1175,16 @@ function OverviewTab({
           </div>
           {bizMsg && <p className="mt-2 text-[12px] font-normal text-black/60">{bizMsg}</p>}
           <button
-            onClick={() => {
+            onClick={async () => {
               const clean = { ...biz, whatsapp: normalizeWhatsapp(biz.whatsapp) };
-              saveSettings(clean);
-              setBiz(clean);
-              setBizMsg('Business info saved — new invoices will use it.');
+              try {
+                await bridgeSaveSettings(clean);
+                setBiz(clean);
+                await refresh();
+                setBizMsg('Business info saved — live everywhere now.');
+              } catch (e) {
+                setBizMsg(e instanceof Error ? e.message : 'Save failed.');
+              }
             }}
             className="mt-3 w-full rounded-full bg-black py-3.5 text-[11px] font-normal tracking-[0.2em] text-white transition hover:bg-neutral-800 sm:w-auto sm:px-10"
           >
@@ -1163,21 +1198,26 @@ function OverviewTab({
 
 /* ================= categories ================= */
 
-function CategoriesTab({ refresh }: { refresh: () => Promise<void> }) {
+function CategoriesTab({ products, refresh }: { products: Product[]; refresh: () => Promise<void> }) {
+  const liveCats = useCategories();
   const [cats, setCats] = useState(() => getCategories());
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [labels, setLabels] = useState<Record<string, string>>({});
   const [msg, setMsg] = useState('');
   const [neu, setNeu] = useState('');
 
+  // Live categories (server when connected) flow in after every refresh.
+  useEffect(() => {
+    setCats(liveCats);
+  }, [liveCats]);
+
   useEffect(() => {
     const m: Record<string, number> = {};
-    for (const p of mergeCatalogSafe()) m[p.category] = (m[p.category] ?? 0) + 1;
+    for (const p of products) m[p.category] = (m[p.category] ?? 0) + 1;
     setCounts(m);
-  }, [cats]);
+  }, [products, cats]);
 
   const save = async () => {
-    setCats(getCategories());
     setLabels({});
     setMsg('');
     await refresh();
@@ -1185,8 +1225,12 @@ function CategoriesTab({ refresh }: { refresh: () => Promise<void> }) {
 
   const doAdd = async () => {
     setMsg('');
-    const c = addCategory(neu);
-    if (!c) return setMsg('Type a category name first.');
+    try {
+      const c = await bridgeAddCategory(neu);
+      if (!c) return setMsg('Type a category name first.');
+    } catch (e) {
+      return setMsg(e instanceof Error ? e.message : 'Add failed.');
+    }
     setNeu('');
     await save();
   };
@@ -1194,7 +1238,11 @@ function CategoriesTab({ refresh }: { refresh: () => Promise<void> }) {
   const doRename = async (id: string) => {
     const v = (labels[id] ?? '').trim();
     if (!v) return;
-    renameCategory(id, v);
+    try {
+      await bridgeRenameCategory(id, v);
+    } catch (e) {
+      return setMsg(e instanceof Error ? e.message : 'Rename failed.');
+    }
     await save();
   };
 
@@ -1207,10 +1255,11 @@ function CategoriesTab({ refresh }: { refresh: () => Promise<void> }) {
       danger: true,
     });
     if (!yes) return;
-    const r = deleteCategory(id);
+    const r = await bridgeDeleteCategory(id);
     if (!r.ok) {
       setMsg(
-        `Cannot delete “${label}” — ${r.count} product${r.count > 1 ? 's' : ''} still use it. Move them to another category first.`,
+        r.error ??
+          `Cannot delete “${label}” — ${r.count} product${r.count > 1 ? 's' : ''} still use it. Move them to another category first.`,
       );
       return;
     }
@@ -1259,11 +1308,11 @@ function CategoriesTab({ refresh }: { refresh: () => Promise<void> }) {
               </div>
               <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-[0.12em] text-black/45">
                 <span>
-                  Link: <span className="font-normal text-black/70">#/shop/{c.id}</span> ·{' '}
+                  Link: <span className="font-normal text-black/70">/shop/{c.id}</span> ·{' '}
                   {counts[c.id] ?? 0} product{(counts[c.id] ?? 0) === 1 ? '' : 's'}
                 </span>
                 <a
-                  href={`#/shop/${c.id}`}
+                  href={`/shop/${c.id}`}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1 font-normal text-black underline underline-offset-4 hover:opacity-70"
@@ -1294,17 +1343,36 @@ function CategoriesTab({ refresh }: { refresh: () => Promise<void> }) {
 
 /* ================= homepage merchandising ================= */
 
-function HomepageTab() {
+function HomepageTab({ refresh }: { refresh: () => Promise<void> }) {
   const products = useCatalogList();
   const [home, setHome] = useState(() => getHome());
   const [msg, setMsg] = useState('');
+  const [err, setErr] = useState('');
+  const msgTimer = useRef(0);
 
-  const persist = (h: typeof home) => {
+  // Pick up the server snapshot after refreshes.
+  useEffect(() => {
+    setHome(getHome());
+  }, [products]);
+
+  const flash = (m: string) => {
+    setMsg(m);
+    window.clearTimeout(msgTimer.current);
+    msgTimer.current = window.setTimeout(() => setMsg(''), 2500);
+  };
+
+  useEffect(() => () => window.clearTimeout(msgTimer.current), []);
+
+  const persist = async (h: typeof home) => {
     setHome(h);
-    saveHome(h);
-    setMsg('Homepage updated — it’s live on the store now.');
-    window.clearTimeout((persist as unknown as { _t?: number })._t);
-    (persist as unknown as { _t?: number })._t = window.setTimeout(() => setMsg(''), 2500);
+    setErr('');
+    try {
+      await bridgeSaveHome(h);
+      await refresh();
+      flash('Homepage updated — it’s live on the store now.');
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : 'Save failed.');
+    }
   };
 
   const setSlide = (i: number, productId: string, variant?: string) => {
@@ -1322,6 +1390,11 @@ function HomepageTab() {
       {msg && (
         <p className="rounded-xl bg-black px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-white">
           {msg}
+        </p>
+      )}
+      {err && (
+        <p className="rounded-xl px-4 py-3 text-center text-[12px] font-normal tracking-[0.08em] text-red-700">
+          {err}
         </p>
       )}
 
@@ -1395,6 +1468,7 @@ function HomepageTab() {
 function ProductsTab({ products, refresh }: { products: Product[]; refresh: () => Promise<void> }) {
   const [editing, setEditing] = useState<FormState | null>(null);
   const [q, setQ] = useState('');
+  const [msg, setMsg] = useState('');
 
   useEffect(() => {
     const intent = consumeAdminIntent();
@@ -1422,7 +1496,13 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
       danger: true,
     });
     if (!yes) return;
-    await deleteProduct(p.id);
+    try {
+      await bridgeDeleteProduct(p.id);
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : 'Delete failed.');
+      return;
+    }
+    setMsg('');
     await refresh();
   };
 
@@ -1444,6 +1524,8 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
           className="w-full rounded-2xl border border-black/10 bg-[#F8F8F8] py-3.5 pl-11 pr-4 text-[13px] outline-none placeholder:text-black/35 focus:border-black"
         />
       </div>
+
+      {msg && <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700">{msg}</p>}
 
       {visible.length === 0 ? (
         <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/45">
@@ -1487,7 +1569,7 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
             </div>
             <div className="flex shrink-0 flex-wrap gap-2">
               <a
-                href={`#/product/${p.id}`}
+                href={`/product/${p.id}`}
                 target="_blank"
                 rel="noreferrer"
                 title="Preview on store (new tab)"
@@ -1532,7 +1614,8 @@ type LineDraft = { productId: string; variant: string; size: string; qty: number
 
 function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
   const products = useCatalogList();
-  const [invoices, setInvoices] = useState<Invoice[]>(() => getInvoices());
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [nextNo, setNextNo] = useState('PR-…');
   const [creating, setCreating] = useState(false);
   const [detail, setDetail] = useState<Invoice | null>(null);
 
@@ -1554,6 +1637,21 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
   const [exportOk, setExportOk] = useState('');
   const [busy, setBusy] = useState(false);
   const [q, setQ] = useState('');
+
+  const reloadInvoices = async () => {
+    try {
+      const [list, no] = await Promise.all([bridgeListInvoices(), bridgePeekNumber()]);
+      setInvoices(list);
+      setNextNo(no);
+    } catch {
+      /* keep last good list — offline admin still works locally */
+    }
+  };
+
+  useEffect(() => {
+    void reloadInvoices();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const visibleInvoices = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -1683,7 +1781,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
           `Only ${have} left of ${p?.name ?? 'item'} (${l.variant} / ${l.size}) — lower the quantity.`,
         );
     }
-    const inv = saveInvoice({
+    const inv = await bridgeCreateInvoice({
       createdAt: new Date(date || Date.now()).toISOString(),
       buyerName: buyerName.trim(),
       buyerPhone: buyerPhone.trim(),
@@ -1706,9 +1804,13 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
       discount: totals.discount,
       shipping: ship,
       total: totals.total,
+    }).catch((e) => {
+      setErr(e instanceof Error ? e.message : 'Save failed. Try again.');
+      return null;
     });
+    if (!inv) return;
     await refresh();
-    setInvoices(getInvoices());
+    await reloadInvoices();
     setSaved(inv);
   };
 
@@ -1720,8 +1822,13 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
       danger: true,
     });
     if (!yes) return;
-    voidInvoice(inv.id);
-    setInvoices(getInvoices());
+    try {
+      await bridgeVoidInvoice(inv.id);
+    } catch (e) {
+      setExportErr(e instanceof Error ? e.message : 'Delete failed.');
+      return;
+    }
+    await reloadInvoices();
     await refresh();
     if (detail?.id === inv.id) setDetail(null);
   };
@@ -1789,7 +1896,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
   if (creating || saved) {
     const preview: Invoice = saved ?? {
       id: 'draft',
-      number: peekInvoiceNumber(),
+      number: nextNo,
       createdAt: new Date(date || Date.now()).toISOString(),
       buyerName: buyerName || '—',
       buyerPhone,
@@ -2033,7 +2140,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                 onClick={() => {
                   resetBuilder();
                   setCreating(true);
-                  setInvoices(getInvoices());
+                  void reloadInvoices();
                 }}
                 className="rounded-full border border-black/20 px-8 py-4 text-[12px] font-normal tracking-[0.2em] transition hover:border-black hover:bg-black hover:text-white"
               >

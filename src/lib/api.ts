@@ -112,6 +112,13 @@ export function apiLogout(): Promise<{ ok: boolean }> {
   return req('/api/auth?action=logout', { method: 'POST' });
 }
 
+export function apiPassword(current: string, next: string): Promise<{ ok: boolean }> {
+  return req('/api/auth?action=password', {
+    method: 'POST',
+    body: JSON.stringify({ current, next }),
+  });
+}
+
 /* ---------- admin writes (server mode) ---------- */
 
 function write<T>(path: string, method: string, body?: unknown): Promise<T> {

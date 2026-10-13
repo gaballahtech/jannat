@@ -12,10 +12,23 @@ export default function Header() {
   const route = useRoute();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Close the mobile menu whenever the URL changes.
+  // Stable page key — the route object is rebuilt every render, and using it
+  // directly would close the menu on ANY re-render (toast, cart badge…).
+  const pageKey =
+    route.view === 'product'
+      ? `product:${route.id}`
+      : route.view === 'shop'
+        ? `shop:${route.category}:${route.saved}`
+        : route.view === 'search'
+          ? 'search'
+          : route.view === 'admin'
+            ? `admin:${route.tab}`
+            : route.view;
+
+  // Close the mobile menu when the page itself changes.
   useEffect(() => {
     setMobileOpen(false);
-  }, [route]);
+  }, [pageKey]);
 
   const goSection = (id: string) => {
     setMobileOpen(false);
