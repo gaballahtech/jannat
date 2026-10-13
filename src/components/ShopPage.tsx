@@ -43,7 +43,7 @@ export default function ShopPage() {
 
   return (
     <section className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-10 lg:py-16">
-      <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">
+      <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">
         HOODIES · JACKETS · ESSENTIALS — DELIVERED IN EGYPT
       </p>
       <h1 className="font-display mt-3 text-5xl font-normal uppercase tracking-tight sm:text-6xl">
@@ -78,7 +78,7 @@ export default function ShopPage() {
           </a>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-[11px] tracking-[0.2em] text-black/50 dark:text-white/50">
+          <span className="text-[11px] tracking-[0.2em] text-black/60 dark:text-white/60">
             {items.length} ITEMS
           </span>
           <Dropdown
@@ -98,7 +98,7 @@ export default function ShopPage() {
       {items.length === 0 && !wishOnly && (
         <div className="flex flex-col items-center py-20 text-center">
           <p className="font-display text-3xl font-normal uppercase">Nothing here yet</p>
-          <p className="mt-2 max-w-xs text-[13px] tracking-[0.08em] text-black/50 dark:text-white/50">
+          <p className="mt-2 max-w-xs text-[13px] tracking-[0.08em] text-black/60 dark:text-white/60">
             {validCat
               ? 'No products in this category — check back soon.'
               : 'This shelf is empty right now.'}
@@ -115,7 +115,7 @@ export default function ShopPage() {
         <div className="flex flex-col items-center py-20 text-center">
           <Heart className="h-10 w-10 text-black/15 dark:text-white/15" />
           <p className="mt-4 text-[13px] font-normal tracking-[0.2em]">NOTHING SAVED YET</p>
-          <p className="mt-1 max-w-xs text-[12px] tracking-wider text-black/50 dark:text-white/50">
+          <p className="mt-1 max-w-xs text-[12px] tracking-wider text-black/60 dark:text-white/60">
             Tap the heart on any piece you like — it’ll wait for you here until you’re ready.
           </p>
         </div>

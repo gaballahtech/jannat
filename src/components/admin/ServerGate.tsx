@@ -48,7 +48,7 @@ export default function ServerAuth({ onAuthed }: { onAuthed: (username: string) 
 
   if (hasOwner === null) {
     return (
-      <p className="mx-auto max-w-md px-6 py-24 text-center text-[12px] tracking-[0.24em] text-black/50 dark:text-white/50">
+      <p className="mx-auto max-w-md px-6 py-24 text-center text-[12px] tracking-[0.24em] text-black/60 dark:text-white/60">
         CHECKING…
       </p>
     );
@@ -71,7 +71,7 @@ export default function ServerAuth({ onAuthed }: { onAuthed: (username: string) 
         autoComplete="username"
         placeholder="e.g. pearlin_owner"
         aria-label="Username"
-        className="mt-6 w-full rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-center text-[16px] outline-none placeholder:text-black/25 focus:border-black dark:focus:border-white sm:text-xl"
+        className="mt-6 w-full rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-center text-[16px] outline-none placeholder:text-black/25 dark:placeholder:text-white/60 focus:border-black dark:focus:border-white sm:text-xl"
       />
       <input
         value={password}
@@ -81,7 +81,7 @@ export default function ServerAuth({ onAuthed }: { onAuthed: (username: string) 
         autoComplete={hasOwner ? 'current-password' : 'new-password'}
         placeholder={hasOwner ? 'Password' : 'Password (8+ characters)'}
         aria-label="Password"
-        className="mt-3 w-full rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-center text-[16px] outline-none placeholder:text-black/25 focus:border-black dark:focus:border-white sm:text-xl"
+        className="mt-3 w-full rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-center text-[16px] outline-none placeholder:text-black/25 dark:placeholder:text-white/60 focus:border-black dark:focus:border-white sm:text-xl"
       />
       {err && <p className="mt-3 text-[12px] font-normal tracking-[0.12em] text-red-700 dark:text-red-400">{err}</p>}
       <button
@@ -91,7 +91,7 @@ export default function ServerAuth({ onAuthed }: { onAuthed: (username: string) 
       >
         {busy ? '…' : hasOwner ? 'SIGN IN' : 'CREATE OWNER'}
       </button>
-      <p className="mt-4 max-w-xs text-[11px] leading-relaxed tracking-[0.08em] text-black/40 dark:text-white/65">
+      <p className="mt-4 max-w-xs text-[11px] leading-relaxed tracking-[0.08em] text-black/60 dark:text-white/65">
         Server account — works on all your devices. Sessions expire after 30 days.
       </p>
     </section>

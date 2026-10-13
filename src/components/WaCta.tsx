@@ -186,7 +186,7 @@ export default function WaCta({
                         options={(govObj?.cities ?? []).map((c) => ({ value: c, label: c }))}
                       />
                       {!gov && (
-                        <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/40 dark:text-white/65">
+                        <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/60 dark:text-white/65">
                           Pick a governorate first.
                         </p>
                       )}
@@ -215,7 +215,7 @@ export default function WaCta({
                 >
                   {submitLabel} <ArrowRight className="h-4 w-4" />
                 </button>
-                <p className="mt-3 text-center text-[11px] tracking-[0.06em] text-black/45 dark:text-white/45">
+                <p className="mt-3 text-center text-[11px] tracking-[0.06em] text-black/60 dark:text-white/60">
                   No phone needed — WhatsApp already shows your number.
                 </p>
               </motion.div>

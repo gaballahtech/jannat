@@ -116,10 +116,10 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-black/10 dark:border-white/10">
-        <div className="mx-auto max-w-[1400px] px-4 py-5 text-center text-[11px] tracking-[0.18em] text-black/50 sm:px-6 lg:px-10 dark:text-white/50">
+        <div className="mx-auto max-w-[1400px] px-4 py-5 text-center text-[11px] tracking-[0.18em] text-black/60 sm:px-6 lg:px-10 dark:text-white/60">
           © {COPYRIGHT_YEAR} PEARLIN · CAIRO, EGYPT. ALL RIGHTS RESERVED.
           {' · '}
-          <a href="/admin" rel="nofollow" className="text-black/30 transition hover:text-black dark:text-white/65 dark:hover:text-white">
+          <a href="/admin" rel="nofollow" className="text-black/60 transition hover:text-black dark:text-white/65 dark:hover:text-white">
             ADMIN
           </a>
         </div>

@@ -94,7 +94,7 @@ export default function Hero() {
           </WaCta>
         </div>
 
-        <div className="mt-14 flex items-center gap-8 border-t border-black/10 dark:border-white/10 pt-6 text-[11px] tracking-[0.2em] text-black/50 dark:text-white/50">
+        <div className="mt-14 flex items-center gap-8 border-t border-black/10 dark:border-white/10 pt-6 text-[11px] tracking-[0.2em] text-black/60 dark:text-white/60">
           <span>CAIRO · EGYPT</span>
           <span className="hidden sm:inline">ONLINE PAYMENT</span>
         </div>
@@ -150,7 +150,7 @@ export default function Hero() {
                     }`}
                   />
                 ))}
-                <span className="ml-1 text-[10px] font-normal tracking-[0.2em] text-black/50 dark:text-white/50">
+                <span className="ml-1 text-[10px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                   0{index + 1} / 0{slides.length}
                 </span>
               </div>

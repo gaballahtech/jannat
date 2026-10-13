@@ -134,7 +134,7 @@ export default function Dropdown({
                     isActive
                       ? 'bg-black text-white dark:bg-white dark:text-black'
                       : disabled
-                        ? 'cursor-not-allowed text-black/30 dark:text-white/50'
+                        ? 'cursor-not-allowed text-black/30 dark:text-white/60'
                         : highlighted
                           ? 'bg-black/[0.06] text-black dark:bg-white/10 dark:text-[#f2f2f2]'
                           : 'text-black hover:bg-black/[0.06] dark:text-[#f2f2f2] dark:hover:bg-white/10'

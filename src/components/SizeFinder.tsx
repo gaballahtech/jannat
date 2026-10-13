@@ -39,7 +39,7 @@ function NumField({
           inputMode="numeric"
           className="min-w-0 flex-1 rounded-xl border border-black/15 dark:border-white/15 px-3 py-2.5 text-center text-[15px] font-normal outline-none focus:border-black dark:focus:border-white"
         />
-        <span className="w-8 shrink-0 text-[11px] font-normal text-black/40 dark:text-white/65">{suffix}</span>
+        <span className="w-8 shrink-0 text-[11px] font-normal text-black/60 dark:text-white/65">{suffix}</span>
       </div>
       <input
         type="range"
@@ -158,7 +158,7 @@ export default function SizeFinder({
                     key={m}
                     onClick={() => setMode(m)}
                     className={`rounded-xl py-2.5 text-[11px] font-normal tracking-[0.15em] transition ${
-                      mode === m ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white'
+                      mode === m ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white'
                     }`}
                   >
                     {label}
@@ -248,7 +248,7 @@ export default function SizeFinder({
                       <span className="block text-[12px] font-normal tracking-[0.12em]">{f.label}</span>
                       <span
                         className={`mt-0.5 block text-[10px] tracking-[0.08em] ${
-                          fit === f.id ? 'text-white/60 dark:text-black/60' : 'text-black/45 dark:text-white/45'
+                          fit === f.id ? 'text-white/60 dark:text-black/60' : 'text-black/60 dark:text-white/60'
                         }`}
                       >
                         {f.hint}
@@ -295,7 +295,7 @@ export default function SizeFinder({
               >
                 USE SIZE {advice.size} <ArrowRight className="h-4 w-4" />
               </button>
-              <p className="mt-3 text-center text-[11px] leading-relaxed tracking-[0.06em] text-black/45 dark:text-white/45">
+              <p className="mt-3 text-center text-[11px] leading-relaxed tracking-[0.06em] text-black/60 dark:text-white/60">
                 Tape measurements + gender tables = our most precise answer. Still unsure? Ask us
                 on WhatsApp with your numbers.
               </p>

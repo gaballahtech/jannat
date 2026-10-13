@@ -1,7 +1,7 @@
 export default function NotFound({ title = 'Page not found', hint = 'This link is old, moved, or mistyped.' }: { title?: string; hint?: string }) {
   return (
     <section className="mx-auto flex max-w-[1400px] flex-col items-center px-4 py-24 text-center sm:px-6 lg:px-10">
-      <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">404 — PEARLIN</p>
+      <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">404 — PEARLIN</p>
       <h1 className="font-display mt-4 text-5xl font-normal uppercase tracking-tight sm:text-6xl">
         {title}
       </h1>

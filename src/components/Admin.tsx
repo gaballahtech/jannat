@@ -400,7 +400,7 @@ function ProductEditor({
               <Plus className="h-3.5 w-3.5" /> ADD COLOR
             </button>
           </div>
-          <p className="mt-2 text-[11px] tracking-[0.08em] text-black/45 dark:text-white/45">
+          <p className="mt-2 text-[11px] tracking-[0.08em] text-black/60 dark:text-white/60">
             {cloudinaryConfigured()
               ? 'Photos upload to Cloudinary (compressed WebP, shared on all devices).'
               : 'Cloudinary not set — photos stay on this device only. Add VITE_CLOUDINARY_* in .env.'}
@@ -412,7 +412,7 @@ function ProductEditor({
                   {v._preview ? (
                     <img src={v._preview} alt={v.name} className="h-full w-full object-cover" />
                   ) : (
-                    <span className="grid h-full w-full place-items-center text-black/30 dark:text-white/50">
+                    <span className="grid h-full w-full place-items-center text-black/30 dark:text-white/60">
                       <ImagePlus className="h-6 w-6" />
                     </span>
                   )}
@@ -474,7 +474,7 @@ function ProductEditor({
             </span>
           </div>
           {f.sizes.length === 0 || f.variants.length === 0 ? (
-            <p className="mt-3 rounded-xl bg-[#F8F8F8] dark:bg-white/[0.05] px-4 py-3 text-[12px] tracking-[0.06em] text-black/50 dark:text-white/50">
+            <p className="mt-3 rounded-xl bg-[#F8F8F8] dark:bg-white/[0.05] px-4 py-3 text-[12px] tracking-[0.06em] text-black/60 dark:text-white/60">
               Pick sizes above and add at least one color to fill the stock table.
             </p>
           ) : (
@@ -482,7 +482,7 @@ function ProductEditor({
               <table className="w-full min-w-[420px] border-collapse bg-white dark:bg-[#101010] text-center">
                 <thead>
                   <tr className="bg-[#F8F8F8] dark:bg-white/[0.05]">
-                    <th className="sticky left-0 bg-[#F8F8F8] dark:bg-white/[0.05] px-3 py-2.5 text-left text-[10px] font-normal tracking-[0.15em] text-black/50 dark:text-white/50">
+                    <th className="sticky left-0 bg-[#F8F8F8] dark:bg-white/[0.05] px-3 py-2.5 text-left text-[10px] font-normal tracking-[0.15em] text-black/60 dark:text-white/60">
                       COLOR ↓ · SIZE →
                     </th>
                     {f.sizes.map((s) => (
@@ -490,7 +490,7 @@ function ProductEditor({
                         {s}
                       </th>
                     ))}
-                    <th className="px-2 py-2.5 text-[10px] font-normal tracking-[0.12em] text-black/50 dark:text-white/50">
+                    <th className="px-2 py-2.5 text-[10px] font-normal tracking-[0.12em] text-black/60 dark:text-white/60">
                       ROW
                     </th>
                   </tr>
@@ -537,7 +537,7 @@ function ProductEditor({
               </table>
             </div>
           )}
-          <p className="mt-2 text-[11px] tracking-[0.06em] text-black/45 dark:text-white/45">
+          <p className="mt-2 text-[11px] tracking-[0.06em] text-black/60 dark:text-white/60">
             Write how many pieces you have of each color in each size. Total updates by itself.
             {f.origStock > matrixTotal(f) && (
               <span className="font-normal text-red-700 dark:text-red-400">
@@ -597,7 +597,7 @@ function ProductEditor({
                       <span className="block truncate text-[12px] font-normal tracking-[0.08em]">
                         {p.name}
                       </span>
-                      <span className="text-[11px] tracking-wider text-black/50 dark:text-white/50">
+                      <span className="text-[11px] tracking-wider text-black/60 dark:text-white/60">
                         {formatEGP(p.price)} · {p.stock > 0 ? `${p.stock} in stock` : 'sold out'}
                       </span>
                     </span>
@@ -605,7 +605,7 @@ function ProductEditor({
                 );
               })}
           </div>
-          <p className="mt-2 text-[11px] tracking-[0.06em] text-black/45 dark:text-white/45">
+          <p className="mt-2 text-[11px] tracking-[0.06em] text-black/60 dark:text-white/60">
             Shown on this product's page. Sold-out or deleted picks hide automatically — if none
             are available, the whole section hides itself.
           </p>
@@ -700,7 +700,7 @@ export default function Admin() {
 
   if (server === 'checking') {
     return (
-      <p className="mx-auto max-w-md px-6 py-24 text-center text-[12px] tracking-[0.24em] text-black/50 dark:text-white/50">
+      <p className="mx-auto max-w-md px-6 py-24 text-center text-[12px] tracking-[0.24em] text-black/60 dark:text-white/60">
         LOADING…
       </p>
     );
@@ -757,9 +757,9 @@ function Dashboard({ onLock }: { onLock: () => void }) {
       <ConfirmHost />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">PEARLIN · OWNER ONLY</p>
+          <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">PEARLIN · OWNER ONLY</p>
           <h1 className="font-display mt-1 text-4xl font-normal uppercase sm:text-5xl">Dashboard</h1>
-          <p className="mt-1.5 text-[13px] tracking-[0.04em] text-black/50 dark:text-white/50">
+          <p className="mt-1.5 text-[13px] tracking-[0.04em] text-black/60 dark:text-white/60">
             Everything for your store, in one place — no code needed.
           </p>
         </div>
@@ -1015,7 +1015,7 @@ function OverviewTab({
           </button>
           <button
             onClick={() => void reloadStats()}
-            className="mt-2 w-full py-2 text-[11px] tracking-[0.15em] text-black/45 dark:text-white/45 underline-offset-4 hover:text-black dark:hover:text-white hover:underline"
+            className="mt-2 w-full py-2 text-[11px] tracking-[0.15em] text-black/60 dark:text-white/60 underline-offset-4 hover:text-black dark:hover:text-white hover:underline"
           >
             Refresh invoice stats
           </button>
@@ -1162,13 +1162,13 @@ function OverviewTab({
                 <button
                   onClick={() => setBiz({ ...biz, promoEnabled: !biz.promoEnabled })}
                   className={`shrink-0 rounded-full px-5 text-[11px] font-normal tracking-[0.15em] transition ${
-                    biz.promoEnabled ? 'bg-black text-white dark:bg-white dark:text-black' : 'border border-black/20 text-black/50 dark:border-white/20 dark:text-white/50'
+                    biz.promoEnabled ? 'bg-black text-white dark:bg-white dark:text-black' : 'border border-black/20 text-black/60 dark:border-white/20 dark:text-white/60'
                   }`}
                 >
                   {biz.promoEnabled ? 'ON' : 'OFF'}
                 </button>
               </div>
-              <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/45 dark:text-white/45">
+              <p className="mt-1.5 text-[11px] tracking-[0.06em] text-black/60 dark:text-white/60">
                 Shown on the site — you apply the discount manually on WhatsApp.
               </p>
             </div>
@@ -1274,7 +1274,7 @@ function CategoriesTab({ products, refresh }: { products: Product[]; refresh: ()
           onChange={(e) => setNeu(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && doAdd()}
           placeholder="New category name (e.g. DRESSES)"
-          className="flex-1 rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-[13px] font-normal tracking-[0.1em] outline-none placeholder:font-normal placeholder:text-black/35 focus:border-black dark:focus:border-white"
+          className="flex-1 rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-[13px] font-normal tracking-[0.1em] outline-none placeholder:font-normal placeholder:text-black/35 dark:placeholder:text-white/60 focus:border-black dark:focus:border-white"
         />
         <button
           onClick={doAdd}
@@ -1306,7 +1306,7 @@ function CategoriesTab({ products, refresh }: { products: Product[]; refresh: ()
                   SAVE
                 </button>
               </div>
-              <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-[0.12em] text-black/45 dark:text-white/45">
+              <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] tracking-[0.12em] text-black/60 dark:text-white/60">
                 <span>
                   Link: <span className="font-normal text-black/70 dark:text-white/70">/shop/{c.id}</span> ·{' '}
                   {counts[c.id] ?? 0} product{(counts[c.id] ?? 0) === 1 ? '' : 's'}
@@ -1324,14 +1324,14 @@ function CategoriesTab({ products, refresh }: { products: Product[]; refresh: ()
             <button
               onClick={() => doDelete(c.id, c.label)}
               aria-label={`Delete ${c.label}`}
-              className="self-start rounded-full border border-black/20 dark:border-white/20 p-2.5 text-black/50 dark:text-white/50 transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black sm:self-center"
+              className="self-start rounded-full border border-black/20 dark:border-white/20 p-2.5 text-black/60 dark:text-white/60 transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black sm:self-center"
             >
               <Trash2 className="h-4 w-4" />
             </button>
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-[11px] leading-relaxed tracking-[0.06em] text-black/45 dark:text-white/45">
+      <p className="mt-4 text-[11px] leading-relaxed tracking-[0.06em] text-black/60 dark:text-white/60">
         Renaming updates the whole site instantly (chips, footer, titles). IDs stay fixed so shared
         links never break. A category can only be deleted when no products use it.
       </p>
@@ -1401,7 +1401,7 @@ function HomepageTab({ refresh }: { refresh: () => Promise<void> }) {
       {/* Hero slides */}
       <div className="rounded-2xl border border-black/10 dark:border-white/10 p-5 sm:p-6">
         <h3 className="text-[12px] font-normal tracking-[0.22em]">HERO SLIDER (3 SLOTS)</h3>
-        <p className="mt-1 text-[12px] tracking-[0.06em] text-black/50 dark:text-white/50">
+        <p className="mt-1 text-[12px] tracking-[0.06em] text-black/60 dark:text-white/60">
           Pick the product — and its color — shown in each hero slide.
         </p>
         <div className="mt-4 space-y-3">
@@ -1521,14 +1521,14 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search products…"
-          className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] py-3.5 pl-11 pr-4 text-[13px] outline-none placeholder:text-black/35 focus:border-black dark:focus:border-white"
+          className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] py-3.5 pl-11 pr-4 text-[13px] outline-none placeholder:text-black/35 dark:placeholder:text-white/60 focus:border-black dark:focus:border-white"
         />
       </div>
 
       {msg && <p className="mt-3 text-[12px] font-normal tracking-[0.08em] text-red-700 dark:text-red-400">{msg}</p>}
 
       {visible.length === 0 ? (
-        <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/45 dark:text-white/45">
+        <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/60 dark:text-white/60">
           No products match “{q}”.
         </p>
       ) : (
@@ -1562,7 +1562,7 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
                     {p.stock === 0 ? 'SOLD OUT' : `ONLY ${p.stock} LEFT`}
                   </span>
                 )}
-                <span className="text-[11px] tracking-[0.1em] text-black/40 dark:text-white/65">
+                <span className="text-[11px] tracking-[0.1em] text-black/60 dark:text-white/65">
                   Tap EDIT to change colors, sizes & pieces
                 </span>
               </div>
@@ -1586,7 +1586,7 @@ function ProductsTab({ products, refresh }: { products: Product[]; refresh: () =
               <button
                 onClick={() => remove(p)}
                 aria-label={`Delete ${p.name}`}
-                className="rounded-full border border-black/20 dark:border-white/20 p-2.5 text-black/50 dark:text-white/50 transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black"
+                className="rounded-full border border-black/20 dark:border-white/20 p-2.5 text-black/60 dark:text-white/60 transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black"
               >
                 <Trash2 className="h-4 w-4" />
               </button>
@@ -2025,7 +2025,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                           </button>
                           <span className="text-center text-[12px] font-normal">
                             {l.qty}
-                            <span className="block text-[9px] font-normal text-black/45 dark:text-white/45">max {max}</span>
+                            <span className="block text-[9px] font-normal text-black/60 dark:text-white/60">max {max}</span>
                           </span>
                           <button
                             onClick={() =>
@@ -2103,7 +2103,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
               >
                 SAVE INVOICE — {formatEGP(totals.total)}
               </button>
-              <p className="mt-2 text-center text-[11px] tracking-[0.08em] text-black/45 dark:text-white/45">
+              <p className="mt-2 text-center text-[11px] tracking-[0.08em] text-black/60 dark:text-white/60">
                 Saving decrements stock automatically.
               </p>
             </div>
@@ -2169,7 +2169,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
         <div className="flex flex-col items-center py-16 text-center">
           <FileText className="h-10 w-10 text-black/15 dark:text-white/15" />
           <p className="mt-4 text-[13px] font-normal tracking-[0.2em]">NO INVOICES YET</p>
-          <p className="mt-1 max-w-xs text-[12px] tracking-wider text-black/50 dark:text-white/50">
+          <p className="mt-1 max-w-xs text-[12px] tracking-wider text-black/60 dark:text-white/60">
             Create your first invoice — stock decrements automatically on save.
           </p>
         </div>
@@ -2181,11 +2181,11 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search by buyer, number or phone…"
-              className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] py-3.5 pl-11 pr-4 text-[13px] outline-none placeholder:text-black/35 focus:border-black dark:focus:border-white"
+              className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] py-3.5 pl-11 pr-4 text-[13px] outline-none placeholder:text-black/35 dark:placeholder:text-white/60 focus:border-black dark:focus:border-white"
             />
           </div>
           {visibleInvoices.length === 0 ? (
-            <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/45 dark:text-white/45">
+            <p className="py-10 text-center text-[12px] tracking-[0.15em] text-black/60 dark:text-white/60">
               No invoices match “{q}”.
             </p>
           ) : (
@@ -2236,7 +2236,7 @@ function InvoicesTab({ refresh }: { refresh: () => Promise<void> }) {
                 <button
                   onClick={() => removeInvoice(inv)}
                   aria-label={`Void ${inv.number}`}
-                  className="rounded-full border border-black/20 dark:border-white/20 p-2.5 text-black/50 dark:text-white/50 transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black"
+                  className="rounded-full border border-black/20 dark:border-white/20 p-2.5 text-black/60 dark:text-white/60 transition hover:border-red-700 hover:bg-red-700 hover:text-white dark:hover:text-black"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>

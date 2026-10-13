@@ -72,7 +72,7 @@ export default function CartDrawer() {
               {items.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
                   <p className="font-display mt-4 text-2xl font-normal uppercase">Your bag is empty</p>
-                  <p className="mt-1.5 text-[12px] tracking-wider text-black/50 dark:text-white/50">
+                  <p className="mt-1.5 text-[12px] tracking-wider text-black/60 dark:text-white/60">
                     Hoodies, pants & essentials.
                   </p>
                   <button
@@ -101,7 +101,7 @@ export default function CartDrawer() {
                           <div className="flex items-start justify-between gap-2">
                             <div>
                               <p className="text-[12px] font-normal tracking-[0.14em]">{i.product.name}</p>
-                              <p className="mt-1 flex items-center gap-1.5 text-[11px] tracking-[0.15em] text-black/50 dark:text-white/50">
+                              <p className="mt-1 flex items-center gap-1.5 text-[11px] tracking-[0.15em] text-black/60 dark:text-white/60">
                                 {v && (
                                   <span
                                     className="inline-block h-2.5 w-2.5 rounded-full ring-1 ring-black/20 dark:ring-white/20"
@@ -141,7 +141,7 @@ export default function CartDrawer() {
                                 </button>
                               </div>
                               {atMax && (
-                                <p className="mt-1 text-[10px] font-normal tracking-[0.12em] text-black/45 dark:text-white/45">
+                                <p className="mt-1 text-[10px] font-normal tracking-[0.12em] text-black/60 dark:text-white/60">
                                   MAX {max} AVAILABLE
                                 </p>
                               )}
@@ -176,7 +176,7 @@ export default function CartDrawer() {
                     <span>{formatEGP(total)}</span>
                   </div>
                 </div>
-                <p className="mt-2 text-[11px] tracking-wider text-black/50 dark:text-white/50">
+                <p className="mt-2 text-[11px] tracking-wider text-black/60 dark:text-white/60">
                   You’ll send the order on WhatsApp — online payment, confirmed with you there.
                 </p>
                 {promo.enabled && promo.percent > 0 && (

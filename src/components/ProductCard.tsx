@@ -125,7 +125,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </h3>
         <p className="mt-1.5 text-[13px] tracking-wider text-white/55">
           {formatEGP(product.price)}{' '}
-          <span className="text-[11px] text-white/35">· {variant.name}</span>
+          <span className="text-[11px] text-white/60">· {variant.name}</span>
         </p>
         <div
           className="mt-3 flex items-center justify-between gap-2"

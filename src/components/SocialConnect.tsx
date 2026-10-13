@@ -9,7 +9,7 @@ export default function SocialConnect() {
   return (
     <section id="contact" className="mx-auto max-w-[1400px] px-4 py-20 sm:px-6 lg:px-10 lg:py-24">
       <div className="mb-10 text-center">
-        <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">CONTACT — EGYPT</p>
+        <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">CONTACT — EGYPT</p>
         <h2 className="font-display mt-3 text-3xl font-normal uppercase tracking-tight sm:text-4xl">
           Order direct. <em className="font-normal normal-case italic">Talk to us.</em>
         </h2>

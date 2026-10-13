@@ -22,7 +22,7 @@ export function TrustStrip() {
             </span>
             <span>
               <span className="block text-[11px] font-normal tracking-[0.18em]">{it.top}</span>
-              <span className="mt-0.5 block text-[11px] tracking-[0.06em] text-black/50 dark:text-white/50">
+              <span className="mt-0.5 block text-[11px] tracking-[0.06em] text-black/60 dark:text-white/60">
                 {it.sub}
               </span>
             </span>

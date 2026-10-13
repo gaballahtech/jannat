@@ -161,7 +161,7 @@ export default function ProductPage({ productId }: { productId: string }) {
     <>
       <section className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-10 lg:py-14">
         {/* breadcrumb */}
-        <div className="mb-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-normal tracking-[0.2em] text-black/50 dark:text-white/50">
+        <div className="mb-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
           <a href="/shop" className="flex items-center gap-1.5 hover:text-black dark:hover:text-white">
             <ArrowLeft className="h-3.5 w-3.5" /> SHOP
           </a>
@@ -239,7 +239,7 @@ export default function ProductPage({ productId }: { productId: string }) {
 
           {/* Info */}
           <div>
-            <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">
+            <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">
               {product.category.toUpperCase()} — EGYPT
             </p>
             <div className="flex items-start justify-between gap-3">
@@ -259,7 +259,7 @@ export default function ProductPage({ productId }: { productId: string }) {
             </div>
             <p className="mt-4 text-xl font-normal tracking-wider">{formatEGP(product.price)}</p>
             {product.sold > 0 && (
-              <p className="mt-2 flex items-center gap-1.5 text-[11px] font-normal tracking-[0.2em] text-black/50 dark:text-white/50">
+              <p className="mt-2 flex items-center gap-1.5 text-[11px] font-normal tracking-[0.2em] text-black/60 dark:text-white/60">
                 <Flame className="h-3.5 w-3.5" aria-hidden="true" /> {product.sold}+ SOLD
               </p>
             )}
@@ -267,7 +267,7 @@ export default function ProductPage({ productId }: { productId: string }) {
               {product.description}
             </p>
             {product.fabric && (
-              <p className="mt-2 text-[12px] tracking-[0.12em] text-black/45 dark:text-white/45">{product.fabric}</p>
+              <p className="mt-2 text-[12px] tracking-[0.12em] text-black/60 dark:text-white/60">{product.fabric}</p>
             )}
 
             {/* Colors */}
@@ -454,7 +454,7 @@ export default function ProductPage({ productId }: { productId: string }) {
             combo is available (otherwise the box would promise the impossible). */}
         {bundleItems.length > 0 && !outOfStock && !comboGone && (
           <div className="mt-16 rounded-[20px] border border-black/10 dark:border-white/10 bg-[#F8F8F8] dark:bg-white/[0.05] p-5 sm:p-8">
-          <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">ONE-CLICK BUNDLE</p>
+          <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">ONE-CLICK BUNDLE</p>
           <h2 className="font-display mt-2 text-2xl font-normal uppercase tracking-tight sm:text-3xl">
             Complete the look
           </h2>
@@ -477,7 +477,7 @@ export default function ProductPage({ productId }: { productId: string }) {
               />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[12px] font-normal tracking-[0.12em]">
-                  {product.name} <span className="text-black/45 dark:text-white/45">(THIS ITEM)</span>
+                  {product.name} <span className="text-black/60 dark:text-white/60">(THIS ITEM)</span>
                 </span>
                 <span className="text-[12px] tracking-wider text-black/55 dark:text-white/55">
                   {formatEGP(product.price)} · {variant.name} / {size} × {qty}

@@ -91,12 +91,12 @@ export default function PinGate({ onUnlock }: { onUnlock: () => void }) {
           type={show ? 'text' : 'password'}
           placeholder={setup ? 'New password' : 'Password'}
           autoComplete="off"
-          className="w-full rounded-2xl border border-black/15 dark:border-white/15 py-4 pl-5 pr-12 text-center text-xl font-normal tracking-[0.2em] outline-none placeholder:text-black/25 placeholder:tracking-[0.1em] focus:border-black dark:focus:border-white"
+          className="w-full rounded-2xl border border-black/15 dark:border-white/15 py-4 pl-5 pr-12 text-center text-xl font-normal tracking-[0.2em] outline-none placeholder:text-black/25 dark:placeholder:text-white/60 placeholder:tracking-[0.1em] focus:border-black dark:focus:border-white"
         />
         <button
           onClick={() => setShow((s) => !s)}
           aria-label={show ? 'Hide PIN' : 'Show PIN'}
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2.5 text-black/45 dark:text-white/45 transition hover:text-black dark:hover:text-white"
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2.5 text-black/60 dark:text-white/60 transition hover:text-black dark:hover:text-white"
         >
           {show ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
         </button>
@@ -109,7 +109,7 @@ export default function PinGate({ onUnlock }: { onUnlock: () => void }) {
           type={show ? 'text' : 'password'}
           placeholder="Confirm password"
           autoComplete="off"
-          className="mt-3 w-full rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-center text-xl font-normal tracking-[0.2em] outline-none placeholder:text-black/25 placeholder:tracking-[0.1em] focus:border-black dark:focus:border-white"
+          className="mt-3 w-full rounded-2xl border border-black/15 dark:border-white/15 px-5 py-4 text-center text-xl font-normal tracking-[0.2em] outline-none placeholder:text-black/25 dark:placeholder:text-white/60 placeholder:tracking-[0.1em] focus:border-black dark:focus:border-white"
         />
       )}
       {err && <p className="mt-3 text-[12px] font-normal tracking-[0.12em] text-red-700 dark:text-red-400">{err}</p>}
@@ -120,7 +120,7 @@ export default function PinGate({ onUnlock }: { onUnlock: () => void }) {
       >
         {wait > 0 ? `WAIT ${wait}S` : setup ? 'CREATE & UNLOCK' : 'UNLOCK'}
       </button>
-      <p className="mt-4 max-w-xs text-[11px] leading-relaxed tracking-[0.08em] text-black/40 dark:text-white/65">
+      <p className="mt-4 max-w-xs text-[11px] leading-relaxed tracking-[0.08em] text-black/60 dark:text-white/65">
         Device-level lock only — anyone with this browser can clear site data. Real multi-user
         security needs a server backend later.
       </p>

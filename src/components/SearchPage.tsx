@@ -47,7 +47,7 @@ export default function SearchPage() {
 
   return (
     <section className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-10 lg:py-16">
-      <p className="text-[11px] font-normal tracking-[0.3em] text-black/50 dark:text-white/50">SEARCH PEARLIN</p>
+      <p className="text-[11px] font-normal tracking-[0.3em] text-black/60 dark:text-white/60">SEARCH PEARLIN</p>
       <div className="mt-5 flex items-center gap-3 border-b-2 border-black dark:border-white pb-4">
         <Search className="h-6 w-6 shrink-0" aria-hidden="true" />
         <input
@@ -57,7 +57,7 @@ export default function SearchPage() {
           value={draft}
           onChange={(e) => onType(e.target.value)}
           placeholder="Hoodie, cargo, jacket..."
-          className="font-display w-full bg-transparent text-2xl font-normal uppercase outline-none placeholder:text-black/20 sm:text-4xl"
+          className="font-display w-full bg-transparent text-2xl font-normal uppercase outline-none placeholder:text-black/20 dark:placeholder:text-white/60 sm:text-4xl"
         />
         {draft && (
           <button
@@ -72,7 +72,7 @@ export default function SearchPage() {
 
       {q.trim() === '' ? (
         <div className="mt-10">
-          <p className="text-[11px] font-normal tracking-[0.24em] text-black/50 dark:text-white/50">POPULAR RIGHT NOW</p>
+          <p className="text-[11px] font-normal tracking-[0.24em] text-black/60 dark:text-white/60">POPULAR RIGHT NOW</p>
           <div className="mt-5 flex flex-wrap gap-2.5">
             {['Hoodie', 'Cargo', 'Jacket', 'Black', 'T-shirt'].map((term) => (
               <a
@@ -90,7 +90,7 @@ export default function SearchPage() {
             ))}
           </div>
           <div className="mt-10">
-            <p className="mb-4 text-[11px] font-normal tracking-[0.24em] text-black/50 dark:text-white/50">
+            <p className="mb-4 text-[11px] font-normal tracking-[0.24em] text-black/60 dark:text-white/60">
               SHOP BY CATEGORY
             </p>
             <div className="flex flex-wrap gap-2.5">
@@ -108,7 +108,7 @@ export default function SearchPage() {
         </div>
       ) : (
         <div className="mt-10">
-          <p className="text-[11px] tracking-[0.22em] text-black/50 dark:text-white/50">
+          <p className="text-[11px] tracking-[0.22em] text-black/60 dark:text-white/60">
             {results.length} RESULT{results.length === 1 ? '' : 'S'} FOR “{q.trim().toUpperCase()}”
             {' — '}
             <a href={searchPath(q.trim())} className="font-normal text-black dark:text-[#f2f2f2] underline underline-offset-4">
@@ -118,7 +118,7 @@ export default function SearchPage() {
           {results.length === 0 ? (
             <div className="py-16 text-center">
               <p className="font-display text-3xl font-normal uppercase">Nothing found</p>
-              <p className="mt-2 text-[13px] tracking-[0.12em] text-black/50 dark:text-white/50">
+              <p className="mt-2 text-[13px] tracking-[0.12em] text-black/60 dark:text-white/60">
                 Try “hoodie”, “cargo” or “jacket”.
               </p>
               <a
@@ -136,7 +136,7 @@ export default function SearchPage() {
             </div>
           )}
           <div className="mt-10 border-t border-black/10 dark:border-white/10 pt-6">
-            <p className="text-[12px] tracking-[0.12em] text-black/50 dark:text-white/50">
+            <p className="text-[12px] tracking-[0.12em] text-black/60 dark:text-white/60">
               Can’t find your size or color?{' '}
               <WaCta
                 mode="name"

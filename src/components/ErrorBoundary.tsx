@@ -20,7 +20,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     if (this.state.error) {
       return (
         <div className="mx-auto flex min-h-[70vh] max-w-[720px] flex-col items-center justify-center px-6 py-24 text-center">
-          <p className="text-[11px] tracking-[0.3em] text-black/50 dark:text-white/50">SOMETHING WENT WRONG</p>
+          <p className="text-[11px] tracking-[0.3em] text-black/60 dark:text-white/60">SOMETHING WENT WRONG</p>
           <h1 className="font-display mt-4 text-4xl uppercase sm:text-5xl">Please reload</h1>
           <p className="mt-3 text-[13px] leading-relaxed text-black/55 dark:text-white/55">
             This is on us, not you. Reload the page — your bag and wishlist are saved on this

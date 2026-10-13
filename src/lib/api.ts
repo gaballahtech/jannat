@@ -35,10 +35,13 @@ async function req<T>(path: string, init?: RequestInit): Promise<T> {
   });
   let body: unknown = null;
   try {
-    body = await res.json();
+    // A 200 with HTML (static preview, proxy error page) is not an API answer.
+    const ct = res.headers.get('content-type') ?? '';
+    body = ct.includes('json') ? await res.json() : null;
   } catch {
-    /* non-JSON (proxy error page, offline) */
+    body = null;
   }
+  if (body == null) throw new Error('Empty response from server.');
   if (!res.ok) {
     const msg =
       body && typeof body === 'object' && 'error' in body ? String((body as { error: unknown }).error) : `HTTP ${res.status}`;
