@@ -9,14 +9,14 @@ export default function Logo({ className = 'h-9 w-9' }: { className?: string }) 
         src="/logo-light.webp"
         alt=""
         decoding="async"
-        className="h-full w-full rounded-[24%] object-cover ring-1 ring-black/10 dark:hidden"
+        className="h-full w-full rounded-[24%] object-cover dark:hidden"
       />
       <img
         src="/logo-dark.webp"
         alt=""
         aria-hidden="true"
         decoding="async"
-        className="hidden h-full w-full rounded-[24%] object-cover ring-1 ring-white/25 dark:block"
+        className="hidden h-full w-full rounded-[24%] object-cover dark:block"
       />
     </span>
   );
