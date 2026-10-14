@@ -77,7 +77,7 @@ export default function Hero() {
         <div className="mt-9 flex flex-wrap items-center gap-4">
           <a
             href="/shop"
-            className="group inline-flex items-center gap-3 rounded-full bg-black px-9 py-4 text-[12px] font-normal tracking-[0.22em] text-white transition hover:bg-neutral-800 dark:hover:bg-neutral-200 dark:bg-white dark:text-black"
+            className="group inline-flex items-center gap-3 rounded-full bg-[#e5ccc4] px-9 py-4 text-[12px] font-normal tracking-[0.22em] text-[#0a0a0a] transition hover:bg-[#d8bcae]"
           >
             SHOP HOODIES
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

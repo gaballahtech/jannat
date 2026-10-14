@@ -10,6 +10,7 @@
   --color-coal: #131313;
   --color-smoke: #6f6f6f;
   /* Jannat brand accents sampled from the logo artwork */
+  --color-jannat-blush: #e5ccc4;
   --color-jannat-sand: #ead9c6;
   --color-jannat-gold: #b08d57;
   --color-jannat-bronze: #7c5f36;
@@ -42,13 +43,13 @@ body {
 }
 
 ::selection {
-  background: #7c5f36;
-  color: #ffffff;
+  background: #e5ccc4;
+  color: #0a0a0a;
 }
 
 @media (prefers-color-scheme: dark) {
   ::selection {
-    background: #d3b183;
+    background: #e5ccc4;
     color: #0a0a0a;
   }
 }

@@ -6,7 +6,7 @@ import WaCta from './WaCta';
 export default function AnnouncementBanner() {
   const shippingFee = getShippingFee();
   return (
-    <section className="bg-[#7c5f36] text-white">
+    <section className="bg-[#e5ccc4] text-[#0a0a0a]">
       <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-2.5 px-4 py-4 sm:px-6 md:flex-row md:justify-between md:gap-4 md:py-5 lg:px-10">
         <div className="flex flex-col items-center gap-2.5 text-center md:flex-row md:gap-3 md:text-left">
           <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white text-[#7c5f36] md:h-9 md:w-9 dark:bg-white dark:text-[#7c5f36]">
@@ -16,7 +16,7 @@ export default function AnnouncementBanner() {
             <p className="text-[12px] font-normal leading-relaxed tracking-[0.18em] md:tracking-[0.24em]">
               SHIPPING TO ALL GOVERNORATES — {formatEGP(shippingFee)} FLAT
             </p>
-            <p className="mt-1 text-[11px] tracking-[0.12em] text-white/85">
+            <p className="mt-1 text-[11px] tracking-[0.12em] text-black/60">
               Online payment · Delivery within a week
             </p>
           </div>
