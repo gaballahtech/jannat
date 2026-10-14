@@ -30,7 +30,7 @@ export function InvoiceCard({ invoice }: { invoice: Invoice }) {
       {/* Brand band */}
       <div style={{ background: '#0a0a0a', color: '#fff', padding: '28px 40px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <img src="/logo-light.webp" alt="jannat" style={{ height: 40 }} />
+          <img src="/jannat.webp" alt="jannat" style={{ height: 40 }} />
           <div style={{ textAlign: 'right' }}>
             <p style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 700, letterSpacing: 3 }}>
               Invoice
